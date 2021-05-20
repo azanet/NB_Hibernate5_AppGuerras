@@ -9,6 +9,7 @@ import CONVERT_a_POJOS.AllyDTO;
 import Models.Contender.Contender_Businness;
 import CONVERT_a_POJOS.ContenderDTO;
 import Models.POJOs.Contendiente;
+import Models.POJOs.UnionBandos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -36,12 +37,12 @@ class controllerContender implements ActionListener {
    
     
   //  private ContenderDTO contenderDTO;
-    private AllyDTO allyDTO;
+   // private AllyDTO allyDTO;
     
     /////////////////////////////////////
     private viewContenders2 viewContender;
     private Contender_Businness businness;
- //   private Contendiente contendiente;
+    private UnionBandos unionBandos;
     
     //AGREGAR MODELs *** 
 
@@ -344,12 +345,10 @@ class controllerContender implements ActionListener {
 	//Insertar países a contendientes
 	if (e.getSource() == viewContender.getBtnInsertCountryToContender()) {
 	    String pais, contendiente, fecha_abandono = "";
-	    allyDTO = new AllyDTO();
+	    unionBandos = new UnionBandos();
 	    try {
 		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		pais = (String) viewContender.getComboBoxSelectCountryToContender().getSelectedItem();
-		allyDTO.setId_pais(businness.select_idPais(pais));
-		allyDTO.setId_contendiente(businness.select_idContendiente(contendiente));
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date1 = viewContender.getjDC_BeginDate().getDate();
@@ -363,9 +362,15 @@ class controllerContender implements ActionListener {
 		} else {
 		    fecha_abandono = "";
 		}
-		allyDTO.setFecha_abandono(fecha_abandono);
-		allyDTO.setFecha_union(fecha_union);
-		businness.insert_country(allyDTO);
+                
+      
+		unionBandos.setFechaAbandono(fecha_abandono);
+		unionBandos.setFechaUnion(fecha_union);
+     // 		allyDTO.setId_pais(businness.select_idPais(pais));
+	//	allyDTO.setId_contendiente(businness.select_idContendiente(contendiente));                          
+		
+                businness.insert_country(unionBandos,contendiente,pais);
+                
 		cleanCountriesForm();
 		if (viewContender.getComboBoxSelectCountryToContender().getSelectedIndex() == 0) {
 		    countriesUpdateSetActive();

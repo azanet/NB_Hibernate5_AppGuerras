@@ -270,9 +270,76 @@ public class Contender_Businness {
     }
 
 
+
+    
+    
+//    //PAISES ALIADOS A LOS CONTENDIENTES
+//    //OBTENER ID_PAIS
+//    public int select_idPais(String pais) throws SQLException {
+//	int idPais = 0;
+//	sql = "SELECT id_pais FROM pais WHERE nombre = ?";
+//	sentencia = conn.crearPrepareStatement(sql);
+//	sentencia.setString(1, pais);
+//	rs = sentencia.executeQuery();
+//	while (rs.next()) {
+//	    idPais = rs.getInt("id_pais");
+//	}
+//	return idPais;
+//    }
+
+//    //OBTENER ID_CONTENDIENTE
+//    public int select_idContendiente(String contendiente) throws SQLException {
+//	int idContendiente = 0;
+//	sql = "SELECT id_contendiente FROM contendiente WHERE nombre = ?";
+//	sentencia = conn.crearPrepareStatement(sql);
+//	sentencia.setString(1, contendiente);
+//	rs = sentencia.executeQuery();
+//	while (rs.next()) {
+//	    idContendiente = rs.getInt("id_contendiente");
+//	}
+//	return idContendiente;
+//    }
+
+    
+    
+    
+    
+    //INSERT PAIS
+    public void insert_country(UnionBandos unionBandos,String nContendiente, String nPais) throws SQLException {
+   
+        //Crear metodos para recuperar LOS objetos por el nombre y setearselos al UNION BANDOS
+        
+        
+        
+            Session session = HibernateUtil_SessionFactory.getCurrentSession();
+            Query query=session.createQuery("SELECT p From Pais p WHERE p.nombre = :nombre");
+            query.setParameter("nombre", nPais);
+            
+            Pais pais= (Pais) query.uniqueResult();
+            
+            query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");
+            query.setParameter("nombre", nContendiente);
+            
+            Contendiente contendiente = (Contendiente) query.uniqueResult();
+            
+            //Recuperando Guerra
+            unionBandos.setPais(pais);
+            unionBandos.setContendiente(contendiente);
+            
+            session.beginTransaction();
+            session.save(unionBandos);
+            session.getTransaction().commit();
+            session.close();
+    }
+    
+    
+    
+    
+    
     
         
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+        
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 //######################################################################################################################//     
 //################### - PARTE INFERIOR - FALTA POR PREPARAR - ##########################################################//     
 //######################################################################################################################//   
@@ -281,33 +348,17 @@ public class Contender_Businness {
   
     
     
-    //PAISES ALIADOS A LOS CONTENDIENTES
-    //OBTENER ID_PAIS
-    public int select_idPais(String pais) throws SQLException {
-	int idPais = 0;
-	sql = "SELECT id_pais FROM pais WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, pais);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    idPais = rs.getInt("id_pais");
-	}
-	return idPais;
-    }
-
-    //OBTENER ID_CONTENDIENTE
-    public int select_idContendiente(String contendiente) throws SQLException {
-	int idContendiente = 0;
-	sql = "SELECT id_contendiente FROM contendiente WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, contendiente);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    idContendiente = rs.getInt("id_contendiente");
-	}
-	return idContendiente;
-    }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //Obtener fechas
     public String select_BeginDate(String nombreContendiente, String nombrePais) throws SQLException {
 	String beginDate = "";
@@ -344,17 +395,6 @@ public class Contender_Businness {
     }
 
 
-    //INSERT PAIS
-    public void insert_country(AllyDTO allyDTO) throws SQLException {
-	sql = "INSERT INTO union_bandos (id_contendiente, id_pais, fecha_union, fecha_abandono) VALUES (?,?,?,?)";
-
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setInt(1, allyDTO.getId_contendiente());
-	sentencia.setInt(2, allyDTO.getId_pais());
-	sentencia.setString(3, allyDTO.getFecha_union());
-	sentencia.setString(4, allyDTO.getFecha_abandono());
-	conn.actualizarBaseDatos(sentencia);
-    }
 
     //ELIMINAR PAIS
     public void delete_country(AllyDTO allyDTO) throws SQLException {

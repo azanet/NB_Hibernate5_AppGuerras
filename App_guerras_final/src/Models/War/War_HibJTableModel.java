@@ -26,9 +26,6 @@ public class War_HibJTableModel extends AbstractTableModel{
         super();
      
         this.business= business;
-        
-        
-
     }
 
     @Override
