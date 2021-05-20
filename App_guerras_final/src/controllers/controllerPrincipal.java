@@ -20,10 +20,10 @@ public class controllerPrincipal implements ActionListener{
     
     
     viewPrincipal viewPpal;
-    controllerCountry ctrlCountry;
-    controllerWar ctrlWar;
-    controllerContender ctrlContender;
-    controllerConsult ctrlConsult;
+    controllerPais ctrlCountry;
+    controllerGuerra ctrlWar;
+    controllerContendientes ctrlContender;
+    controllerConsultas ctrlConsult;
     
     public controllerPrincipal() {
         this.viewPpal =  new viewPrincipal();
@@ -51,24 +51,24 @@ public class controllerPrincipal implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         
         if (ae.getSource()==viewPpal.getBtnWars()){
-            ctrlWar= new controllerWar(viewPpal);  
+            ctrlWar= new controllerGuerra(viewPpal);  
             
         }else if(ae.getSource()==viewPpal.getBtnContender()){
 	    try {  
-		ctrlContender= new controllerContender(viewPpal);
+		ctrlContender= new controllerContendientes(viewPpal);
 	    } catch (ClassNotFoundException | SQLException ex) {
 		Logger.getLogger(controllerPrincipal.class.getName()).log(Level.SEVERE, null, ex);
 	    }
             
         }else if(ae.getSource()==viewPpal.getBtnCountry()){
 	    try {  
-		ctrlCountry= new controllerCountry(viewPpal);
+		ctrlCountry= new controllerPais(viewPpal);
 	    } catch (ClassNotFoundException | SQLException ex) {
 		Logger.getLogger(controllerPrincipal.class.getName()).log(Level.SEVERE, null, ex);
 	    }
             
         }else if(ae.getSource()==viewPpal.getBtnConsult()){
-            ctrlConsult= new controllerConsult(viewPpal);
+            ctrlConsult= new controllerConsultas(viewPpal);
         
         }else if(ae.getSource()==viewPpal.getBtnExit()){
             System.exit(0);

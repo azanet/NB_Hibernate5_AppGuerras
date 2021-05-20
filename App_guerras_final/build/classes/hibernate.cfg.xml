@@ -50,11 +50,9 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.connection.autocommit">true</property>
-    
     <property name="c3p0.timeout">300</property>
     <property name="c3p0.max_statements">50</property>
     <property name="c3p0.idle_test_period">3000</property>
-      
     <mapping resource="Models/POJOs/UnionBandos.hbm.xml"/>
     <mapping resource="Models/POJOs/Guerra.hbm.xml"/>
     <mapping resource="Models/POJOs/Contendiente.hbm.xml"/>

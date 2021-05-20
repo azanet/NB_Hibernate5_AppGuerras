@@ -5,10 +5,8 @@
  */
 package Main;
 
-import DAOS_A_MANO.Ejemplos_Chatarreo_DAO;
-import Models.HibernateUtil_SessionFactory;
+import Models.DAOs.HibernateUtil_SessionFactory;
 import controllers.controllerPrincipal;
-import org.hibernate.Hibernate;
 
 /**
  *
@@ -22,19 +20,14 @@ public class App_guerras_final {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        controllerPrincipal ctrlWar= new controllerPrincipal();  
-         
-         
-         
-    //////////////////////////////////////////////////  
-    //CREANDO LA FACTORIA DE SESIONES
+         //////////////////////////////////////////////////  
+        //CREANDO LA FACTORIA DE SESIONES
         HibernateUtil_SessionFactory.buildSessionFactory();
        
-//        Ejemplos_Chatarreo_DAO gd = new Ejemplos_Chatarreo_DAO();
-//        
-//        gd.listar();
+       
+        controllerPrincipal ctrlWar= new controllerPrincipal();  
+   
 
-    
     }
     
 }
