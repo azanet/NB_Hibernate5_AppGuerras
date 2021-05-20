@@ -8,6 +8,7 @@ package controllers;
 import CONVERT_a_POJOS.AllyDTO;
 import Models.Contender.Contender_Businness;
 import CONVERT_a_POJOS.ContenderDTO;
+import Models.POJOs.Contendiente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -32,10 +33,16 @@ import views.viewPrincipal;
  */
 class controllerContender implements ActionListener {
 
-    private viewContenders2 viewContender;
-    private Contender_Businness businness;
+   
+    
     private ContenderDTO contenderDTO;
     private AllyDTO allyDTO;
+    
+    /////////////////////////////////////
+    private viewContenders2 viewContender;
+    private Contender_Businness businness;
+    private Contendiente contendiente;
+    
     //AGREGAR MODELs *** 
 
     //Constructor
@@ -278,18 +285,21 @@ class controllerContender implements ActionListener {
 	if (e.getSource() == viewContender.getBtnInsertNewContender()) {
 	    try {
 		int ganador = 0;
-		String guerra = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
-		contenderDTO = new ContenderDTO();
-		contenderDTO.setId_guerra(businness.select_idguerra(guerra));
-		contenderDTO.setNombre(viewContender.getTxtfInsertNewContender().getText());
-		if (viewContender.getCb_GanadorInsert().isSelected()) {
+                
+                if (viewContender.getCb_GanadorInsert().isSelected()) {
 		    ganador = 1;
 		} else {
 		    ganador = 0;
 		}
 
-		contenderDTO.setGanador(ganador);
-		businness.insert(contenderDTO);
+                String nombreGuerra = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
+                
+                contendiente = new Contendiente();
+                contendiente.setNombre(viewContender.getTxtfInsertNewContender().getText());
+                contendiente.setGanador(ganador);
+                
+                businness.insert(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
+                
 		cleanContenderForm();
 		refreshContenderComboBox();
 

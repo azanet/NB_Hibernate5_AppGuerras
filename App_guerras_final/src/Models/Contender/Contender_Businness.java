@@ -175,53 +175,43 @@ public class Contender_Businness {
         DefaultComboBoxModel comboBoxModelCountries = new DefaultComboBoxModel();
         comboBoxModelCountries.addElement("Seleccione un País...");
         
-        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
-        Query query=session.createQuery("Select p.nombre from Pais p order by p.nombre");        
-      
-        comboBoxModelCountries.addAll(query.list());
-        
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+            Query query=session.createQuery("Select p.nombre from Pais p order by p.nombre");
+            
+            comboBoxModelCountries.addAll(query.list());
         session.close();
         
         return comboBoxModelCountries;     
     }
 
     
-    
-    
-       ////////////////////////////////////////////////////////////////////////////////////////////////////////////   
-    
-    
-    //MÉTODOS CRUD
-    //INSERT CONTENDIENTE
-    public int select_idguerra(String war) throws SQLException {
-	int idwar = 0;
-	sql = "SELECT id_guerra FROM guerra WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, war);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    idwar = rs.getInt("id_guerra");
-	}
-	return idwar;
-    }
 
-    public void insert(ContenderDTO contender) throws SQLException {
-//	int idwar = select_idguerra(war);
-	sql = "INSERT INTO contendiente (ganador,nombre,id_guerra) VALUES (?,?,?)";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setInt(1, contender.getGanador());
-	sentencia.setString(2, contender.getNombre());
-	sentencia.setInt(3, contender.getId_guerra());
-	conn.actualizarBaseDatos(sentencia);
-    }
+    public void insert(Contendiente contender, String nombreGuerra) throws SQLException {
 
-    //DELETE CONTENDIENTE
-    public void delete(ContenderDTO contenderDTO) throws SQLException {
-	sql = "DELETE FROM contendiente WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, contenderDTO.getNombre());
-	conn.actualizarBaseDatos(sentencia);
+       Session session = HibernateUtil_SessionFactory.getCurrentSession();
+           
+           Query query=session.createQuery("SELECT g From Guerra g WHERE g.nombre = :nombre");        
+           query.setParameter("nombre", nombreGuerra);
+        
+           //Recuperando Guerra
+           Guerra guerra= (Guerra) query.uniqueResult();
+           contender.setGuerra(guerra);
+                 
+           session.beginTransaction();
+           session.save(contender);
+           session.getTransaction().commit();
+           session.close();
+            
+ 
     }
+ 
+    
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+//######################################################################################################################//     
+//################### - PARTE INFERIOR - FALTA POR PREPARAR - ##########################################################//     
+//######################################################################################################################//   
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 
     //UPDATE CONTENDIENTE      
     public void update(ContenderDTO contender, String oldName) throws SQLException {
@@ -234,6 +224,18 @@ public class Contender_Businness {
 
 	conn.actualizarBaseDatos(sentencia);
     }
+
+    
+
+
+    //DELETE CONTENDIENTE
+    public void delete(ContenderDTO contenderDTO) throws SQLException {
+	sql = "DELETE FROM contendiente WHERE nombre = ?";
+	sentencia = conn.crearPrepareStatement(sql);
+	sentencia.setString(1, contenderDTO.getNombre());
+	conn.actualizarBaseDatos(sentencia);
+    }
+
 
     //PAISES ALIADOS A LOS CONTENDIENTES
     //OBTENER ID_PAIS
