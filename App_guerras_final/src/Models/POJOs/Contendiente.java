@@ -39,7 +39,7 @@ public class Contendiente  implements java.io.Serializable {
      @Column(name="ganador", nullable=false)
      private int ganador;
      
-     @Column(name="nombre", nullable=false, length=50)
+     @Column(name="nombre", unique=true, nullable=false, length=50)
      private String nombre;
      
      @OneToMany(fetch=FetchType.LAZY, mappedBy="contendiente")

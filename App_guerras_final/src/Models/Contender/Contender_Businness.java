@@ -2,12 +2,12 @@ package Models.Contender;
 
 import Data.Connect;
 import CONVERT_a_POJOS.AllyDTO;
-import CONVERT_a_POJOS.ContenderDTO;
 import Models.HibernateUtil_SessionFactory;
 import Models.POJOs.Contendiente;
 import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
 import Models.POJOs.UnionBandos;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,7 +88,7 @@ public class Contender_Businness {
     
     
     //DEFAULTCOMBOBOXMODELS
-    public DefaultComboBoxModel fillComboBoxModelWar() throws SQLException {
+    public DefaultComboBoxModel fillComboBoxModelWar() {
 	
         DefaultComboBoxModel comboBoxModelWar = new DefaultComboBoxModel();      
         comboBoxModelWar.addElement("Seleccione una guerra...");
@@ -105,7 +105,7 @@ public class Contender_Businness {
     }
 
 
-    public DefaultComboBoxModel fillComboBoxContender(String nombre) throws SQLException {
+    public DefaultComboBoxModel fillComboBoxContender(String nombre)  {
 
         DefaultComboBoxModel comboBoxModelContender = new DefaultComboBoxModel();      
         comboBoxModelContender.addElement("Seleccione un Contendiente...");
@@ -135,7 +135,7 @@ public class Contender_Businness {
     
      
     
-    public DefaultComboBoxModel fillComboBoxCountry(String nombre) throws SQLException {
+    public DefaultComboBoxModel fillComboBoxCountry(String nombre) {
     
         
         DefaultComboBoxModel comboBoxModelCountry = new DefaultComboBoxModel();
@@ -170,7 +170,7 @@ public class Contender_Businness {
 
     
     
-    public DefaultComboBoxModel fillAllCountriesCombobox() throws SQLException {
+    public DefaultComboBoxModel fillAllCountriesCombobox() {
 
         DefaultComboBoxModel comboBoxModelCountries = new DefaultComboBoxModel();
         comboBoxModelCountries.addElement("Seleccione un País...");
@@ -186,57 +186,101 @@ public class Contender_Businness {
 
     
 
-    public void insert(Contendiente contender, String nombreGuerra) throws SQLException {
+    public void insert(Contendiente contender, String nombreGuerra)  {
 
-       Session session = HibernateUtil_SessionFactory.getCurrentSession();
-           
-           Query query=session.createQuery("SELECT g From Guerra g WHERE g.nombre = :nombre");        
-           query.setParameter("nombre", nombreGuerra);
-        
-           //Recuperando Guerra
-           Guerra guerra= (Guerra) query.uniqueResult();
-           contender.setGuerra(guerra);
-                 
-           session.beginTransaction();
-           session.save(contender);
-           session.getTransaction().commit();
-           session.close();
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+            Query query=session.createQuery("SELECT g From Guerra g WHERE g.nombre = :nombre");
+            query.setParameter("nombre", nombreGuerra);
             
- 
+            //Recuperando Guerra
+            Guerra guerra= (Guerra) query.uniqueResult();
+            contender.setGuerra(guerra);
+            
+            session.beginTransaction();
+            session.save(contender);
+            session.getTransaction().commit();
+            session.close();
+
     }
  
     
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+    //UPDATE CONTENDIENTE      
+    public void update(Contendiente contendiente, String oldName)  {
+
+       Session session = HibernateUtil_SessionFactory.getCurrentSession();
+           
+           Query query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");        
+           query.setParameter("nombre", oldName);
+                    
+           //Recuperando Guerra
+           Contendiente contendiente_hib= (Contendiente) query.uniqueResult();
+           
+          
+           contendiente_hib.setGanador(contendiente.getGanador());
+           contendiente_hib.setNombre(contendiente.getNombre());
+                 
+           session.beginTransaction();
+           session.save(contendiente_hib);
+           session.getTransaction().commit();
+           session.close();
+ 
+    }
+
+    
+    
+        //Obtener ganador
+    public int select_Winner(String nombreContendiente) throws SQLException {
+	
+        int winner = 0;
+           Session session = HibernateUtil_SessionFactory.getCurrentSession();
+           
+           Query query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");        
+           query.setParameter("nombre", nombreContendiente);
+                    
+           //Recuperando Guerra
+           Contendiente contendiente_hib= (Contendiente) query.uniqueResult();
+           winner = contendiente_hib.getGanador();
+           session.close();
+        
+	return winner;
+    }
+
+    
+
+
+
+
+    //DELETE CONTENDIENTE
+    public void delete(Contendiente contendiente) throws SQLException {
+
+        String nombreContendiente= contendiente.getNombre();
+         Session session = HibernateUtil_SessionFactory.getCurrentSession();
+           
+           Query query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");        
+           query.setParameter("nombre", nombreContendiente);
+                    
+           //Recuperando Guerra
+           Contendiente contendiente_hib= (Contendiente) query.uniqueResult();
+           session.beginTransaction();
+           session.delete(contendiente_hib);
+           session.getTransaction().commit();
+           session.close();
+        
+    }
+
+
+    
+        
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 //######################################################################################################################//     
 //################### - PARTE INFERIOR - FALTA POR PREPARAR - ##########################################################//     
 //######################################################################################################################//   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-
-    //UPDATE CONTENDIENTE      
-    public void update(ContenderDTO contender, String oldName) throws SQLException {
-	sql = "UPDATE contendiente SET nombre = ?, ganador = ? WHERE nombre = ?";
-
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, contender.getNombre());
-	sentencia.setInt(2, contender.getGanador());
-	sentencia.setString(3, oldName);
-
-	conn.actualizarBaseDatos(sentencia);
-    }
-
+  
     
-
-
-    //DELETE CONTENDIENTE
-    public void delete(ContenderDTO contenderDTO) throws SQLException {
-	sql = "DELETE FROM contendiente WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, contenderDTO.getNombre());
-	conn.actualizarBaseDatos(sentencia);
-    }
-
-
+    
     //PAISES ALIADOS A LOS CONTENDIENTES
     //OBTENER ID_PAIS
     public int select_idPais(String pais) throws SQLException {
@@ -299,18 +343,6 @@ public class Contender_Businness {
 
     }
 
-    //Obtener ganador
-    public int select_Winner(String contendiente) throws SQLException {
-	int winner = 0;
-	sql = "SELECT ganador FROM contendiente WHERE nombre = ?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, contendiente);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    winner = rs.getInt("ganador");
-	}
-	return winner;
-    }
 
     //INSERT PAIS
     public void insert_country(AllyDTO allyDTO) throws SQLException {

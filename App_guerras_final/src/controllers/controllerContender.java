@@ -35,13 +35,13 @@ class controllerContender implements ActionListener {
 
    
     
-    private ContenderDTO contenderDTO;
+  //  private ContenderDTO contenderDTO;
     private AllyDTO allyDTO;
     
     /////////////////////////////////////
     private viewContenders2 viewContender;
     private Contender_Businness businness;
-    private Contendiente contendiente;
+ //   private Contendiente contendiente;
     
     //AGREGAR MODELs *** 
 
@@ -119,24 +119,18 @@ class controllerContender implements ActionListener {
 
 	viewContender.getBtnExit().addActionListener(this);
 
-	try {
-	    //COMBOBOX DE GUERRAS
-	    viewContender.getComboBoxSelectWar().setModel(businness.fillComboBoxModelWar());
-	} catch (SQLException ex) {
-	    System.out.println("fallo al cargar combo guerras");
-	}
-
+	 //COMBOBOX DE GUERRAS
+	viewContender.getComboBoxSelectWar().setModel(businness.fillComboBoxModelWar());
+        
 	viewContender.getComboBoxSelectWar().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == e.SELECTED) {
 		    viewContender.getComboBoxSelectContender().setEnabled(true);
-		    try {
+		  
 			String nombre = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
 			viewContender.getComboBoxSelectContender().setModel(businness.fillComboBoxContender(nombre));
-		    } catch (SQLException ex) {
-			System.out.println("fallo al cargar combo contendientes");
-		    }
+		
 		    contenderInsertSetActive();
 		    countriesUpdateDeactivate();
 		    cleanContenderForm();
@@ -158,6 +152,8 @@ class controllerContender implements ActionListener {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == e.SELECTED) {
+                    
+                    
 		    viewContender.getLblInsertNewCountry().setEnabled(true);
 		    viewContender.getComboBoxSelectCountryADDED().setEnabled(true);
 		    viewContender.getComboBoxSelectCountryToContender().setEnabled(true);
@@ -176,13 +172,9 @@ class controllerContender implements ActionListener {
 		    } else {
 			viewContender.getCb_Ganador().setSelected(false);
 		    }
-		    try {
 			viewContender.getComboBoxSelectCountryADDED().setModel(businness.fillComboBoxCountry(nombre));
 			viewContender.getComboBoxSelectCountryToContender().setModel(businness.fillAllCountriesCombobox());
 
-		    } catch (SQLException ex) {
-			ex.printStackTrace(System.out);
-		    }
 
 		    contenderUpdateSetActive();
 		    contenderInsertDeactivate();
@@ -283,8 +275,8 @@ class controllerContender implements ActionListener {
 
 	//Insertar nuevo contendiente
 	if (e.getSource() == viewContender.getBtnInsertNewContender()) {
-	    try {
-		int ganador = 0;
+	  
+		int ganador;
                 
                 if (viewContender.getCb_GanadorInsert().isSelected()) {
 		    ganador = 1;
@@ -294,10 +286,10 @@ class controllerContender implements ActionListener {
 
                 String nombreGuerra = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
                 
-                contendiente = new Contendiente();
+                Contendiente contendiente = new Contendiente();
                 contendiente.setNombre(viewContender.getTxtfInsertNewContender().getText());
                 contendiente.setGanador(ganador);
-                
+               try {   
                 businness.insert(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
                 
 		cleanContenderForm();
@@ -311,10 +303,10 @@ class controllerContender implements ActionListener {
 	//Eliminar contendiente seleccionado
 	if (e.getSource() == viewContender.getBtnDeleteSelectedContender()) {
 	    String contenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-	    contenderDTO = new ContenderDTO();
-	    contenderDTO.setNombre(contenderName);
+	    Contendiente contendiente = new Contendiente();
+	    contendiente.setNombre(contenderName);
 	    try {
-		businness.delete(contenderDTO);
+		businness.delete(contendiente);
 		refreshContenderComboBox();
 		cleanUpdateContenderForm();
 	    } catch (SQLException ex) {
@@ -325,24 +317,28 @@ class controllerContender implements ActionListener {
 
 	//Actualizar contendiente seleccionado
 	if (e.getSource() == viewContender.getBtnUpdateSelectedContender()) {
-	    int ganador;
-	    contenderDTO = new ContenderDTO();
-	    String newContenderName = viewContender.getTxtfUpdateSelectedContender().getText();
-	    String oldContenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-	    contenderDTO.setNombre(newContenderName);
-	    if (viewContender.getCb_Ganador().isSelected()) {
-		ganador = 1;
-	    } else {
-		ganador = 0;
-	    }
-	    contenderDTO.setGanador(ganador);
-	    try {
-		businness.update(contenderDTO, oldContenderName);
-		refreshContenderComboBox();
-		cleanUpdateContenderForm();
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al actualizar contendiente");
-	    }
+            try {
+                int ganador;
+                Contendiente contendiente = new Contendiente();
+                String newContenderName = viewContender.getTxtfUpdateSelectedContender().getText();
+                String oldContenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
+                contendiente.setNombre(newContenderName);
+                
+                if (viewContender.getCb_Ganador().isSelected()) {
+                    ganador = 1;
+                } else {
+                    ganador = 0;
+                }
+                contendiente.setGanador(ganador);
+                
+                
+                businness.update(contendiente, oldContenderName);
+                refreshContenderComboBox();
+                cleanUpdateContenderForm();
+            } catch (SQLException ex) {
+                Logger.getLogger(controllerContender.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
 	}
 
 	//Insertar países a contendientes
