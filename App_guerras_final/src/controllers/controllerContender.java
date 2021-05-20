@@ -32,10 +32,10 @@ import views.viewPrincipal;
  */
 class controllerContender implements ActionListener {
 
-    viewContenders2 viewContender;
-    Contender_Businness businness;
-    ContenderDTO contenderDTO;
-    AllyDTO allyDTO;
+    private viewContenders2 viewContender;
+    private Contender_Businness businness;
+    private ContenderDTO contenderDTO;
+    private AllyDTO allyDTO;
     //AGREGAR MODELs *** 
 
     //Constructor

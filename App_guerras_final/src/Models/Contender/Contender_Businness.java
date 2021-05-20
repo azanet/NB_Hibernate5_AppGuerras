@@ -3,11 +3,20 @@ package Models.Contender;
 import Data.Connect;
 import CONVERT_a_POJOS.AllyDTO;
 import CONVERT_a_POJOS.ContenderDTO;
+import Models.HibernateUtil_SessionFactory;
+import Models.POJOs.Contendiente;
+import Models.POJOs.Guerra;
+import Models.POJOs.Pais;
+import Models.POJOs.UnionBandos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -35,6 +44,9 @@ public class Contender_Businness {
 
 	}
     }
+    
+    
+    
 //
 //    public AllyDTO getAllyDTO() {
 //	try {
@@ -49,11 +61,7 @@ public class Contender_Businness {
 //
 //    }
 
-    
-    
-    
-    
-    
+
     //buscart objeto
 //    public void queries() throws SQLException {
 //	conn.crearConsulta("select * from union_bandos");
@@ -61,45 +69,128 @@ public class Contender_Businness {
 //    }
 
     
+        
+//    //Método que devuelve un arraylist con todos los objetos de las tablas
+//    public ArrayList<Object> fillAllCombobox() throws SQLException {
+//	ArrayList<Object> list = new ArrayList<>();
+//	sql = "select * from guerra g, contendiente c, union_bandos u, pais p where g.id_guerra= c.id_guerra and c.id_contendiente= u.id_contendiente and u.id_pais= p.id_pais";
+//	sentencia = conn.crearPrepareStatement(sql);
+//	rs = sentencia.executeQuery();
+//
+//	while (rs.next()) {
+////	    list.add(rs.getObject("nombre"));
+//
+//	}
+//
+//	return list;
+//    }
+    
     
     
     //DEFAULTCOMBOBOXMODELS
-    public DefaultComboBoxModel fillComboBoxModel(String quote, String sql, String nombre) throws SQLException {
-	DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
-	comboBoxModel.addElement(quote);
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setString(1, nombre);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    comboBoxModel.addElement(rs.getString("nombre"));
-	}
-	return comboBoxModel;
+    public DefaultComboBoxModel fillComboBoxModelWar() throws SQLException {
+	
+        DefaultComboBoxModel comboBoxModelWar = new DefaultComboBoxModel();      
+        comboBoxModelWar.addElement("Seleccione una guerra...");
+        
+        //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
+        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
+        Query query=session.createQuery("Select g.nombre from Guerra g order by g.nombre");        
+      
+        
+        comboBoxModelWar.addAll(query.list());
+        
+        session.close();
+        return comboBoxModelWar;	
     }
 
-    public DefaultComboBoxModel fillComboBoxModelWar() throws SQLException {
-	DefaultComboBoxModel comboBoxModelWar = new DefaultComboBoxModel();
-	comboBoxModelWar = fillComboBoxModel("Seleccione una guerra...", "Select nombre from guerra order by ?", "nombre");
-	return comboBoxModelWar;
-    }
 
     public DefaultComboBoxModel fillComboBoxContender(String nombre) throws SQLException {
-	DefaultComboBoxModel comboBoxModelContender = new DefaultComboBoxModel();
-	comboBoxModelContender = fillComboBoxModel("Seleccione un contendiente...", "select * from contendiente c, guerra g where c.id_guerra=g.id_guerra and g.nombre=?", nombre);
-	return comboBoxModelContender;
+
+        DefaultComboBoxModel comboBoxModelContender = new DefaultComboBoxModel();      
+        comboBoxModelContender.addElement("Seleccione un Contendiente...");
+        
+        //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
+        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
+        Query query=session.createQuery("SELECT g From Guerra g WHERE g.nombre = :nombre");        
+        query.setParameter("nombre", nombre);
+        
+        //Recuperando Guerra
+        Guerra guerra= (Guerra) query.uniqueResult();
+        
+        if(guerra != null){
+        //Obteniendo Los contendientes y agregandolos al comboBox
+        List<Contendiente> contendientes = new ArrayList<>(guerra.getContendientes());
+        
+        for (Contendiente contendiente : contendientes) {
+            System.out.println(contendiente.getNombre());
+            comboBoxModelContender.addElement(contendiente.getNombre());
+        }
+        }
+        session.close();
+        return comboBoxModelContender;
     }
 
+    
+    
+     
+    
     public DefaultComboBoxModel fillComboBoxCountry(String nombre) throws SQLException {
-	DefaultComboBoxModel comboBoxModelCountry = new DefaultComboBoxModel();
-	comboBoxModelCountry = fillComboBoxModel("Seleccione un país contendiente...", "select p.nombre from pais p INNER JOIN union_bandos u on p.id_pais= u.id_pais INNER join contendiente c on u.id_contendiente=c.id_contendiente where c.nombre=?", nombre);
-	return comboBoxModelCountry;
+    
+        
+        DefaultComboBoxModel comboBoxModelCountry = new DefaultComboBoxModel();
+	
+               
+        comboBoxModelCountry.addElement("Seleccione un PAÍS Contendiente...");
+        
+        //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
+        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
+        Query query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");        
+        query.setParameter("nombre", nombre);
+        
+        //Recuperando Guerra
+        Contendiente contendiente= (Contendiente) query.uniqueResult();
+        
+        //Obteniendo los Paises contendientes y agregandolos al comboBox
+        if (contendiente != null){
+        List<UnionBandos> unionBandos = new ArrayList<>(contendiente.getUnionBandoses());
+        
+        
+        for (UnionBandos unionBando : unionBandos) {
+            Pais pais= unionBando.getPais();
+            comboBoxModelCountry.addElement(pais.getNombre());
+        }
+        }
+        
+        session.close();
+        
+        
+        return comboBoxModelCountry;    
     }
 
+    
+    
     public DefaultComboBoxModel fillAllCountriesCombobox() throws SQLException {
-	DefaultComboBoxModel comboBoxModelCountries = new DefaultComboBoxModel();
-	comboBoxModelCountries = fillComboBoxModel("Seleccione un país...", "select nombre from pais order by ?", "nombre");
-	return comboBoxModelCountries;
+
+        DefaultComboBoxModel comboBoxModelCountries = new DefaultComboBoxModel();
+        comboBoxModelCountries.addElement("Seleccione un País...");
+        
+        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
+        Query query=session.createQuery("Select p.nombre from Pais p order by p.nombre");        
+      
+        comboBoxModelCountries.addAll(query.list());
+        
+        session.close();
+        
+        return comboBoxModelCountries;     
     }
 
+    
+    
+    
+       ////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+    
+    
     //MÉTODOS CRUD
     //INSERT CONTENDIENTE
     public int select_idguerra(String war) throws SQLException {
@@ -255,19 +346,5 @@ public class Contender_Businness {
     }
 
     
-    
-//    //Método que devuelve un arraylist con todos los objetos de las tablas
-//    public ArrayList<Object> fillAllCombobox() throws SQLException {
-//	ArrayList<Object> list = new ArrayList<>();
-//	sql = "select * from guerra g, contendiente c, union_bandos u, pais p where g.id_guerra= c.id_guerra and c.id_contendiente= u.id_contendiente and u.id_pais= p.id_pais";
-//	sentencia = conn.crearPrepareStatement(sql);
-//	rs = sentencia.executeQuery();
-//
-//	while (rs.next()) {
-////	    list.add(rs.getObject("nombre"));
-//
-//	}
-//
-//	return list;
-//    }
+
 }
