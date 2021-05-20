@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16 may. 2021 19:18:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="guerras" name="Models.POJOs.UnionBandos" optimistic-lock="version" table="union_bandos">
+    <id name="idUnionBandos" type="java.lang.Integer">
+      <column name="id_union_bandos"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="Models.POJOs.Contendiente" fetch="select" name="contendiente">
+      <column name="id_contendiente" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="Models.POJOs.Pais" fetch="select" name="pais">
+      <column name="id_pais" not-null="true"/>
+    </many-to-one>
+    <property name="fechaUnion" type="string">
+      <column length="10" name="fecha_union"/>
+    </property>
+    <property name="fechaAbandono" type="string">
+      <column length="10" name="fecha_abandono"/>
+    </property>
+  </class>
+</hibernate-mapping>

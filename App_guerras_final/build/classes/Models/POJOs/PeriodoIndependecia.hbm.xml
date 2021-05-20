@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16 may. 2021 19:18:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="guerras" name="Models.POJOs.PeriodoIndependecia" optimistic-lock="version" table="periodo_independecia">
+    <id name="idPeriodo" type="java.lang.Integer">
+      <column name="id_periodo"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="Models.POJOs.Pais" fetch="select" name="pais">
+      <column name="id_pais" not-null="true" unique="true"/>
+    </many-to-one>
+    <property name="anioInicio" type="int">
+      <column name="anio_inicio" not-null="true"/>
+    </property>
+    <property name="anioFin" type="java.lang.Integer">
+      <column name="anio_fin"/>
+    </property>
+  </class>
+</hibernate-mapping>
