@@ -339,7 +339,59 @@ public class Contender_Businness {
     
         
         
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+  
+    //Obtener fechas
+    public String select_BeginDate(String nombreContendiente, String nombrePais) throws SQLException {
+       
+	String beginDate = "";
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+            //REALIZANDO CONSULTA con 2 SUBCONSULTAS en las que le pasamos OBJETOS para COMPARAR y obtener de una los objetos necesatios, para determinar que tabla UNION es la nuestra
+           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
+            query.setParameter("contendiente", nombreContendiente);
+            query.setParameter("pais", nombrePais);
+
+            UnionBandos unionB = (UnionBandos)query.uniqueResult();
+//            
+//            System.out.println(unionB.getIdUnionBandos());
+//            System.out.println(unionB.getFechaAbandono());
+//            System.out.println(unionB.getFechaUnion());
+//            
+            beginDate = unionB.getFechaUnion();
+
+            session.close();
+     
+        return beginDate;   
+    }
+
+    
+    
+    
+    
+    public String select_EndDate(String nombreContendiente, String nombrePais) throws SQLException {
+	String endDate = "";
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
+            query.setParameter("contendiente", nombreContendiente);
+            query.setParameter("pais", nombrePais);
+
+            UnionBandos unionB = (UnionBandos)query.uniqueResult();
+//            
+//            System.out.println(unionB.getIdUnionBandos());
+//            System.out.println(unionB.getFechaAbandono());
+//            System.out.println(unionB.getFechaUnion());
+//            
+            endDate = unionB.getFechaAbandono();
+
+            session.close();
+	return endDate;
+
+    }
+
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 //######################################################################################################################//     
 //################### - PARTE INFERIOR - FALTA POR PREPARAR - ##########################################################//     
 //######################################################################################################################//   
@@ -351,49 +403,6 @@ public class Contender_Businness {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    //Obtener fechas
-    public String select_BeginDate(String nombreContendiente, String nombrePais) throws SQLException {
-	String beginDate = "";
-	int idContendiente = select_idContendiente(nombreContendiente);
-	int idpais = select_idPais(nombrePais);
-	sql = "SELECT fecha_union from union_bandos where id_contendiente=? and id_pais=?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setInt(1, idContendiente);
-	sentencia.setInt(2, idpais);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    beginDate = rs.getString("fecha_union");
-	}
-
-	return beginDate;
-
-    }
-
-    public String select_EndDate(String nombreContendiente, String nombrePais) throws SQLException {
-	String endDate = "";
-	int idContendiente = select_idContendiente(nombreContendiente);
-	int idpais = select_idPais(nombrePais);
-	sql = "SELECT fecha_abandono from union_bandos where id_contendiente=? and id_pais=?";
-	sentencia = conn.crearPrepareStatement(sql);
-	sentencia.setInt(1, idContendiente);
-	sentencia.setInt(2, idpais);
-	rs = sentencia.executeQuery();
-	while (rs.next()) {
-	    endDate = rs.getString("fecha_abandono");
-	}
-
-	return endDate;
-
-    }
-
 
 
     //ELIMINAR PAIS
