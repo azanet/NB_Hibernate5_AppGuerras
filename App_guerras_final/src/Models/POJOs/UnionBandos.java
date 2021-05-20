@@ -26,11 +26,23 @@ import javax.persistence.UniqueConstraint;
 )
 public class UnionBandos  implements java.io.Serializable {
 
-
+     @Id
+     @GeneratedValue(strategy=IDENTITY)
+     @Column(name="id_union_bandos", unique=true, nullable=false)
      private Integer idUnionBandos;
+    
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="id_contendiente", nullable=false)
      private Contendiente contendiente;
+     
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="id_pais", nullable=false)
      private Pais pais;
+    
+     @Column(name="fecha_union", length=10)
      private String fechaUnion;
+    
+     @Column(name="fecha_abandono", length=10)
      private String fechaAbandono;
 
     public UnionBandos() {
@@ -48,10 +60,7 @@ public class UnionBandos  implements java.io.Serializable {
        this.fechaAbandono = fechaAbandono;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
 
-    
-    @Column(name="id_union_bandos", unique=true, nullable=false)
     public Integer getIdUnionBandos() {
         return this.idUnionBandos;
     }
@@ -60,8 +69,6 @@ public class UnionBandos  implements java.io.Serializable {
         this.idUnionBandos = idUnionBandos;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_contendiente", nullable=false)
     public Contendiente getContendiente() {
         return this.contendiente;
     }
@@ -70,8 +77,6 @@ public class UnionBandos  implements java.io.Serializable {
         this.contendiente = contendiente;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_pais", nullable=false)
     public Pais getPais() {
         return this.pais;
     }
@@ -81,7 +86,6 @@ public class UnionBandos  implements java.io.Serializable {
     }
 
     
-    @Column(name="fecha_union", length=10)
     public String getFechaUnion() {
         return this.fechaUnion;
     }
@@ -91,7 +95,6 @@ public class UnionBandos  implements java.io.Serializable {
     }
 
     
-    @Column(name="fecha_abandono", length=10)
     public String getFechaAbandono() {
         return this.fechaAbandono;
     }

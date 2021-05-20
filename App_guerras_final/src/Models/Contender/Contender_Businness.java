@@ -22,6 +22,12 @@ public class Contender_Businness {
 //    ContenderDTO contender;
     Connection conexion;
     PreparedStatement sentencia;
+    
+    
+    
+    
+    
+    
 
     public Contender_Businness() throws ClassNotFoundException, SQLException {
 	if (conn == null) {
@@ -43,12 +49,20 @@ public class Contender_Businness {
 //
 //    }
 
+    
+    
+    
+    
+    
     //buscart objeto
-    public void queries() throws SQLException {
-	conn.crearConsulta("select * from union_bandos");
-	rs = conn.getRs();
-    }
+//    public void queries() throws SQLException {
+//	conn.crearConsulta("select * from union_bandos");
+//	rs = conn.getRs();
+//    }
 
+    
+    
+    
     //DEFAULTCOMBOBOXMODELS
     public DefaultComboBoxModel fillComboBoxModel(String quote, String sql, String nombre) throws SQLException {
 	DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
@@ -240,7 +254,8 @@ public class Contender_Businness {
 	conn.actualizarBaseDatos(sentencia);
     }
 
-
+    
+    
 //    //Método que devuelve un arraylist con todos los objetos de las tablas
 //    public ArrayList<Object> fillAllCombobox() throws SQLException {
 //	ArrayList<Object> list = new ArrayList<>();

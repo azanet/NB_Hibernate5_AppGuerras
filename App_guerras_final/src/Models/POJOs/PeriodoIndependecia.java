@@ -26,10 +26,19 @@ import javax.persistence.UniqueConstraint;
 )
 public class PeriodoIndependecia  implements java.io.Serializable {
 
-
+     @Id 
+     @GeneratedValue(strategy=IDENTITY)
+     @Column(name="id_periodo", unique=true, nullable=false)
      private Integer idPeriodo;
+    
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="id_pais", unique=true, nullable=false)
      private Pais pais;
+    
+     @Column(name="anio_inicio")
      private Integer anioInicio;
+    
+     @Column(name="anio_fin")
      private Integer anioFin;
 
     public PeriodoIndependecia() {
@@ -46,10 +55,7 @@ public class PeriodoIndependecia  implements java.io.Serializable {
        this.anioFin = anioFin;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
 
-    
-    @Column(name="id_periodo", unique=true, nullable=false)
     public Integer getIdPeriodo() {
         return this.idPeriodo;
     }
@@ -58,8 +64,6 @@ public class PeriodoIndependecia  implements java.io.Serializable {
         this.idPeriodo = idPeriodo;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_pais", unique=true, nullable=false)
     public Pais getPais() {
         return this.pais;
     }
@@ -69,7 +73,6 @@ public class PeriodoIndependecia  implements java.io.Serializable {
     }
 
     
-    @Column(name="anio_inicio")
     public Integer getAnioInicio() {
         return this.anioInicio;
     }
@@ -79,7 +82,6 @@ public class PeriodoIndependecia  implements java.io.Serializable {
     }
 
     
-    @Column(name="anio_fin")
     public Integer getAnioFin() {
         return this.anioFin;
     }

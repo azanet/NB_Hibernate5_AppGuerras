@@ -27,13 +27,25 @@ import javax.persistence.Table;
 )
 public class Contendiente  implements java.io.Serializable {
 
-
+     @Id 
+     @GeneratedValue(strategy=IDENTITY)
+     @Column(name="id_contendiente", unique=true, nullable=false)
      private Integer idContendiente;
+    
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="id_guerra", nullable=false)
      private Guerra guerra;
+     
+     @Column(name="ganador", nullable=false)
      private int ganador;
+     
+     @Column(name="nombre", nullable=false, length=50)
      private String nombre;
+     
+     @OneToMany(fetch=FetchType.LAZY, mappedBy="contendiente")
      private Set unionBandoses = new HashSet(0);
 
+     
     public Contendiente() {
     }
 
@@ -50,10 +62,7 @@ public class Contendiente  implements java.io.Serializable {
        this.unionBandoses = unionBandoses;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
 
-    
-    @Column(name="id_contendiente", unique=true, nullable=false)
     public Integer getIdContendiente() {
         return this.idContendiente;
     }
@@ -62,8 +71,6 @@ public class Contendiente  implements java.io.Serializable {
         this.idContendiente = idContendiente;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_guerra", nullable=false)
     public Guerra getGuerra() {
         return this.guerra;
     }
@@ -73,7 +80,6 @@ public class Contendiente  implements java.io.Serializable {
     }
 
     
-    @Column(name="ganador", nullable=false)
     public int getGanador() {
         return this.ganador;
     }
@@ -83,7 +89,6 @@ public class Contendiente  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", nullable=false, length=50)
     public String getNombre() {
         return this.nombre;
     }
@@ -92,7 +97,6 @@ public class Contendiente  implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="contendiente")
     public Set getUnionBandoses() {
         return this.unionBandoses;
     }

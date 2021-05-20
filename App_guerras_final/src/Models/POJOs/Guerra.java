@@ -25,11 +25,21 @@ import javax.persistence.Table;
 )
 public class Guerra  implements java.io.Serializable {
 
-
+    @Id 
+    @GeneratedValue(strategy=IDENTITY)
+    @Column(name="id_guerra", unique=true, nullable=false)
      private Integer idGuerra;
+    
+    @Column(name="anio_inicio", nullable=false, length=10)
      private String anioInicio;
+    
+    @Column(name="anio_fin", length=10)
      private String anioFin;
+    
+    @Column(name="nombre", nullable=false, length=50)
      private String nombre;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="guerra")
      private Set contendientes = new HashSet(0);
 
     public Guerra() {
@@ -57,10 +67,7 @@ public class Guerra  implements java.io.Serializable {
     }
     
    
-    @Id 
-    @GeneratedValue(strategy=IDENTITY)
-   
-    @Column(name="id_guerra", unique=true, nullable=false)
+
     public Integer getIdGuerra() {
         return this.idGuerra;
     }
@@ -70,7 +77,6 @@ public class Guerra  implements java.io.Serializable {
     }
 
     
-    @Column(name="anio_inicio", nullable=false, length=10)
     public String getAnioInicio() {
         return this.anioInicio;
     }
@@ -80,7 +86,6 @@ public class Guerra  implements java.io.Serializable {
     }
 
     
-    @Column(name="anio_fin", length=10)
     public String getAnioFin() {
         return this.anioFin;
     }
@@ -90,7 +95,6 @@ public class Guerra  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", nullable=false, length=50)
     public String getNombre() {
         return this.nombre;
     }
@@ -99,7 +103,6 @@ public class Guerra  implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="guerra")
     public Set getContendientes() {
         return this.contendientes;
     }

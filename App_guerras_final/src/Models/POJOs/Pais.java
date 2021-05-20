@@ -27,10 +27,18 @@ import javax.persistence.UniqueConstraint;
 )
 public class Pais  implements java.io.Serializable {
 
-
+     @Id 
+     @GeneratedValue(strategy=IDENTITY)
+     @Column(name="id_pais", unique=true, nullable=false)
      private Integer idPais;
+     
+     @Column(name="nombre", unique=true, nullable=false, length=50)
      private String nombre;
+     
+     @OneToMany(fetch=FetchType.LAZY, mappedBy="pais")
      private Set periodoIndependecias = new HashSet(0);
+     
+     @OneToMany(fetch=FetchType.LAZY, mappedBy="pais")
      private Set unionBandoses = new HashSet(0);
 
     public Pais() {
@@ -46,10 +54,7 @@ public class Pais  implements java.io.Serializable {
        this.unionBandoses = unionBandoses;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
 
-    
-    @Column(name="id_pais", unique=true, nullable=false)
     public Integer getIdPais() {
         return this.idPais;
     }
@@ -59,7 +64,6 @@ public class Pais  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", unique=true, nullable=false, length=50)
     public String getNombre() {
         return this.nombre;
     }
@@ -68,7 +72,6 @@ public class Pais  implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="pais")
     public Set getPeriodoIndependecias() {
         return this.periodoIndependecias;
     }
@@ -77,7 +80,6 @@ public class Pais  implements java.io.Serializable {
         this.periodoIndependecias = periodoIndependecias;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="pais")
     public Set getUnionBandoses() {
         return this.unionBandoses;
     }
