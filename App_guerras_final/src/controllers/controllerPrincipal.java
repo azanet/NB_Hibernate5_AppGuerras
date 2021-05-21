@@ -7,9 +7,6 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import views.viewPrincipal;
 
 /**
@@ -54,18 +51,14 @@ public class controllerPrincipal implements ActionListener{
             ctrlWar= new controllerGuerra(viewPpal);  
             
         }else if(ae.getSource()==viewPpal.getBtnContender()){
-	    try {  
+
 		ctrlContender= new controllerContendientes(viewPpal);
-	    } catch (ClassNotFoundException | SQLException ex) {
-		Logger.getLogger(controllerPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-	    }
+	
             
         }else if(ae.getSource()==viewPpal.getBtnCountry()){
-	    try {  
+	
 		ctrlCountry= new controllerPais(viewPpal);
-	    } catch (ClassNotFoundException | SQLException ex) {
-		Logger.getLogger(controllerPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-	    }
+	  
             
         }else if(ae.getSource()==viewPpal.getBtnConsult()){
             ctrlConsult= new controllerConsultas(viewPpal);

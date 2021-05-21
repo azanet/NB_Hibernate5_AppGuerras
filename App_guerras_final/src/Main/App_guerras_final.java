@@ -22,11 +22,13 @@ public class App_guerras_final {
         
          //////////////////////////////////////////////////  
         //CREANDO LA FACTORIA DE SESIONES
-        HibernateUtil_SessionFactory.buildSessionFactory();
-       
+
        
         controllerPrincipal ctrlWar= new controllerPrincipal();  
-   
+        
+        
+        HibernateUtil_SessionFactory.buildSessionFactory();
+      
 
     }
     

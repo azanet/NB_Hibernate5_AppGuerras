@@ -5,11 +5,6 @@ import Models.POJOs.Contendiente;
 import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
 import Models.POJOs.UnionBandos;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -18,22 +13,13 @@ import org.hibernate.query.Query;
 
 /**
  *
- * @author Sonia Castro (soniacastromartel@gmail.com)
+ * @author Davidf
  */
 public class Contender_DAO {
 
-    
-//    ContenderDTO contender;
-    Connection conexion;
-    PreparedStatement sentencia;
-    
-    
-    
-    
-    
-    
 
-    public Contender_DAO() throws ClassNotFoundException, SQLException {
+
+    public Contender_DAO() {
 
     }
     
@@ -47,8 +33,7 @@ public class Contender_DAO {
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
         Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
         Query query=session.createQuery("Select g.nombre from Guerra g order by g.nombre");        
-      
-        
+             
         comboBoxModelWar.addAll(query.list());
         
         session.close();
@@ -175,7 +160,7 @@ public class Contender_DAO {
     
     
         //Obtener ganador
-    public int select_Winner(String nombreContendiente) throws SQLException {
+    public int select_Winner(String nombreContendiente) {
 	
         Integer winner;
            Session session = HibernateUtil_SessionFactory.getCurrentSession();
@@ -202,7 +187,7 @@ public class Contender_DAO {
 
 
     //DELETE CONTENDIENTE
-    public void delete(Contendiente contendiente) throws SQLException {
+    public void delete(Contendiente contendiente) {
 
         String nombreContendiente= contendiente.getNombre();
          Session session = HibernateUtil_SessionFactory.getCurrentSession();
@@ -223,7 +208,7 @@ public class Contender_DAO {
     
     
     //INSERT PAIS
-    public void insert_country(UnionBandos unionBandos,String nContendiente, String nPais) throws SQLException {
+    public void insert_country(UnionBandos unionBandos,String nContendiente, String nPais){
    
         //Crear metodos para recuperar LOS objetos por el nombre y setearselos al UNION BANDOS
 
@@ -249,16 +234,10 @@ public class Contender_DAO {
     }
     
     
-    
-    
-    
-    
-        
-        
 
   
     //Obtener fechas
-    public String select_BeginDate(String nombreContendiente, String nombrePais) throws SQLException {
+    public String select_BeginDate(String nombreContendiente, String nombrePais) {
        
 	String beginDate = "";
 
@@ -285,7 +264,7 @@ public class Contender_DAO {
     
     
     
-    public String select_EndDate(String nombreContendiente, String nombrePais) throws SQLException {
+    public String select_EndDate(String nombreContendiente, String nombrePais){
 	String endDate = "";
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
@@ -305,15 +284,9 @@ public class Contender_DAO {
     }
 
 
-    
-    
-    
-    
-    
-
 
     //ELIMINAR PAIS
-    public void delete_country(String nombreContendiente, String nombrePais) throws SQLException {
+    public void delete_country(String nombreContendiente, String nombrePais)  {
   
               Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
@@ -335,30 +308,9 @@ public class Contender_DAO {
     }
 
     
-    
-        
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
-//######################################################################################################################//     
-//################### - PARTE INFERIOR - FALTA POR PREPARAR - ##########################################################//     
-//######################################################################################################################//   
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
   
-    
-    
     //ACTUALIZAS PAIS
-    public void update_country(UnionBandos unionBandos, String nombreContendiente, String nombrePais) throws SQLException {
-//	sql = "UPDATE union_bandos SET fecha_union = ?, fecha_abandono = ? WHERE id_contendiente = ? AND id_pais = ?";
-//
-//	sentencia = conn.crearPrepareStatement(sql);
-//	sentencia.setString(1, allyDTO.getFecha_union());
-//	sentencia.setString(2, allyDTO.getFecha_abandono());
-//	sentencia.setInt(3, allyDTO.getId_contendiente());
-//	sentencia.setInt(4, allyDTO.getId_pais());
-//
-//	conn.actualizarBaseDatos(sentencia);
-        
-     /////////////////////////////////////////////////////////////
+    public void update_country(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
      
             Session session = HibernateUtil_SessionFactory.getCurrentSession();
 

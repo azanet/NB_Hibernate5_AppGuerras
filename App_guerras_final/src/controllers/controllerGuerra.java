@@ -5,7 +5,7 @@
  */
 package controllers;
 
-//import views.viewCountries;
+
 import Models.POJOs.Guerra;
 import Models.JTableModels.JTableModel_War;
 import Models.DAOs.Guerra_DAO;
@@ -13,9 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -38,14 +35,9 @@ public final class controllerGuerra implements ActionListener {
     public controllerGuerra(viewPrincipal viewPpal) {
         viewWar = new viewWars(viewPpal, true);
 
-        try {
+    
             bussinessWar = new Guerra_DAO();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+   
         initComponents();
         initEvents();
 
@@ -67,19 +59,9 @@ public final class controllerGuerra implements ActionListener {
         viewWar.getEdit_button().addActionListener(this);
         viewWar.getExit_button().addActionListener(this);
 
-//
-//        try {
-//            //AQUI INICIAMOS LA JTABLE ETC ETC
 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        warTableView = new War_TableView(bussinessWar);
-//        viewWar.getJtableWars().setModel(warTableView);
-  
+//            //AQUI INICIAMOS LA JTABLE ETC ETC
         bussinessWar.queriesI();
-///////JTABLE CON HIBERNATE  ///////////////////////////////
         warTableView = new JTableModel_War(bussinessWar);
         viewWar.getJtableWars().setModel(warTableView);
   /////////     ///////////////////              ////////////       
@@ -144,17 +126,15 @@ public final class controllerGuerra implements ActionListener {
         //Boton Añadir Guerras
         if (ae.getSource() == viewWar.getAdd_button()) {
             wardto = new Guerra();
-            try {
+   
                 wardto.setNombre(viewWar.getName_text().getText());
                 wardto.setAnioInicio(viewWar.getStart_date_text().getText());
                 wardto.setAnioFin(viewWar.getEnd_date_text().getText());
                 bussinessWar.insert(wardto);
                 list();
                 System.out.println("INSERT Pais SOLO, METER LAS LLAMADAS A MODELO AQUI");
-            } catch (SQLException ex) {
-                Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //Boton Editar Guerras
+
+  
             //Boton Editar Guerras
         } else if (ae.getSource() == viewWar.getEdit_button()) {
             wardto = new Guerra();
@@ -163,21 +143,19 @@ public final class controllerGuerra implements ActionListener {
             wardto.setAnioInicio(viewWar.getStart_date_text().getText());
             wardto.setAnioFin(viewWar.getEnd_date_text().getText());
            
-            try {
+     
                 bussinessWar.update(wardto);
                 list();
-            } catch (SQLException ex) {
-                System.out.println("Que no refresca la tabla mari");            }
+
             //Boton Eliminar Guerras
         } else if (ae.getSource() == viewWar.getDelete_button()) {
             wardto = new Guerra();
             wardto.setIdGuerra(Integer.parseInt(viewWar.getId_text().getText()));
-            try {
-                bussinessWar.delete(wardto);
+            
+            bussinessWar.delete(wardto);
+          
                 list();
-            } catch (SQLException ex) {
-                Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    
             System.out.println("REALIZANDO DELETE, METER LAS LLAMADAS A MODELO AQUI");
             //Botón Salir
         } else if (ae.getSource() == viewWar.getExit_button()) {
@@ -205,7 +183,7 @@ public final class controllerGuerra implements ActionListener {
 
     }
     
-    private void list() throws SQLException {
+    private void list() {
         bussinessWar.queriesI();
         warTableView.fireTableDataChanged();
     }

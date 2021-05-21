@@ -13,9 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -40,7 +37,7 @@ public final class controllerPais implements ActionListener {
     //AGREGAR MODELs *** 
 
     //Constructor
-    public controllerPais(viewPrincipal viewPpal) throws ClassNotFoundException, SQLException {
+    public controllerPais(viewPrincipal viewPpal) {
 
         //AGREGAR MODELs ***
         viewCountrie = new viewCountries(viewPpal, true);
@@ -62,7 +59,7 @@ public final class controllerPais implements ActionListener {
 
     }//Fin initComponents
 
-    public void initEvents() throws SQLException {
+    public void initEvents() {
         //INICIALIZAR EVENTOS
         viewCountrie.getBtnInsert().addActionListener(this);
         viewCountrie.getBtnUpdate().addActionListener(this);
@@ -178,7 +175,7 @@ public final class controllerPais implements ActionListener {
 
             if (viewCountrie.getCheckBoxIndependent().isSelected() == true) {
 
-                try {
+              
                     businness.update(countryDTO);
                     //////////////////
                     
@@ -186,6 +183,7 @@ public final class controllerPais implements ActionListener {
                          
                     PeriodoIndependecia pi= new PeriodoIndependecia();
                     pi.setAnioInicio(Integer.parseInt(viewCountrie.getTxtfDateBegin().getText()));
+                    
                     pi.setAnioFin(Integer.parseInt(viewCountrie.getTxtfDateEnd().getText())); 
                     
                     //Añadiendo al objeto el periodo de independencia
@@ -198,19 +196,15 @@ public final class controllerPais implements ActionListener {
                     /////////////7
                     
                     list();
-                } catch (SQLException ex) {
-                    System.out.println("falló update de pais solo");
-                }
+      
 
             } else {
 
-                try {
+             
                     businness.update(countryDTO);
                     businness.deleteIndependencePeriod(countryDTO);
                     list();
-                } catch (SQLException ex) {
-                    Logger.getLogger(controllerPais.class.getName()).log(Level.SEVERE, null, ex);
-                }
+      
 
             }
 

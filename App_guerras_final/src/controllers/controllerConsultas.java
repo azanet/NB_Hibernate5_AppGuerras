@@ -15,9 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -45,19 +42,15 @@ public final class controllerConsultas implements ActionListener {
 
         //AGREGAR MODELs ***
         viewConsult = new viewConsults(viewPpal, true);
-
-        try {
-            bussinessWar = new Guerra_DAO();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(controllerGuerra.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        bussinessWar = new Guerra_DAO();
+        
         initComponents();
         initEvents();
 
         viewConsult.setVisible(true);
     }//Fin del constructor
 
+    
     public void initEvents() {
         //INICIALIZAR EVENTOS
         viewConsult.getBtnSeeDetails().addActionListener(this);
@@ -74,9 +67,7 @@ public final class controllerConsultas implements ActionListener {
             public void mouseClicked(MouseEvent me) {
                     setWarDTO();
                     viewConsult.getBtnSeeDetails().setEnabled(true);
-
             }
-
         }
         );
             
@@ -124,16 +115,11 @@ public final class controllerConsultas implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == viewConsult.getBtnSeeDetails()) {
-            try {
- //               bussinessWar.searchAllDataFromWar();
 
                 viewConsult.getTxtAreaDetailsWar().setText(getFormatDetails.formatDetails(bussinessWar.returnDetails(wardto)));
 
                 initComponents();
-            } catch (SQLException ex) {
-                System.out.println("Se produjo una SQLException: "+ex.getMessage());
-            }
-            
+         
             } else if (ae.getSource() == viewConsult.getBtnClean()) {
             viewConsult.getTxtAreaDetailsWar().setText("");
             viewConsult.getTxtfFilterWar().setText("");
@@ -164,19 +150,14 @@ public final class controllerConsultas implements ActionListener {
               int row = viewConsult.getJtableWarList().getSelectedRow();
         if (row >= 0) {
             wardto = new Guerra();
+            //Le pasaremos solo la ID del objeto que queremos Consultar Posteriormente, y con hibernate, haremos el resto del trabajo
             wardto.setIdGuerra(Integer.parseInt(String.valueOf(viewConsult.getJtableWarList().getValueAt(row, 0))));
-//            wardto.setAnioInicio(String.valueOf(viewConsult.getJtableWarList().getValueAt(row, 1)));
-//            wardto.setAnioFin(String.valueOf(viewConsult.getJtableWarList().getValueAt(row, 2)));
-//            wardto.setNombre(String.valueOf(viewConsult.getJtableWarList().getValueAt(row, 3)));      
-    
-//              warTable = new JTableModel_War(bussinessWar);  
-//              viewConsult.getJtableWarList().setModel(warTable);
-
-//        
         }
     }
 
-         private void activoTimer() {
+        
+        
+   private void activoTimer() {
 	
 	if ((timerbuscar != null) && timerbuscar.isRunning()) {
 	    timerbuscar.restart();
@@ -187,13 +168,10 @@ public final class controllerConsultas implements ActionListener {
 		
 			timerbuscar = null;
 			bussinessWar.lightSearch(viewConsult.getTxtfFilterWar().getText());
-			warTable.fireTableDataChanged();
-		
-			
+			warTable.fireTableDataChanged();			
 		}
-		
-		
-	    });
+            });
+            
 	    timerbuscar.setRepeats(false);
 	    timerbuscar.start();
 	}

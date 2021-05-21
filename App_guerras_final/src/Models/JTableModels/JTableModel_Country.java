@@ -6,10 +6,6 @@
 package Models.JTableModels;
 
 import Models.DAOs.Pais_DAO;
-import Models.POJOs.Pais;
-import Models.POJOs.PeriodoIndependecia;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**

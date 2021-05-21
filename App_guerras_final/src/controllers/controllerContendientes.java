@@ -14,13 +14,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import views.viewContenders2;
@@ -39,7 +35,7 @@ class controllerContendientes implements ActionListener {
     //AGREGAR MODELs *** 
 
     //Constructor
-    public controllerContendientes(viewPrincipal viewPpal) throws ClassNotFoundException, SQLException {
+    public controllerContendientes(viewPrincipal viewPpal){
 
 	//AGREGAR MODELs ***
 	viewContender = new viewContenders2(viewPpal, true);
@@ -130,11 +126,9 @@ class controllerContendientes implements ActionListener {
 		    cleanCountriesForm();
 		    cleanUpdateContenderForm();
 		    cleanUpdateCountriesForm();
-		    try {
+		
 			refreshCountriesAddedComboBox();
-		    } catch (SQLException ex) {
-			Logger.getLogger(controllerContendientes.class.getName()).log(Level.SEVERE, null, ex);
-		    }
+		
 		}
 	    }
 	}
@@ -154,12 +148,9 @@ class controllerContendientes implements ActionListener {
 		    viewContender.getTxtfUpdateSelectedContender().setText(nombre);
 		    //marcar checkbox ganador
 		    int ganador = 0;
-		    try {
+		   
 			ganador = businness.select_Winner(nombre);
-		    } catch (SQLException ex) {
-			System.out.println("Fallo al obtener ganador");
-
-		    }
+	
 		    if (ganador == 1) {
 			viewContender.getCb_Ganador().setSelected(true);
 		    } else {
@@ -192,21 +183,22 @@ class controllerContendientes implements ActionListener {
 
 	//COMBOBOX MODIFICAR PAIS	
 	viewContender.getComboBoxSelectCountryADDED().addItemListener(new ItemListener() {
-
+            
+            
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
-		Date date1;
+                
+		Date date1 = null;
 		Date date2;
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		if (e.getStateChange() == e.SELECTED) {
-		    String fecha1 = "0001-01-01";
-		    String fecha2 = "";
+		    String fecha1;
+		    String fecha2;
 		    String nombrePais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
 		    String nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 
-		    try {
-//			AllyDTO allyDTO = new AllyDTO();
+
 			fecha1 = businness.select_BeginDate(nombreContendiente, nombrePais);
 			fecha2 = businness.select_EndDate(nombreContendiente, nombrePais);                 
 
@@ -215,11 +207,18 @@ class controllerContendientes implements ActionListener {
 			    date1 = df.parse(fecha1);
 
 			} catch (Exception ex) {
-			    date1 = df.parse("0001-01-01");
-			    viewContender.getjDC_updateBeginDate().setEnabled(false);
+////                        try {
+////                            date1 = df.parse("0001-01-01");
+////                        } catch (ParseException ex1) {
+////                            Logger.getLogger(controllerContendientes.class.getName()).log(Level.SEVERE, null, ex1);
+////                        }
+			 viewContender.getjDC_updateBeginDate().setEnabled(false);
 			}
-//			String newFecha1=df.format(date1);
+         
 			viewContender.getjDC_updateBeginDate().setDate(date1);
+                        
+                        
+                        
 
 			try {
 			    date2 = df.parse(fecha2);
@@ -231,12 +230,7 @@ class controllerContendientes implements ActionListener {
 			}
 			
 
-		    } catch (ParseException ex) {
-			System.out.println("fallo al parsear fecha");
-
-		    } catch (SQLException ex) {
-			System.out.println("fallo al obtener fecha de unión y/o fecha de abandono");
-		    }
+		
 		    countriesInsertDeactivate();
 		    countriesUpdateSetActive();
 		    viewContender.getBtnDeleteSelectCountryADDED().setEnabled(true);
@@ -282,15 +276,13 @@ class controllerContendientes implements ActionListener {
                 Contendiente contendiente = new Contendiente();
                 contendiente.setNombre(viewContender.getTxtfInsertNewContender().getText());
                 contendiente.setGanador(ganador);
-               try {   
+         
                 businness.insert(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
                 
 		cleanContenderForm();
 		refreshContenderComboBox();
 
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al insertar nuevo contendiente");
-	    }
+	
 	}
 
 	//Eliminar contendiente seleccionado
@@ -298,19 +290,17 @@ class controllerContendientes implements ActionListener {
 	    String contenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 	    Contendiente contendiente = new Contendiente();
 	    contendiente.setNombre(contenderName);
-	    try {
+	
 		businness.delete(contendiente);
 		refreshContenderComboBox();
 		cleanUpdateContenderForm();
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al eliminar contendiente");
-	    }
+
 
 	}
 
 	//Actualizar contendiente seleccionado
 	if (e.getSource() == viewContender.getBtnUpdateSelectedContender()) {
-            try {
+      
                 int ganador;
                 Contendiente contendiente = new Contendiente();
                 String newContenderName = viewContender.getTxtfUpdateSelectedContender().getText();
@@ -328,9 +318,7 @@ class controllerContendientes implements ActionListener {
                 businness.update(contendiente, oldContenderName);
                 refreshContenderComboBox();
                 cleanUpdateContenderForm();
-            } catch (SQLException ex) {
-                Logger.getLogger(controllerContendientes.class.getName()).log(Level.SEVERE, null, ex);
-            }
+       
 
 	}
 
@@ -338,7 +326,7 @@ class controllerContendientes implements ActionListener {
 	if (e.getSource() == viewContender.getBtnInsertCountryToContender()) {
 	    String pais, contendiente, fecha_abandono = "";
 	    UnionBandos unionBandos = new UnionBandos();
-	    try {
+	
 		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		pais = (String) viewContender.getComboBoxSelectCountryToContender().getSelectedItem();
 
@@ -354,13 +342,10 @@ class controllerContendientes implements ActionListener {
 		} else {
 		    fecha_abandono = "";
 		}
-                
-      
+   
 		unionBandos.setFechaAbandono(fecha_abandono);
 		unionBandos.setFechaUnion(fecha_union);
-     // 		allyDTO.setId_pais(businness.select_idPais(pais));
-	//	allyDTO.setId_contendiente(businness.select_idContendiente(contendiente));                          
-		
+
                 businness.insert_country(unionBandos,contendiente,pais);
                 
 		cleanCountriesForm();
@@ -368,23 +353,18 @@ class controllerContendientes implements ActionListener {
 		    countriesUpdateSetActive();
 		}
 		refreshCountriesAddedComboBox();
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al insertar nuevo aliado");
-	    }
 	}
 
 	//Eliminar países de contendientes
 	if (e.getSource() == viewContender.getBtnDeleteSelectCountryADDED()) {
 	    String pais, contendiente;
 	
-	    try {
+	
 		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		pais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
 	        businness.delete_country(contendiente, pais);
 		refreshCountriesAddedComboBox();
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al eliminar aliado");
-	    }
+	
 	}
 
 	
@@ -419,7 +399,7 @@ class controllerContendientes implements ActionListener {
 	if (e.getSource() == viewContender.getBtnUpdateDate()) {
 	    String nombrePais, nombreContendiente;
 	    UnionBandos unionBandos = new UnionBandos();
-	    try {
+	
 		nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		nombrePais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
 
@@ -441,9 +421,7 @@ class controllerContendientes implements ActionListener {
               
 		refreshCountriesAddedComboBox();
 		cleanUpdateCountriesForm();
-	    } catch (SQLException ex) {
-		System.out.println("Fallo al actualizar aliado");
-	    }
+	
 	}
     }
 
@@ -563,12 +541,12 @@ class controllerContendientes implements ActionListener {
 	viewContender.getjDC_updateEndDate().setDate(new Date());
     }
 
-    private void refreshContenderComboBox() throws SQLException {
+    private void refreshContenderComboBox() {
 	viewContender.getComboBoxSelectContender().removeAllItems();
 	viewContender.getComboBoxSelectContender().setModel(businness.fillComboBoxContender((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
     }
 
-    private void refreshCountriesAddedComboBox() throws SQLException {
+    private void refreshCountriesAddedComboBox()  {
 	viewContender.getComboBoxSelectCountryADDED().removeAllItems();
 	viewContender.getComboBoxSelectCountryADDED().setModel(businness.fillComboBoxCountry((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
     }

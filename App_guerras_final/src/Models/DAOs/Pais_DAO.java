@@ -3,7 +3,6 @@ package Models.DAOs;
 
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -11,14 +10,14 @@ import org.hibernate.query.Query;
 
 /**
  *
- * @author Sonia Castro Martel
+ * @author davidf
  */
 public class Pais_DAO {
 
     private List<Pais> PaisesList;
 
             
-    public Pais_DAO() throws ClassNotFoundException, SQLException {
+    public Pais_DAO() {
 
     }
     
@@ -135,7 +134,7 @@ public class Pais_DAO {
 
 
 
-    public void updateIndependencePeriod(Pais country) throws SQLException {
+    public void updateIndependencePeriod(Pais country) {
 
              Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
 
@@ -216,7 +215,7 @@ public class Pais_DAO {
 
     
     
-    public void deleteIndependencePeriod(Pais country) throws SQLException {
+    public void deleteIndependencePeriod(Pais country){
  
         Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
         

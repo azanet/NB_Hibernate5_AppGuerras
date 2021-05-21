@@ -7,7 +7,6 @@ import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
 import Models.POJOs.UnionBandos;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -23,7 +22,7 @@ public class Guerra_DAO {
     private DetailsWarDTO detailsWar;
 
 
-    public Guerra_DAO() throws ClassNotFoundException, SQLException {
+    public Guerra_DAO() {
       
     }
     
@@ -73,7 +72,7 @@ public class Guerra_DAO {
     
 
     
-    public Guerra findById(int id) throws SQLException {
+    public Guerra findById(int id){
          
         Guerra war;
        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
@@ -97,7 +96,7 @@ public class Guerra_DAO {
 
     
     //borrar registro
-    public void delete(Guerra war) throws SQLException {
+    public void delete(Guerra war)  {
 
            int id=war.getIdGuerra();
            
@@ -112,7 +111,7 @@ public class Guerra_DAO {
     }
 
     //actualizar registro
-    public void update(Guerra war) throws SQLException {
+    public void update(Guerra war) {
 
            int id=war.getIdGuerra();
            
@@ -135,7 +134,7 @@ public class Guerra_DAO {
     }
 
     //PARA EL APARTADO DE CONSULTAS!!
-    public ArrayList returnDetails(Guerra war) throws SQLException{
+    public ArrayList returnDetails(Guerra war){
         
         ArrayList<DetailsWarDTO> detailsWarList = new ArrayList<>();
             String nombre_guerra, inicio_guerra, fin_guerra;
