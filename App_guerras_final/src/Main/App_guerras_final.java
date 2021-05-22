@@ -7,6 +7,7 @@ package Main;
 
 import SessionFactory.HibernateUtil_SessionFactory;
 import controllers.controllerPrincipal;
+import javax.swing.Timer;
 
 /**
  *
@@ -19,16 +20,16 @@ public class App_guerras_final {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+
         
-
-
-       
         controllerPrincipal ctrlWar= new controllerPrincipal();  
         
-       /////////////////////////////////////////////////  
+               /////////////////////////////////////////////////  
        //CREANDO LA FACTORIA DE SESIONES 
-        HibernateUtil_SessionFactory.buildSessionFactory();
-     
+           HibernateUtil_SessionFactory.buildSessionFactory();
+        
     }
     
+
+
 }
