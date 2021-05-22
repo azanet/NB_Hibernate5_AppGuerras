@@ -44,20 +44,13 @@ public class HibernateUtil_SessionFactory {
             
             StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure().build();
 
-         ////////////EL error se produce en esta de abajo si el metadata source no está bien
-            
             Metadata metadata = new MetadataSources(standardRegistry).buildMetadata(standardRegistry);
-   
+  
             sessionFactory = metadata.getSessionFactoryBuilder().build();
    
         }
     }
 
- 
-   public static void checkSession() {
-    session = sessionFactory.openSession();
-  }
- 
     
     
     /**
