@@ -203,21 +203,18 @@ class controllerContendientes implements ActionListener {
 		    String fecha2;
 		    String nombrePais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
 		    String nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
+                    
+                     UnionBandos unionBandos = DAOunionBandos.selectUnionBandos(nombreContendiente, nombrePais);
 
-
-			fecha1 = DAOunionBandos.select_BeginDate(nombreContendiente, nombrePais);
-			fecha2 = DAOunionBandos.select_EndDate(nombreContendiente, nombrePais);                 
+                    fecha1 = unionBandos.getFechaUnion();
+                    fecha2 = unionBandos.getFechaAbandono();                 
 
 			//parseo de fecha string a date
 			try {
 			    date1 = df.parse(fecha1);
 
 			} catch (Exception ex) {
-////                        try {
-////                            date1 = df.parse("0001-01-01");
-////                        } catch (ParseException ex1) {
-////                            Logger.getLogger(controllerContendientes.class.getName()).log(Level.SEVERE, null, ex1);
-////                        }
+
 			 viewContender.getjDC_updateBeginDate().setEnabled(false);
 			}
          
@@ -352,7 +349,7 @@ class controllerContendientes implements ActionListener {
 		unionBandos.setFechaAbandono(fecha_abandono);
 		unionBandos.setFechaUnion(fecha_union);
 
-                DAOunionBandos.insert_country(unionBandos,contendiente,pais);
+                DAOunionBandos.insertUnionBandos(unionBandos,contendiente,pais);
                 
 		cleanCountriesForm();
 		if (viewContender.getComboBoxSelectCountryToContender().getSelectedIndex() == 0) {
@@ -368,7 +365,7 @@ class controllerContendientes implements ActionListener {
 	
 		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		pais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
-	        DAOunionBandos.delete_country(contendiente, pais);
+	        DAOunionBandos.deleteUnionBandos(contendiente, pais);
 		refreshCountriesAddedComboBox();
 	
 	}
@@ -423,7 +420,7 @@ class controllerContendientes implements ActionListener {
                 }
 		unionBandos.setFechaUnion(fecha_union);		
                 
-		DAOunionBandos.update_country(unionBandos,nombreContendiente,nombrePais);                
+		DAOunionBandos.updateUnionBandos(unionBandos,nombreContendiente,nombrePais);                
               
 		refreshCountriesAddedComboBox();
 		cleanUpdateCountriesForm();

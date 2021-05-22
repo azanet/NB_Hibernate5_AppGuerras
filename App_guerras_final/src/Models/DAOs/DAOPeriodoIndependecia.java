@@ -9,7 +9,6 @@ import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
 import SessionFactory.HibernateUtil_SessionFactory;
 import java.util.ArrayList;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -31,23 +30,18 @@ public class DAOPeriodoIndependecia {
         Query query = session.createQuery("FROM Pais p WHERE p.nombre =:nombre");
         query.setParameter("nombre", country.getNombre());
         Pais p = (Pais) query.uniqueResult();
-
-        //Cogiendo la lista DEL OBJETO RESCATADO DE LA BBDD
-         System.out.println(p.getNombre());
-
+        
+        //Cogiendo la lista DEL "Pais" RESCATADO DE LA BBDD para ocmprobar si existe registro o no.
         if (p.getPeriodoIndependecias().size() > 0) {
+            
             //Insertando MODIFICACIONES EN EL periodoIndependencia del PAIS existente en la BBDD
             session.beginTransaction();
             //Recogemos el PeriodoInd del PAIS recuperado de la BBDD
             PeriodoIndependecia pi = (PeriodoIndependecia) (new ArrayList<>(p.getPeriodoIndependecias())).get(0);
 
-            //Recogiendo PeriodoInd. del PAIS que viene DEL CONTROLADOR
-            PeriodoIndependecia pi_aux = (PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0);
-
-            
-
-                pi.setAnioInicio(pi_aux.getAnioInicio());
-                pi.setAnioFin(pi_aux.getAnioFin());
+            //Seteamos las Fechas del PAIS RECOGIDO DE LA BBDD con las fechas que vienen de Country DEL CONTROLADOR
+            pi.setAnioInicio(((PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0)).getAnioInicio());
+            pi.setAnioFin(((PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0)).getAnioFin());
                 
                 session.save(pi);
           
@@ -55,7 +49,9 @@ public class DAOPeriodoIndependecia {
             session.getTransaction().commit();
             session.close();
 
+        //En caso de NO EXISTIR REGISTRO EN LA BBDD, se procederá a INSERTAR uno.
         } else {
+        
             insertIndependencePeriod(country);
 
             session.close();
@@ -95,14 +91,12 @@ public class DAOPeriodoIndependecia {
         Query query = session.createQuery("FROM Pais p WHERE p.nombre = :nombre");
         query.setParameter("nombre", country.getNombre());
         
-        Pais p = (Pais) query.uniqueResult();
-
-        List<PeriodoIndependecia> pi = new ArrayList<>(p.getPeriodoIndependecias());
-        if(pi.size()>0){
-        for (PeriodoIndependecia periodoIndependecia : pi) {
-            session.delete(periodoIndependecia);
-            break;
-        }
+        Pais pais = (Pais) query.uniqueResult();
+       
+        if(pais.getPeriodoIndependecias().size()>0){
+         
+           session.delete((PeriodoIndependecia) (new ArrayList<>(pais.getPeriodoIndependecias())).get(0));  
+        
         }
         
         session.getTransaction().commit();

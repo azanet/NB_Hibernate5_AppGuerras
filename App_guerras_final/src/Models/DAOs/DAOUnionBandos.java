@@ -22,8 +22,32 @@ public class DAOUnionBandos {
     public DAOUnionBandos(){
     }
 
-    //INSERT PAIS
-    public void insert_country(UnionBandos unionBandos, String nContendiente, String nPais) {
+
+   ////////////////CRUD DE - UNION BANDOS///////////////////////////////////////////////  
+    
+    //Obtener UnionBandos
+    public UnionBandos selectUnionBandos(String nombreContendiente, String nombrePais) {
+       
+	String beginDate = "";
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+            //REALIZANDO CONSULTA con 2 SUBCONSULTAS en las que le pasamos OBJETOS para COMPARAR y obtener de una los objetos necesatios, para determinar que tabla UNION es la nuestra
+           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
+            query.setParameter("contendiente", nombreContendiente);
+            query.setParameter("pais", nombrePais);
+
+            UnionBandos unionBandos = (UnionBandos)query.uniqueResult();
+      
+            session.close();
+     
+        return unionBandos;   
+    }
+
+    
+ 
+    
+    //INSERT UnionBandos
+    public void insertUnionBandos(UnionBandos unionBandos, String nContendiente, String nPais) {
         //Crear metodos para recuperar LOS objetos por el nombre y setearselos al UNION BANDOS
         
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
@@ -49,63 +73,16 @@ public class DAOUnionBandos {
     
     
 
+    
+    
+
+
+    //ELIMINAR UnionBandos
+    public void deleteUnionBandos(String nombreContendiente, String nombrePais)  {
   
-    //Obtener fechas
-    public String select_BeginDate(String nombreContendiente, String nombrePais) {
-       
-	String beginDate = "";
+            Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-            //REALIZANDO CONSULTA con 2 SUBCONSULTAS en las que le pasamos OBJETOS para COMPARAR y obtener de una los objetos necesatios, para determinar que tabla UNION es la nuestra
-           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
-            query.setParameter("contendiente", nombreContendiente);
-            query.setParameter("pais", nombrePais);
-
-            UnionBandos unionB = (UnionBandos)query.uniqueResult();
-            
-            try{
-            beginDate = unionB.getFechaUnion();
-            }catch (NullPointerException npe){
-                beginDate="";
-            }
-      
-            session.close();
-     
-        return beginDate;   
-    }
-
-    
-    
-    
-    
-    public String select_EndDate(String nombreContendiente, String nombrePais){
-        
-	String endDate = "";
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
-            query.setParameter("contendiente", nombreContendiente);
-            query.setParameter("pais", nombrePais);
-
-            UnionBandos unionB = (UnionBandos)query.uniqueResult();
-            try{
-            endDate = unionB.getFechaAbandono();
-             }catch (NullPointerException npe){
-                endDate="";
-            }
-            session.close();
-	return endDate;
-
-    }
-
-
-
-    //ELIMINAR PAIS
-    public void delete_country(String nombreContendiente, String nombrePais)  {
-  
-              Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
+            Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
             query.setParameter("contendiente", nombreContendiente);
             query.setParameter("pais", nombrePais);
 
@@ -120,8 +97,8 @@ public class DAOUnionBandos {
 
     
   
-    //ACTUALIZAS PAIS
-    public void update_country(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
+    //ACTUALIZAR UnionBandos
+    public void updateUnionBandos(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
      
             Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
