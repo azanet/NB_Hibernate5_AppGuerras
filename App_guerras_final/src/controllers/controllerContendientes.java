@@ -6,6 +6,8 @@
 package controllers;
 
 import Models.DAOs.DAOContendiente;
+import Models.DAOs.DAOComboBoxesFill;
+import Models.DAOs.DAOUnionBandos;
 import Models.POJOs.Contendiente;
 import Models.POJOs.UnionBandos;
 import java.awt.event.ActionEvent;
@@ -31,6 +33,8 @@ class controllerContendientes implements ActionListener {
     /////////////////////////////////////
     private viewContendientes viewContender;
     private DAOContendiente businness;
+    private DAOUnionBandos DAOunionBandos;
+    private DAOComboBoxesFill DAOcomboBoxesFill;
     
     //AGREGAR MODELs *** 
 
@@ -40,6 +44,8 @@ class controllerContendientes implements ActionListener {
 	//AGREGAR MODELs ***
 	viewContender = new viewContendientes(viewPpal, true);
 	businness = new DAOContendiente();
+        DAOunionBandos = new DAOUnionBandos();
+        DAOcomboBoxesFill = new DAOComboBoxesFill();
 	initComponents();
 	initEvents();
 
@@ -109,7 +115,7 @@ class controllerContendientes implements ActionListener {
 	viewContender.getBtnExit().addActionListener(this);
 
 	 //COMBOBOX DE GUERRAS
-	viewContender.getComboBoxSelectWar().setModel(businness.fillComboBoxModelWar());
+	viewContender.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxModelWar());
         
 	viewContender.getComboBoxSelectWar().addItemListener(new ItemListener() {
 	    @Override
@@ -118,7 +124,7 @@ class controllerContendientes implements ActionListener {
 		    viewContender.getComboBoxSelectContender().setEnabled(true);
 		  
 			String nombre = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
-			viewContender.getComboBoxSelectContender().setModel(businness.fillComboBoxContender(nombre));
+			viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContender(nombre));
 		
 		    contenderInsertSetActive();
 		    countriesUpdateDeactivate();
@@ -156,8 +162,8 @@ class controllerContendientes implements ActionListener {
 		    } else {
 			viewContender.getCb_Ganador().setSelected(false);
 		    }
-			viewContender.getComboBoxSelectCountryADDED().setModel(businness.fillComboBoxCountry(nombre));
-			viewContender.getComboBoxSelectCountryToContender().setModel(businness.fillAllCountriesCombobox());
+			viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxCountry(nombre));
+			viewContender.getComboBoxSelectCountryToContender().setModel(DAOcomboBoxesFill.fillAllCountriesCombobox());
 
 
 		    contenderUpdateSetActive();
@@ -199,8 +205,8 @@ class controllerContendientes implements ActionListener {
 		    String nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 
 
-			fecha1 = businness.select_BeginDate(nombreContendiente, nombrePais);
-			fecha2 = businness.select_EndDate(nombreContendiente, nombrePais);                 
+			fecha1 = DAOunionBandos.select_BeginDate(nombreContendiente, nombrePais);
+			fecha2 = DAOunionBandos.select_EndDate(nombreContendiente, nombrePais);                 
 
 			//parseo de fecha string a date
 			try {
@@ -346,7 +352,7 @@ class controllerContendientes implements ActionListener {
 		unionBandos.setFechaAbandono(fecha_abandono);
 		unionBandos.setFechaUnion(fecha_union);
 
-                businness.insert_country(unionBandos,contendiente,pais);
+                DAOunionBandos.insert_country(unionBandos,contendiente,pais);
                 
 		cleanCountriesForm();
 		if (viewContender.getComboBoxSelectCountryToContender().getSelectedIndex() == 0) {
@@ -362,7 +368,7 @@ class controllerContendientes implements ActionListener {
 	
 		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
 		pais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
-	        businness.delete_country(contendiente, pais);
+	        DAOunionBandos.delete_country(contendiente, pais);
 		refreshCountriesAddedComboBox();
 	
 	}
@@ -417,7 +423,7 @@ class controllerContendientes implements ActionListener {
                 }
 		unionBandos.setFechaUnion(fecha_union);		
                 
-		businness.update_country(unionBandos,nombreContendiente,nombrePais);                
+		DAOunionBandos.update_country(unionBandos,nombreContendiente,nombrePais);                
               
 		refreshCountriesAddedComboBox();
 		cleanUpdateCountriesForm();
@@ -543,12 +549,12 @@ class controllerContendientes implements ActionListener {
 
     private void refreshContenderComboBox() {
 	viewContender.getComboBoxSelectContender().removeAllItems();
-	viewContender.getComboBoxSelectContender().setModel(businness.fillComboBoxContender((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
+	viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContender((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
     }
 
     private void refreshCountriesAddedComboBox()  {
 	viewContender.getComboBoxSelectCountryADDED().removeAllItems();
-	viewContender.getComboBoxSelectCountryADDED().setModel(businness.fillComboBoxCountry((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
+	viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxCountry((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
     }
 
 }//Fin clase proincipal
