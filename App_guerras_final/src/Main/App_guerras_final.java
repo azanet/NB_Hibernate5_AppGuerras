@@ -7,7 +7,6 @@ package Main;
 
 import SessionFactory.HibernateUtil_SessionFactory;
 import controllers.controllerPrincipal;
-import javax.swing.Timer;
 
 /**
  *
