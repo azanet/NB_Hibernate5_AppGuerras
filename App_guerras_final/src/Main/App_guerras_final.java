@@ -5,7 +5,7 @@
  */
 package Main;
 
-import Models.DAOs.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil_SessionFactory;
 import controllers.controllerPrincipal;
 
 /**
@@ -20,16 +20,15 @@ public class App_guerras_final {
     public static void main(String[] args) {
         // TODO code application logic here
         
-         //////////////////////////////////////////////////  
-        //CREANDO LA FACTORIA DE SESIONES
+
 
        
         controllerPrincipal ctrlWar= new controllerPrincipal();  
         
-        
+       /////////////////////////////////////////////////  
+       //CREANDO LA FACTORIA DE SESIONES 
         HibernateUtil_SessionFactory.buildSessionFactory();
-      
-
+     
     }
     
 }

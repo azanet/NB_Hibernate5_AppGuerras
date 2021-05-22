@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import Models.DAOs.Contender_DAO;
+import Models.DAOs.DAOContendiente;
 import Models.POJOs.Contendiente;
 import Models.POJOs.UnionBandos;
 import java.awt.event.ActionEvent;
@@ -19,18 +19,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import views.viewContenders2;
+import views.viewContendientes;
 import views.viewPrincipal;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 class controllerContendientes implements ActionListener {
     
     /////////////////////////////////////
-    private viewContenders2 viewContender;
-    private Contender_DAO businness;
+    private viewContendientes viewContender;
+    private DAOContendiente businness;
     
     //AGREGAR MODELs *** 
 
@@ -38,8 +38,8 @@ class controllerContendientes implements ActionListener {
     public controllerContendientes(viewPrincipal viewPpal){
 
 	//AGREGAR MODELs ***
-	viewContender = new viewContenders2(viewPpal, true);
-	businness = new Contender_DAO();
+	viewContender = new viewContendientes(viewPpal, true);
+	businness = new DAOContendiente();
 	initComponents();
 	initEvents();
 

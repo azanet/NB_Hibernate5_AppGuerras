@@ -9,15 +9,15 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Sonia Castro (soniacastromartel@gmail.com)
+ * @author davidf
  */
-public class viewContenders2 extends javax.swing.JDialog {
+public class viewContendientes extends javax.swing.JDialog {
 
     /**
      * Creates new form viewContenders1
      */
            imagenPanel fondo = new imagenPanel();
-    public viewContenders2(java.awt.Frame parent, boolean modal) {
+    public viewContendientes(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
         
          this.setContentPane(fondo);

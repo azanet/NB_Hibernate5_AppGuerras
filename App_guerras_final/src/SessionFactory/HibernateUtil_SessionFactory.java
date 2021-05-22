@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models.DAOs;
+package SessionFactory;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +11,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 
 /**
  *Utilizando las LIBRERIAS de HIBERNATE 5.4.31
@@ -40,14 +41,26 @@ public class HibernateUtil_SessionFactory {
     //Fabricando la sesionFactory
     public static void buildSessionFactory() {
         if (sessionFactory == null) {
+            
             StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure().build();
-            Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+
+         ////////////EL error se produce en esta de abajo si el metadata source no está bien
+            
+            Metadata metadata = new MetadataSources(standardRegistry).buildMetadata(standardRegistry);
+   
             sessionFactory = metadata.getSessionFactoryBuilder().build();
+   
         }
     }
 
-       
-  /**
+ 
+   public static void checkSession() {
+    session = sessionFactory.openSession();
+  }
+ 
+    
+    
+    /**
    * Abre una nueva sesión
    */
   public static void openSession() {

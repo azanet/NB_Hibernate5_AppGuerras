@@ -1,8 +1,9 @@
 package Models.DAOs;
 
 
+import SessionFactory.HibernateUtil_SessionFactory;
 import Models.POJOs.Contendiente;
-import Models.Consult.DetailsWarDTO;
+import Models.UtilsAndDTOs.DetailsWarDTO;
 import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
@@ -16,13 +17,13 @@ import org.hibernate.query.Query;
  *
  * @author davidf
  */
-public class Guerra_DAO {
+public class DAOGuerra {
     
     private List<Guerra> GuerrasList;
     private DetailsWarDTO detailsWar;
 
 
-    public Guerra_DAO() {
+    public DAOGuerra() {
       
     }
     

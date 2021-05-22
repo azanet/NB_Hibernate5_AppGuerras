@@ -7,8 +7,8 @@ package controllers;
 
 
 import Models.POJOs.Guerra;
-import Models.JTableModels.JTableModel_War;
-import Models.DAOs.Guerra_DAO;
+import Models.TableModels.JTableModel_Guerra;
+import Models.DAOs.DAOGuerra;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,26 +17,26 @@ import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import views.viewPrincipal;
-import views.viewWars;
+import views.viewGuerras;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public final class controllerGuerra implements ActionListener {
 
-    viewWars viewWar;
-    JTableModel_War warTableView;//= new JTableModel_War();
-    Guerra_DAO bussinessWar;
+    viewGuerras viewWar;
+    JTableModel_Guerra warTableView;//= new JTableModel_Guerra();
+    DAOGuerra bussinessWar;
     Guerra wardto;
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
 
     public controllerGuerra(viewPrincipal viewPpal) {
-        viewWar = new viewWars(viewPpal, true);
+        viewWar = new viewGuerras(viewPpal, true);
 
     
-            bussinessWar = new Guerra_DAO();
+            bussinessWar = new DAOGuerra();
    
         initComponents();
         initEvents();
@@ -62,7 +62,7 @@ public final class controllerGuerra implements ActionListener {
 
 //            //AQUI INICIAMOS LA JTABLE ETC ETC
         bussinessWar.queriesI();
-        warTableView = new JTableModel_War(bussinessWar);
+        warTableView = new JTableModel_Guerra(bussinessWar);
         viewWar.getJtableWars().setModel(warTableView);
   /////////     ///////////////////              ////////////       
   

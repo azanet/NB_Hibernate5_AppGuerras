@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
-public class viewCountries extends JDialog {
+public class viewPaises extends JDialog {
 
     /**
      * Creates new form viewCountrie
@@ -26,7 +26,7 @@ public class viewCountries extends JDialog {
     
     imagenPanel fondo = new imagenPanel();
      
-     public viewCountries(java.awt.Frame parent, boolean modal) {
+     public viewPaises(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
     this.setContentPane(fondo);

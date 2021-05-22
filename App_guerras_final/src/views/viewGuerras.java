@@ -12,9 +12,9 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
-public class viewWars extends JDialog {
+public class viewGuerras extends JDialog {
 
     /**
      * Creates new form warView
@@ -24,7 +24,7 @@ public class viewWars extends JDialog {
      */
     
       imagenPanel fondo = new imagenPanel();
-    public viewWars(java.awt.Frame parent, boolean modal) {
+    public viewGuerras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
              this.setContentPane(fondo);
@@ -103,7 +103,6 @@ public class viewWars extends JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 640));
 
         lblFilterSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFilterSearch.setForeground(new java.awt.Color(204, 204, 204));

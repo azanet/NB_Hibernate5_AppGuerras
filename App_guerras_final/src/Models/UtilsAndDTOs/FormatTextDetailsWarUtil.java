@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models.Consult;
+package Models.UtilsAndDTOs;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,9 +14,9 @@ import java.util.TreeSet;
  *
  * @author davidf
  */
-public class FormatText_DetailsWar {
+public class FormatTextDetailsWarUtil {
 
-    public FormatText_DetailsWar() {
+    public FormatTextDetailsWarUtil() {
     }
 
     public String formatDetails(ArrayList<DetailsWarDTO> detailsWarList) {

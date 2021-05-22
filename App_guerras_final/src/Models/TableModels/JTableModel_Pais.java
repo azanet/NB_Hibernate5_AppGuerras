@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models.JTableModels;
+package Models.TableModels;
 
-import Models.DAOs.Pais_DAO;
+import Models.DAOs.DAOPais;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -14,14 +14,14 @@ import javax.swing.table.AbstractTableModel;
  * 
  */
 
-public class JTableModel_Country extends AbstractTableModel{
+public class JTableModel_Pais extends AbstractTableModel{
 
 
 
     private static final long serialVersionUID = 2L;
-    private final Pais_DAO business;
+    private final DAOPais business;
     
-    public JTableModel_Country(Pais_DAO business)
+    public JTableModel_Pais(DAOPais business)
     {
         super();
      

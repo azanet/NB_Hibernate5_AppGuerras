@@ -5,13 +5,14 @@
  */
 package controllers;
 
+import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import views.viewPrincipal;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public class controllerPrincipal implements ActionListener{
     
@@ -48,8 +49,10 @@ public class controllerPrincipal implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         
         if (ae.getSource()==viewPpal.getBtnWars()){
-            ctrlWar= new controllerGuerra(viewPpal);  
+
             
+            ctrlWar= new controllerGuerra(viewPpal);  
+           
         }else if(ae.getSource()==viewPpal.getBtnContender()){
 
 		ctrlContender= new controllerContendientes(viewPpal);

@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  *
  * @author davidf
  */
-public class viewConsults extends JDialog {
+public class viewConsultas extends JDialog {
 
     /**
      * Creates new form viewSearch
@@ -25,7 +25,7 @@ public class viewConsults extends JDialog {
      */
     
        imagenPanel fondo = new imagenPanel();
-    public viewConsults(java.awt.Frame parent, boolean modal) {
+    public viewConsultas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
    this.setContentPane(fondo);
@@ -98,7 +98,6 @@ public class viewConsults extends JDialog {
         jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 616));
 
         lblFilterWar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFilterWar.setForeground(new java.awt.Color(204, 204, 204));

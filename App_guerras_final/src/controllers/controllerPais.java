@@ -5,33 +5,37 @@
  */
 package controllers;
 
-import Models.JTableModels.JTableModel_Country;
-import Models.DAOs.Pais_DAO;
+import Models.TableModels.JTableModel_Pais;
+import Models.DAOs.DAOPais;
+import Models.DAOs.DAOPeriodoIndependecia;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import views.viewCountries;
+import views.viewPaises;
 import views.viewPrincipal;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public final class controllerPais implements ActionListener {
 
     
-    private JTableModel_Country country_TableView;
+    private JTableModel_Pais country_TableView;
     
-    viewCountries viewCountrie;
+    viewPaises viewCountrie;
    
-    Pais_DAO businness;
-    Pais countryDTO;
+    DAOPais businness;
+    DAOPeriodoIndependecia businnessPI;
+
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
     //AGREGAR MODELs *** 
@@ -40,8 +44,9 @@ public final class controllerPais implements ActionListener {
     public controllerPais(viewPrincipal viewPpal) {
 
         //AGREGAR MODELs ***
-        viewCountrie = new viewCountries(viewPpal, true);
-        businness = new Pais_DAO();
+        viewCountrie = new viewPaises(viewPpal, true);
+        businness = new DAOPais();
+        businnessPI = new DAOPeriodoIndependecia();
         initComponents();
         initEvents();
 
@@ -69,7 +74,7 @@ public final class controllerPais implements ActionListener {
 
 //////// JTABLEEE HIBERNATE!!
         businness.queriesI();
-        country_TableView = new JTableModel_Country(businness);
+        country_TableView = new JTableModel_Pais(businness);
         viewCountrie.getJtableCountries().setModel(country_TableView);
  ////////////////////////////////////////////////////////  
    
@@ -131,16 +136,20 @@ public final class controllerPais implements ActionListener {
             }
         });
 
+        
+      
     }//Fin initEvents
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-
+        
+     
+         
         if (ae.getSource() == viewCountrie.getBtnInsert()) {
-            
+            Pais countryDTO = new Pais();
             //insert pais con independencia
             if (viewCountrie.getCheckBoxIndependent().isSelected() == true) {
-                countryDTO = new Pais();
+              
                 countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
                 
                 businness.insert(countryDTO);
@@ -150,28 +159,35 @@ public final class controllerPais implements ActionListener {
                     PeriodoIndependecia pi= new PeriodoIndependecia();
                     pi.setAnioInicio(Integer.parseInt(viewCountrie.getTxtfDateBegin().getText()));
                     pi.setAnioFin(Integer.parseInt(viewCountrie.getTxtfDateEnd().getText())); 
-                    
+
                     //Añadiendo al objeto el periodo de independencia
-                    countryDTO.getPeriodoIndependecias().add(pi);
-                    businness.insertIndependencePeriod(countryDTO);
+                   countryDTO.getPeriodoIndependecias().add(pi);
+                   //
+                    businnessPI.insertIndependencePeriod(countryDTO);
 		
                 }
-                list();
-                    
+                         
                                     
             //insert de pais solo
             } else {
              
-                    countryDTO = new Pais();
+                    
                     countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
                     businness.insert(countryDTO);
-                    list();
+                    
                
             }
-
+            list();
+            
+            
             //update
         } else if (ae.getSource() == viewCountrie.getBtnUpdate()) {
-            countryDTO = setCountryDTO();
+            
+            Pais countryDTO = new Pais();
+            Pais countryDTO1 = new Pais();
+            countryDTO.setIdPais(Integer.parseInt(viewCountrie.getTF_CountryId().getText()));
+            countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
+            countryDTO1.setNombre(viewCountrie.getTxtfCountryName().getText());
 
             if (viewCountrie.getCheckBoxIndependent().isSelected() == true) {
 
@@ -182,36 +198,40 @@ public final class controllerPais implements ActionListener {
                     if(viewCountrie.getTxtfDateBegin().getText().length()>0){
                          
                     PeriodoIndependecia pi= new PeriodoIndependecia();
+                    
+                    try{
                     pi.setAnioInicio(Integer.parseInt(viewCountrie.getTxtfDateBegin().getText()));
+                    }catch(NumberFormatException nfe){
+                        pi.setAnioInicio(null);
+                    }
                     
+                    try{
                     pi.setAnioFin(Integer.parseInt(viewCountrie.getTxtfDateEnd().getText())); 
-                    
+                    }catch(NumberFormatException nfe){
+                        pi.setAnioFin(null);
+                    }
                     //Añadiendo al objeto el periodo de independencia
                     countryDTO.getPeriodoIndependecias().add(pi);
                     
-                    businness.updateIndependencePeriod(countryDTO);
+                    businnessPI.updateIndependencePeriod(countryDTO);
                 }
-                    
-                   
-                    /////////////7
-                    
-                    list();
-      
 
             } else {
 
              
                     businness.update(countryDTO);
-                    businness.deleteIndependencePeriod(countryDTO);
-                    list();
-      
-
+                    businnessPI.deleteIndependencePeriod(countryDTO);
+          
             }
-
+            
+            list();
+            
+            
+            
             //Delete
         } else if (ae.getSource() == viewCountrie.getBtnDelete()) {
           
-                countryDTO = new Pais();
+                Pais countryDTO = new Pais();
                 countryDTO.setIdPais(Integer.parseInt(viewCountrie.getTF_CountryId().getText()));
                 businness.delete(countryDTO);
                 list();
@@ -267,22 +287,6 @@ public final class controllerPais implements ActionListener {
         country_TableView.fireTableDataChanged();
     }
 
-    //Settear el objeto
-    private Pais setCountryDTO() {
-        countryDTO = new Pais();
-        countryDTO.setIdPais(Integer.parseInt(viewCountrie.getTF_CountryId().getText()));
-        countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
-
-        return countryDTO;
-    }
-
-    
-    
-    
-    
-    
-    
-    
     
     private void activoTimer() {
 

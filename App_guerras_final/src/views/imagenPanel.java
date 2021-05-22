@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public class imagenPanel extends JPanel{
     private Image imagen;

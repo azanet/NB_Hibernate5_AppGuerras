@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models.JTableModels;
+package Models.TableModels;
 
 
-import Models.DAOs.Guerra_DAO;
+import Models.DAOs.DAOGuerra;
 import Models.POJOs.Guerra;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,14 +15,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author davidf
  */
-public class JTableModel_War extends AbstractTableModel{
+public class JTableModel_Guerra extends AbstractTableModel{
 
 
 
     private static final long serialVersionUID = 1L;
-    private final Guerra_DAO business;
+    private final DAOGuerra business;
     
-    public JTableModel_War(Guerra_DAO business)
+    public JTableModel_Guerra(DAOGuerra business)
     {
         super();
      

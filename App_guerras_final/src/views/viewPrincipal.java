@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public class viewPrincipal extends javax.swing.JFrame {
 

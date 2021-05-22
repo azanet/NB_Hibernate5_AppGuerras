@@ -6,9 +6,9 @@
 package controllers;
 
 import Models.POJOs.Guerra;
-import Models.Consult.FormatText_DetailsWar;
-import Models.DAOs.Guerra_DAO;
-import Models.JTableModels.JTableModel_War;
+import Models.UtilsAndDTOs.FormatTextDetailsWarUtil;
+import Models.DAOs.DAOGuerra;
+import Models.TableModels.JTableModel_Guerra;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,19 +20,19 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import views.viewConsults;
+import views.viewConsultas;
 import views.viewPrincipal;
 
 /**
  *
- * @author grupo1
+ * @author davidf
  */
 public final class controllerConsultas implements ActionListener {
 
-    viewConsults viewConsult;
-    Guerra_DAO bussinessWar;
-    FormatText_DetailsWar getFormatDetails;
-    JTableModel_War warTable;
+    viewConsultas viewConsult;
+    DAOGuerra bussinessWar;
+    FormatTextDetailsWarUtil getFormatDetails;
+    JTableModel_Guerra warTable;
     Guerra wardto;
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
@@ -41,8 +41,8 @@ public final class controllerConsultas implements ActionListener {
     public controllerConsultas(viewPrincipal viewPpal) {
 
         //AGREGAR MODELs ***
-        viewConsult = new viewConsults(viewPpal, true);
-        bussinessWar = new Guerra_DAO();
+        viewConsult = new viewConsultas(viewPpal, true);
+        bussinessWar = new DAOGuerra();
         
         initComponents();
         initEvents();
@@ -102,8 +102,8 @@ public final class controllerConsultas implements ActionListener {
     private void initComponents()  {
 
         bussinessWar.queriesI();
-        warTable = new JTableModel_War(bussinessWar);
-        getFormatDetails = new FormatText_DetailsWar();
+        warTable = new JTableModel_Guerra(bussinessWar);
+        getFormatDetails = new FormatTextDetailsWarUtil();
         viewConsult.getJtableWarList().setModel(warTable);
         
         viewConsult.getBtnSeeDetails().setEnabled(false);

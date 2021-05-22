@@ -1,6 +1,7 @@
 package Models.DAOs;
 
 
+import SessionFactory.HibernateUtil_SessionFactory;
 import Models.POJOs.Contendiente;
 import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
@@ -13,13 +14,13 @@ import org.hibernate.query.Query;
 
 /**
  *
- * @author Davidf
+ * @author davidf
  */
-public class Contender_DAO {
+public class DAOContendiente {
 
 
 
-    public Contender_DAO() {
+    public DAOContendiente() {
 
     }
     
