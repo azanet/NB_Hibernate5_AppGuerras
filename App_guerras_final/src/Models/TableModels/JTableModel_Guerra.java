@@ -32,7 +32,7 @@ public class JTableModel_Guerra extends AbstractTableModel{
     @Override
     public int getRowCount()
     {
-        return business.getSizeList();
+        return business.getGuerraSizeList();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class JTableModel_Guerra extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex){
              
-        Guerra g = business.getWarDTO(rowIndex);
+        Guerra g = business.getGuerraData(rowIndex);
         
         Object[] values=new Object[]{g.getIdGuerra(), g.getNombre(),g.getAnioInicio(),g.getAnioFin()};
         return values[columnIndex];

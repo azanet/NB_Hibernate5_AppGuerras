@@ -33,7 +33,7 @@ public class JTableModel_Pais extends AbstractTableModel{
     @Override
     public int getRowCount()
     {
-        return business.getSizeList();
+        return business.getPaisAllDataSizeList();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JTableModel_Pais extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex)
     {
        
-            Object[] values = business.getCountryData(rowIndex);
+            Object[] values = business.getPaisAllData(rowIndex);
             
    
             return values[columnIndex];

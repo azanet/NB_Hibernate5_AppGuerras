@@ -163,7 +163,7 @@ public final class controllerPais implements ActionListener {
                     //Añadiendo al objeto el periodo de independencia
                    countryDTO.getPeriodoIndependecias().add(pi);
                    //
-                    businnessPI.insertIndependencePeriod(countryDTO);
+                    businnessPI.insertPeriodoIndependencia(countryDTO);
 		
                 }
                          
@@ -213,14 +213,14 @@ public final class controllerPais implements ActionListener {
                     //Añadiendo al objeto el periodo de independencia
                     countryDTO.getPeriodoIndependecias().add(pi);
                     
-                    businnessPI.updateIndependencePeriod(countryDTO);
+                    businnessPI.updatePeriodoIndependencia(countryDTO);
                 }
 
             } else {
 
              
                     businness.updatePais(countryDTO);
-                    businnessPI.deleteIndependencePeriod(countryDTO);
+                    businnessPI.deletePeriodoIndependencia(countryDTO);
           
             }
             

@@ -24,55 +24,18 @@ public class DAOPeriodoIndependecia {
     }
     
     
-
-    public void updateIndependencePeriod(Pais country) {
-
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre =:nombre");
-        query.setParameter("nombre", country.getNombre());
-        Pais paisBBDD = (Pais) query.uniqueResult();
-
-        //Cogiendo la lista DEL "Pais" RESCATADO DE LA BBDD para ocmprobar si existe registro o no.
-        if (paisBBDD.getPeriodoIndependecias().size() > 0) {
-
-            //Insertando MODIFICACIONES EN EL periodoIndependencia del PAIS existente en la BBDD
-            session.beginTransaction();
-            //Recogemos el PeriodoInd del PAIS recuperado de la BBDD
-            PeriodoIndependecia pi = (PeriodoIndependecia) (new ArrayList<>(paisBBDD.getPeriodoIndependecias())).get(0);
-
-            //Seteamos las Fechas del PAIS RECOGIDO DE LA BBDD con las fechas que vienen de Country DEL CONTROLADOR
-            pi.setAnioInicio(((PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0)).getAnioInicio());
-            pi.setAnioFin(((PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0)).getAnioFin());
-
-            session.save(pi);
-
-            session.getTransaction().commit();
-            session.close();
-
-            //En caso de NO EXISTIR REGISTRO EN LA BBDD, se procederá a INSERTAR uno.
-        } else {
-
-            insertIndependencePeriod(country);
-
-            session.close();
-        }
-
-    }
-
-    
-    
-    public void insertIndependencePeriod(Pais country) {
+        
+    public void insertPeriodoIndependencia(Pais pais) {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");
-        query.setParameter("nombre", country.getNombre());
+        query.setParameter("nombre", pais.getNombre());
         //Obteniendo objeto PAIS de la BBDD, para poder insertarselo a PeriodoInd
         Pais paisBBDD = (Pais) query.uniqueResult();
 
         //Obteniendo PeriodoInd. del objeto PAIS que hemos mandado DESDE EL CONTROLADOR
-        PeriodoIndependecia periodoIndependencia = (PeriodoIndependecia) (new ArrayList<>(country.getPeriodoIndependecias())).get(0);
+        PeriodoIndependecia periodoIndependencia = (PeriodoIndependecia) (new ArrayList<>(pais.getPeriodoIndependecias())).get(0);
         session.beginTransaction();
         //Indertando PAIS (que es la clave primaria [PK] de nuestro objeto ==>) a PeriodoInd. 
         periodoIndependencia.setPais(paisBBDD);
@@ -85,18 +48,59 @@ public class DAOPeriodoIndependecia {
 
     
     
-    public void deleteIndependencePeriod(Pais country) {
+
+    public void updatePeriodoIndependencia(Pais pais) {
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre =:nombre");
+        query.setParameter("nombre", pais.getNombre());
+        Pais paisBBDD = (Pais) query.uniqueResult();
+
+        //Cogiendo la lista DEL "Pais" RESCATADO DE LA BBDD para ocmprobar si existe registro o no.
+        if (paisBBDD.getPeriodoIndependecias().size() > 0) {
+            //Insertando MODIFICACIONES EN EL periodoIndependencia del PAIS existente en la BBDD
+            
+            session.beginTransaction();
+            
+            //Recogemos el PeriodoInd del PAIS recuperado de la BBDD
+            PeriodoIndependecia periodoIndependenciaBBDD = (PeriodoIndependecia) (new ArrayList<>(paisBBDD.getPeriodoIndependecias())).get(0);
+
+            //Seteamos las Fechas del PAIS RECOGIDO DE LA BBDD con las fechas que vienen de Country DEL CONTROLADOR
+            periodoIndependenciaBBDD.setAnioInicio(((PeriodoIndependecia) (new ArrayList<>(pais.getPeriodoIndependecias())).get(0)).getAnioInicio());
+            periodoIndependenciaBBDD.setAnioFin(((PeriodoIndependecia) (new ArrayList<>(pais.getPeriodoIndependecias())).get(0)).getAnioFin());
+
+            session.save(periodoIndependenciaBBDD);
+
+            session.getTransaction().commit();
+            session.close();
+
+            //En caso de NO EXISTIR REGISTRO EN LA BBDD, se procederá a INSERTAR uno.
+        } else {
+
+            insertPeriodoIndependencia(pais);
+
+            session.close();
+        }
+
+    }
+
+    
+
+    
+    public void deletePeriodoIndependencia(Pais pais) {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
         session.beginTransaction();
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");
-        query.setParameter("nombre", country.getNombre());
+        query.setParameter("nombre", pais.getNombre());
 
         Pais paisBBDD = (Pais) query.uniqueResult();
 
         if (paisBBDD.getPeriodoIndependecias().size() > 0) {
 
+            //Eliminando periodo de INDEPENDENCIA que esta CONTENIDO EN EL PAIS
             session.delete((PeriodoIndependecia) (new ArrayList<>(paisBBDD.getPeriodoIndependecias())).get(0));
 
         }

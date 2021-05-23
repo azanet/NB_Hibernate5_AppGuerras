@@ -15,7 +15,7 @@ import org.hibernate.query.Query;
 public class DAOPais {
 
     //Lista en la que se almacenan los PAISES con sus FECHAS para no estar masacrando la BBDD a peticiones
-    private List<String[]> paisesDetails;
+    private List<String[]> paisesAllData;
 
     
     //Constructor
@@ -24,64 +24,7 @@ public class DAOPais {
     }
 
     
-    /**
-     * ESTE METODO, RECIBE UN OBJETO DE TIPO "Query" LA CUAL TRAE CONFIGURADA LA
-     * CONSULTA REALIZAR POSTERIORMENTE CARGARÁ LA LISTA DE "paisesDetails" QUE
-     * UTILIZAREMOS PARA ESTÁR MOSITRANDO LOS DATOS DE ESTA EN NUESTRO jtable.
-     *
-     * EL MÉTODO FUE REALIZADO PARA REUTILIZAR LA OPERACION DE CARGAR YA QUE ES
-     * UTILIZADA MÁS DE UN MÉTODO
-     *
-     * @param query
-     *
-     *
-     * Es llamado por:
-     *
-     * -selectAllPaises() -lightSearchPaises(String nombre)
-     *
-     */
-    private void chargePaisDetailsList(Query query) {
-
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-        List<Pais> PaisesList = new ArrayList<>(query.list());
-
-        //Volviendo a crear una lista nueva PAISES-DETAILS para RELLENARLA
-        paisesDetails = new ArrayList<>();
-
-        //Recorriendo la lista de PAISES devuelta por la "query" para SOLICITAR su OBJETO 
-        //PERIODO INDEPENDENCIA y almacenarlo todo junto en la LISTA que utilizará nuestra Jtable
-        for (Pais pais : PaisesList) {
-
-            //Creando ARRAY que aliviará la BBDD
-            String[] paisDetails_aux = new String[5];
-
-            paisDetails_aux[0] = Integer.toString(pais.getIdPais());
-            paisDetails_aux[1] = pais.getNombre();
-
-            List<PeriodoIndependecia> pi = new ArrayList<>(pais.getPeriodoIndependecias());
-
-            for (PeriodoIndependecia periodoIndependecia : pi) {
-
-                paisDetails_aux[2] = Integer.toString(periodoIndependecia.getIdPeriodo());
-                paisDetails_aux[3] = Integer.toString(periodoIndependecia.getAnioInicio());
-                try {
-                    paisDetails_aux[4] = Integer.toString(periodoIndependecia.getAnioFin());
-                } catch (Exception nfe) {
-                    paisDetails_aux[4] = null;
-                }
-            }
-
-            //Agregamos el ARRAY que HEMOS MONTADO con los DATOS NECESARIOS a la LISTA PAISES-DETAILS
-            paisesDetails.add(paisDetails_aux);
-
-        }//Fin del FOR "PAIS"
-
-        session.close();
-    }
-
-    
-    
+        
     public void selectAllPaises() {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
@@ -109,15 +52,75 @@ public class DAOPais {
 
         session.close();
     }
+    
+    
+    /**
+     * ESTE METODO, RECIBE UN OBJETO DE TIPO "Query" LA CUAL TRAE CONFIGURADA LA
+     * CONSULTA REALIZAR POSTERIORMENTE CARGARÁ LA LISTA DE "paisesDetails" QUE
+     * UTILIZAREMOS PARA ESTÁR MOSITRANDO LOS DATOS DE ESTA EN NUESTRO jtable.
+     *
+     * EL MÉTODO FUE REALIZADO PARA REUTILIZAR LA OPERACION DE CARGAR YA QUE ES
+     * UTILIZADA MÁS DE UN MÉTODO
+     *
+     * @param query
+     *
+     *
+     * Es llamado por:
+     *
+     * -selectAllPaises() -lightSearchPaises(String nombre)
+     *
+     */
+    private void chargePaisDetailsList(Query query) {
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+        List<Pais> paisesBBDDList = new ArrayList<>(query.list());
+
+        //Volviendo a crear una lista nueva PAISES-DETAILS para RELLENARLA
+        paisesAllData = new ArrayList<>();
+
+        //Recorriendo la lista de PAISES devuelta por la "query" para SOLICITAR su OBJETO 
+        //PERIODO INDEPENDENCIA y almacenarlo todo junto en la LISTA que utilizará nuestra Jtable
+        for (Pais paisBBDD : paisesBBDDList) {
+
+            //Creando ARRAY que aliviará la BBDD
+            String[] paisAllData = new String[5];
+
+            paisAllData[0] = Integer.toString(paisBBDD.getIdPais());
+            paisAllData[1] = paisBBDD.getNombre();
+
+            List<PeriodoIndependecia> pi = new ArrayList<>(paisBBDD.getPeriodoIndependecias());
+
+            for (PeriodoIndependecia periodoIndependecia : pi) {
+
+                paisAllData[2] = Integer.toString(periodoIndependecia.getIdPeriodo());
+                paisAllData[3] = Integer.toString(periodoIndependecia.getAnioInicio());
+                try {
+                    paisAllData[4] = Integer.toString(periodoIndependecia.getAnioFin());
+                } catch (Exception nfe) {
+                    paisAllData[4] = null;
+                }
+            }
+
+            //Agregamos el ARRAY que HEMOS MONTADO con los DATOS NECESARIOS a la LISTA PAISES-DETAILS
+            paisesAllData.add(paisAllData);
+
+        }//Fin del FOR "PAIS"
+
+        session.close();
+    }
 
     
+
+    
+    ////////////////////CRUD///////////////////////////////////////
     
     //insertar registro
-    public void insertPais(Pais country) {
+    public void insertPais(Pais pais) {
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.save(country);
+            session.save(pais);
             session.getTransaction().commit();
             session.close();
         }
@@ -125,11 +128,30 @@ public class DAOPais {
     }
     
     
+    //actualizar registro
+    public void updatePais(Pais pais) {
+
+        int id = pais.getIdPais();
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        //Recogiendo objeto de la BBDD
+        Pais paisBBDD = session.get(Pais.class, id);
+
+        //Seteando valores del Jtable al objeto recogido de la BBDD
+        paisBBDD.setNombre(pais.getNombre());
+
+        session.beginTransaction();
+        session.save(paisBBDD);
+        session.getTransaction().commit();
+        session.close();
+
+    }
+    
 
     //borrar registro
-    public void deletePais(Pais country) {
+    public void deletePais(Pais pais) {
 
-        int id = country.getIdPais();
+        int id = pais.getIdPais();
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
@@ -144,40 +166,23 @@ public class DAOPais {
 
     
     
-    //actualizar registro
-    public void updatePais(Pais country) {
 
-        int id = country.getIdPais();
-
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-        //Recogiendo objeto de la BBDD
-        Pais paisBBDD = session.get(Pais.class, id);
-
-        //Seteando valores del Jtable al objeto recogido de la BBDD
-        paisBBDD.setNombre(country.getNombre());
-
-        session.beginTransaction();
-        session.save(paisBBDD);
-        session.getTransaction().commit();
-        session.close();
-
-    }
 
     
     
 /////////////METODOS UTILIZADOS POR LA JTABLE   ////////////////////////////////// 
     //Obtener el objeto
-    public Object[] getCountryData(int indice) {
+    public Object[] getPaisAllData(int indice) {
 
-        Object[] values = paisesDetails.get(indice);
+        Object[] values = paisesAllData.get(indice);
         return values;
     }
 
     
     
     //Obtener la "dimension" del ArrayList de guerras
-    public int getSizeList() {
-        return paisesDetails.size();
+    public int getPaisAllDataSizeList() {
+        return paisesAllData.size();
     }
 
 }//FIN DE LA CLASE

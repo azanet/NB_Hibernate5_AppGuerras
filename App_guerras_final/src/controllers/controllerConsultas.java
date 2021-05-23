@@ -167,7 +167,7 @@ public final class controllerConsultas implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 		
 			timerbuscar = null;
-			bussinessWar.lightSearch(viewConsult.getTxtfFilterWar().getText());
+			bussinessWar.lightSearchGuerras(viewConsult.getTxtfFilterWar().getText());
 			warTable.fireTableDataChanged();			
 		}
             });

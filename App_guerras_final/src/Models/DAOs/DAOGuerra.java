@@ -41,7 +41,7 @@ public class DAOGuerra {
     
     
     //Busqueda Suave, por nombre, año inicio, o año fin (todo junto)
-    public void lightSearch(String nombre) {
+    public void lightSearchGuerras(String nombre) {
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
             nombre = "%" + nombre + "%";
@@ -56,11 +56,11 @@ public class DAOGuerra {
     
     
     //insertar registro
-    public void insert(Guerra war) {
+    public void insertGuerras(Guerra guerra) {
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.save(war);
+            session.save(guerra);
             session.getTransaction().commit();
             session.close();
         }
@@ -68,10 +68,36 @@ public class DAOGuerra {
 
     
     
-    //borrar registro
-    public void delete(Guerra war) {
+        
+    //actualizar registro
+    public void updateGuerras(Guerra guerra) {
 
-        int id = war.getIdGuerra();
+        int id = guerra.getIdGuerra();
+
+        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+            //Recogiendo objeto de la BBDD
+            Guerra guerraBBDD = session.get(Guerra.class, id);
+
+            //Seteando valores del Jtable al objeto recogido de la BBDD
+            guerraBBDD.setNombre(guerra.getNombre());
+            guerraBBDD.setAnioInicio(guerra.getAnioInicio());
+            guerraBBDD.setAnioFin(guerra.getAnioFin());
+
+            session.beginTransaction();
+            session.save(guerraBBDD);
+            session.getTransaction().commit();
+            session.close();
+        }
+
+    }
+
+    
+    
+    
+    //borrar registro
+    public void deleteGuerras(Guerra guerra) {
+
+        int id = guerra.getIdGuerra();
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
             //Recogiendo Guerra de la BBDD, utilizando su ID, para su eliminación         
@@ -84,28 +110,6 @@ public class DAOGuerra {
     }
 
     
-    
-    //actualizar registro
-    public void update(Guerra war) {
-
-        int id = war.getIdGuerra();
-
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
-            //Recogiendo objeto de la BBDD
-            Guerra guerraBBDD = session.get(Guerra.class, id);
-
-            //Seteando valores del Jtable al objeto recogido de la BBDD
-            guerraBBDD.setNombre(war.getNombre());
-            guerraBBDD.setAnioInicio(war.getAnioInicio());
-            guerraBBDD.setAnioFin(war.getAnioFin());
-
-            session.beginTransaction();
-            session.save(guerraBBDD);
-            session.getTransaction().commit();
-            session.close();
-        }
-
-    }
 
     
     
@@ -113,14 +117,16 @@ public class DAOGuerra {
 ////////////////METODOS para JTABLE
 /////////////////////////////////////////////////////////////////////////    
     //Obtener el objeto según el índice
-    public Guerra getWarDTO(int indice) {
+    public Guerra getGuerraData(int indice) {
 
         Guerra guerra = GuerrasList.get(indice);
         return guerra;
     }
 
+    
     //Obtener la "dimension" del ArrayList de guerras
-    public int getSizeList() {
+    public int getGuerraSizeList() {
+        
         return GuerrasList.size();
     }
 ///////////////////////////////////////////////////////////////////////    
@@ -130,7 +136,7 @@ public class DAOGuerra {
 //////////////////////////////////////////////////////////////////////////////
     //PARA EL APARTADO DE CONSULTAS!!
 //////////////////////////////////////////////////////////////////////////////  
-    public ArrayList returnDetails(Guerra war) {
+    public ArrayList returnDetails(Guerra guerra) {
 
         ArrayList<DetailsWarDTO> detailsWarList = new ArrayList<>();
         String nombre_guerra, inicio_guerra, fin_guerra;
@@ -139,7 +145,7 @@ public class DAOGuerra {
         String inicio_independiente = "", fin_independiente = "";
         String inicio_unioncont, abandono_unioncont;
 
-        int id = war.getIdGuerra();
+        int id = guerra.getIdGuerra();
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
 

@@ -130,7 +130,7 @@ public final class controllerGuerra implements ActionListener {
                 wardto.setNombre(viewWar.getName_text().getText());
                 wardto.setAnioInicio(viewWar.getStart_date_text().getText());
                 wardto.setAnioFin(viewWar.getEnd_date_text().getText());
-                bussinessWar.insert(wardto);
+                bussinessWar.insertGuerras(wardto);
                 list();
                 System.out.println("INSERT Pais SOLO, METER LAS LLAMADAS A MODELO AQUI");
 
@@ -144,7 +144,7 @@ public final class controllerGuerra implements ActionListener {
             wardto.setAnioFin(viewWar.getEnd_date_text().getText());
            
      
-                bussinessWar.update(wardto);
+                bussinessWar.updateGuerras(wardto);
                 list();
 
             //Boton Eliminar Guerras
@@ -152,7 +152,7 @@ public final class controllerGuerra implements ActionListener {
             wardto = new Guerra();
             wardto.setIdGuerra(Integer.parseInt(viewWar.getId_text().getText()));
             
-            bussinessWar.delete(wardto);
+            bussinessWar.deleteGuerras(wardto);
           
                 list();
     
@@ -198,7 +198,7 @@ public final class controllerGuerra implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 	
 			timerbuscar = null;
-			bussinessWar.lightSearch(viewWar.getTxtfFilterSearch().getText());
+			bussinessWar.lightSearchGuerras(viewWar.getTxtfFilterSearch().getText());
 			warTableView.fireTableDataChanged();
 		
 		}

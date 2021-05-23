@@ -115,7 +115,7 @@ class controllerContendientes implements ActionListener {
 	viewContender.getBtnExit().addActionListener(this);
 
 	 //COMBOBOX DE GUERRAS
-	viewContender.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxModelWar());
+	viewContender.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
         
 	viewContender.getComboBoxSelectWar().addItemListener(new ItemListener() {
 	    @Override
@@ -124,7 +124,7 @@ class controllerContendientes implements ActionListener {
 		    viewContender.getComboBoxSelectContender().setEnabled(true);
 		  
 			String nombre = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
-			viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContender(nombre));
+			viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes(nombre));
 		
 		    contenderInsertSetActive();
 		    countriesUpdateDeactivate();
@@ -162,8 +162,8 @@ class controllerContendientes implements ActionListener {
 		    } else {
 			viewContender.getCb_Ganador().setSelected(false);
 		    }
-			viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxCountry(nombre));
-			viewContender.getComboBoxSelectCountryToContender().setModel(DAOcomboBoxesFill.fillAllCountriesCombobox());
+			viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises(nombre));
+			viewContender.getComboBoxSelectCountryToContender().setModel(DAOcomboBoxesFill.fillComboBoxAllPaises());
 
 
 		    contenderUpdateSetActive();
@@ -280,7 +280,7 @@ class controllerContendientes implements ActionListener {
                 contendiente.setNombre(viewContender.getTxtfInsertNewContender().getText());
                 contendiente.setGanador(ganador);
          
-                businness.insert(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
+                businness.insertContendiente(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
                 
 		cleanContenderForm();
 		refreshContenderComboBox();
@@ -294,7 +294,7 @@ class controllerContendientes implements ActionListener {
 	    Contendiente contendiente = new Contendiente();
 	    contendiente.setNombre(contenderName);
 	
-		businness.delete(contendiente);
+		businness.deleteContendiente(contendiente);
 		refreshContenderComboBox();
 		cleanUpdateContenderForm();
 
@@ -318,7 +318,7 @@ class controllerContendientes implements ActionListener {
                 contendiente.setGanador(ganador);
                 
                 
-                businness.update(contendiente, oldContenderName);
+                businness.updateContendiente(contendiente, oldContenderName);
                 refreshContenderComboBox();
                 cleanUpdateContenderForm();
        
@@ -384,7 +384,7 @@ class controllerContendientes implements ActionListener {
 	});
         
         
-        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de update paises
+        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de updateContendiente paises
 	viewContender.getCB_updateFechaAbandono().addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
@@ -546,12 +546,12 @@ class controllerContendientes implements ActionListener {
 
     private void refreshContenderComboBox() {
 	viewContender.getComboBoxSelectContender().removeAllItems();
-	viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContender((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
+	viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
     }
 
     private void refreshCountriesAddedComboBox()  {
 	viewContender.getComboBoxSelectCountryADDED().removeAllItems();
-	viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxCountry((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
+	viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
     }
 
 }//Fin clase proincipal

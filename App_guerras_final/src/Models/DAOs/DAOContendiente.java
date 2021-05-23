@@ -18,7 +18,33 @@ public class DAOContendiente {
 
     
 //////////////////CRUD DE CONTENDIENTES/////////////////////////////////////////
-    public void insert(Contendiente contender, String nombreGuerra) {
+    
+    
+        //Obtener Si El CONTENDIENTE solicitado ES ganador o no
+    public int isWinnerContender(String nombreContendiente) {
+
+        Integer winner;
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("SELECT c.ganador FROM Contendiente c WHERE c.nombre = :nombre");
+        query.setParameter("nombre", nombreContendiente);
+        
+        try {
+            winner = (Integer) query.getSingleResult();
+        } catch (Exception e) {
+            winner = 0;
+        }
+        
+        session.close();
+
+        return winner;
+    }
+    
+    
+    
+    
+    //Insertar CONTENDIENTE
+    public void insertContendiente(Contendiente contendiente, String nombreGuerra) {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
         Query query = session.createQuery("SELECT g FROM Guerra g WHERE g.nombre = :nombre");
@@ -26,10 +52,10 @@ public class DAOContendiente {
 
         //Recuperando Guerra
         Guerra guerraBBDD = (Guerra) query.uniqueResult();
-        contender.setGuerra(guerraBBDD);
+        contendiente.setGuerra(guerraBBDD);
 
         session.beginTransaction();
-        session.save(contender);
+        session.save(contendiente);
         session.getTransaction().commit();
         session.close();
     }
@@ -37,7 +63,7 @@ public class DAOContendiente {
     
     
     //UPDATE CONTENDIENTE      
-    public void update(Contendiente contendiente, String oldName) {
+    public void updateContendiente(Contendiente contendiente, String oldName) {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
@@ -58,30 +84,9 @@ public class DAOContendiente {
     
     
 
-    //Obtener ganador
-    public int isWinnerContender(String nombreContendiente) {
-
-        Integer winner;
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("SELECT c.ganador FROM Contendiente c WHERE c.nombre = :nombre");
-        query.setParameter("nombre", nombreContendiente);
         
-        try {
-            winner = (Integer) query.getSingleResult();
-        } catch (Exception e) {
-            winner = 0;
-        }
-        
-        session.close();
-
-        return winner;
-    }
-
-    
-    
     //DELETE CONTENDIENTE
-    public void delete(Contendiente contendiente) {
+    public void deleteContendiente(Contendiente contendiente) {
 
         String nombreContendiente = contendiente.getNombre();
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
@@ -97,5 +102,12 @@ public class DAOContendiente {
         session.close();
 
     }
+    
+    
+    
+
+
+    
+
 
 }

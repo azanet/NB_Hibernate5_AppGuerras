@@ -45,17 +45,17 @@ public class DAOUnionBandos {
     
     
     //INSERT UnionBandos
-    public void insertUnionBandos(UnionBandos unionBandos, String nContendiente, String nPais) {
+    public void insertUnionBandos(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
         //Crear metodos para recuperar LOS objetos por el nombre y setearselos al UNION BANDOS
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");
-        query.setParameter("nombre", nPais);
+        query.setParameter("nombre", nombrePais);
 
         Pais paisBBDD = (Pais) query.uniqueResult();
 
         query = session.createQuery("SELECT c FROM Contendiente c WHERE c.nombre = :nombre");
-        query.setParameter("nombre", nContendiente);
+        query.setParameter("nombre", nombreContendiente);
 
         Contendiente contendienteBBDD = (Contendiente) query.uniqueResult();
 
@@ -70,26 +70,7 @@ public class DAOUnionBandos {
     }
 
     
-    
-    //ELIMINAR UnionBandos
-    public void deleteUnionBandos(String nombreContendiente, String nombrePais) {
-
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente = (SELECT c FROM Contendiente c WHERE c.nombre = :contendiente) AND u.pais = (SELECT p FROM Pais p WHERE p.nombre = :pais)");
-        query.setParameter("contendiente", nombreContendiente);
-        query.setParameter("pais", nombrePais);
-
-        UnionBandos unionBandosBBDD = (UnionBandos) query.uniqueResult();
-
-        session.beginTransaction();
-        session.delete(unionBandosBBDD);
-        session.getTransaction().commit();
-        session.close();
-
-    }
-
-    
+        
     
     //ACTUALIZAR UnionBandos
     public void updateUnionBandos(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
@@ -111,5 +92,26 @@ public class DAOUnionBandos {
         session.close();
 
     }
+    
+    
+    //ELIMINAR UnionBandos
+    public void deleteUnionBandos(String nombreContendiente, String nombrePais) {
+
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente = (SELECT c FROM Contendiente c WHERE c.nombre = :contendiente) AND u.pais = (SELECT p FROM Pais p WHERE p.nombre = :pais)");
+        query.setParameter("contendiente", nombreContendiente);
+        query.setParameter("pais", nombrePais);
+
+        UnionBandos unionBandosBBDD = (UnionBandos) query.uniqueResult();
+
+        session.beginTransaction();
+        session.delete(unionBandosBBDD);
+        session.getTransaction().commit();
+        session.close();
+
+    }
+
+
 
 }
