@@ -41,27 +41,23 @@ Contributor(s):
 
 -->
 <hibernate-configuration>
-  <session-factory>                                             
+  <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/guerras</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">admin</property>
-    
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>  
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <!--Activando el autocommit -->  
+    <!--Activando el autocommit -->
     <property name="hibernate.connection.autocommit">true</property>
-    
-      <!-- Configuracion del C3P0 (Pool de conexiones) -->  
+    <!-- Configuracion del C3P0 (Pool de conexiones) -->
     <property name="c3p0.min_size">5</property>
     <property name="c3p0.max_size">20</property>
     <property name="c3p0.timeout">300</property>
     <property name="c3p0.max_statements">50</property>
     <property name="c3p0.idle_test_period">3000</property>
-    
-    
     <mapping resource="Models/POJOs/UnionBandos.hbm.xml"/>
     <mapping resource="Models/POJOs/Guerra.hbm.xml"/>
     <mapping resource="Models/POJOs/Contendiente.hbm.xml"/>

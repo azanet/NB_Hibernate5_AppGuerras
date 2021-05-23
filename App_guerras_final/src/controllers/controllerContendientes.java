@@ -155,7 +155,7 @@ class controllerContendientes implements ActionListener {
 		    //marcar checkbox ganador
 		    int ganador = 0;
 		   
-			ganador = businness.select_Winner(nombre);
+			ganador = businness.isWinnerContender(nombre);
 	
 		    if (ganador == 1) {
 			viewContender.getCb_Ganador().setSelected(true);

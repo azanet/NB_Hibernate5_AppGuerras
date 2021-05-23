@@ -36,7 +36,7 @@ public class Guerra  implements java.io.Serializable {
     @Column(name="anio_fin", length=10)
      private String anioFin;
     
-    @Column(name="nombre", nullable=false, length=50)
+    @Column(name="nombre", unique=true, nullable=false, length=50)
      private String nombre;
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="guerra")

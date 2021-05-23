@@ -61,7 +61,7 @@ public final class controllerGuerra implements ActionListener {
 
 
 //            //AQUI INICIAMOS LA JTABLE ETC ETC
-        bussinessWar.queriesI();
+        bussinessWar.selectAllGuerras();
         warTableView = new JTableModel_Guerra(bussinessWar);
         viewWar.getJtableWars().setModel(warTableView);
   /////////     ///////////////////              ////////////       
@@ -184,7 +184,7 @@ public final class controllerGuerra implements ActionListener {
     }
     
     private void list() {
-        bussinessWar.queriesI();
+        bussinessWar.selectAllGuerras();
         warTableView.fireTableDataChanged();
     }
     

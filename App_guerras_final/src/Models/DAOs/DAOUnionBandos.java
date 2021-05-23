@@ -17,106 +17,99 @@ import org.hibernate.query.Query;
  * @author davidf
  */
 public class DAOUnionBandos {
-    
+
     //PONER AQUI LOS METODOS DE UNION BANDOS QUE ESTAN EN CONTENDIENTES+
-    public DAOUnionBandos(){
+    public DAOUnionBandos() {
     }
 
-
-   ////////////////CRUD DE - UNION BANDOS///////////////////////////////////////////////  
+    
+    
+    ////////////////CRUD DE - UNION BANDOS///////////////////////////////////////////////  
     
     //Obtener UnionBandos
     public UnionBandos selectUnionBandos(String nombreContendiente, String nombrePais) {
-       
-	String beginDate = "";
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
-            //REALIZANDO CONSULTA con 2 SUBCONSULTAS en las que le pasamos OBJETOS para COMPARAR y obtener de una los objetos necesatios, para determinar que tabla UNION es la nuestra
-           Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
-            query.setParameter("contendiente", nombreContendiente);
-            query.setParameter("pais", nombrePais);
+        //REALIZANDO CONSULTA con 2 SUBCONSULTAS en las que le pasamos OBJETOS para COMPARAR y obtener de una los objetos necesatios, para determinar que tabla UNION es la nuestra
+        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente = (SELECT c FROM Contendiente c WHERE c.nombre = :contendiente) AND u.pais = (SELECT p FROM Pais p WHERE p.nombre = :pais)");
+        query.setParameter("contendiente", nombreContendiente);
+        query.setParameter("pais", nombrePais);
 
-            UnionBandos unionBandos = (UnionBandos)query.uniqueResult();
-      
-            session.close();
-     
-        return unionBandos;   
+        UnionBandos unionBandosBBDD = (UnionBandos) query.uniqueResult();
+
+        session.close();
+
+        return unionBandosBBDD;
     }
 
     
- 
     
     //INSERT UnionBandos
     public void insertUnionBandos(UnionBandos unionBandos, String nContendiente, String nPais) {
         //Crear metodos para recuperar LOS objetos por el nombre y setearselos al UNION BANDOS
-        
+
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
-        Query query=session.createQuery("SELECT p From Pais p WHERE p.nombre = :nombre");
+        Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");
         query.setParameter("nombre", nPais);
-        
-        Pais pais= (Pais) query.uniqueResult();
-        
-        query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");
+
+        Pais paisBBDD = (Pais) query.uniqueResult();
+
+        query = session.createQuery("SELECT c FROM Contendiente c WHERE c.nombre = :nombre");
         query.setParameter("nombre", nContendiente);
-        
-        Contendiente contendiente = (Contendiente) query.uniqueResult();
-        
+
+        Contendiente contendienteBBDD = (Contendiente) query.uniqueResult();
+
         //Recuperando Guerra
-        unionBandos.setPais(pais);
-        unionBandos.setContendiente(contendiente);
-        
+        unionBandos.setPais(paisBBDD);
+        unionBandos.setContendiente(contendienteBBDD);
+
         session.beginTransaction();
         session.save(unionBandos);
         session.getTransaction().commit();
         session.close();
     }
-    
-    
 
     
     
-
-
     //ELIMINAR UnionBandos
-    public void deleteUnionBandos(String nombreContendiente, String nombrePais)  {
-  
-            Session session = HibernateUtil_SessionFactory.getCurrentSession();
+    public void deleteUnionBandos(String nombreContendiente, String nombrePais) {
 
-            Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
-            query.setParameter("contendiente", nombreContendiente);
-            query.setParameter("pais", nombrePais);
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
-            UnionBandos unionB = (UnionBandos)query.uniqueResult();
-    
-           session.beginTransaction();
-           session.delete(unionB);
-           session.getTransaction().commit();
-           session.close();
-  
+        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente = (SELECT c FROM Contendiente c WHERE c.nombre = :contendiente) AND u.pais = (SELECT p FROM Pais p WHERE p.nombre = :pais)");
+        query.setParameter("contendiente", nombreContendiente);
+        query.setParameter("pais", nombrePais);
+
+        UnionBandos unionBandosBBDD = (UnionBandos) query.uniqueResult();
+
+        session.beginTransaction();
+        session.delete(unionBandosBBDD);
+        session.getTransaction().commit();
+        session.close();
+
     }
 
     
-  
+    
     //ACTUALIZAR UnionBandos
     public void updateUnionBandos(UnionBandos unionBandos, String nombreContendiente, String nombrePais) {
-     
-            Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
-            Query query=session.createQuery("SELECT u From UnionBandos u WHERE u.contendiente = (SELECT c From Contendiente c WHERE c.nombre = :contendiente) and u.pais = (SELECT p From Pais p WHERE p.nombre = :pais)");
-            query.setParameter("contendiente", nombreContendiente);
-            query.setParameter("pais", nombrePais);
-            
-            UnionBandos unionBandos_aux= (UnionBandos) query.uniqueResult();
-            
-            unionBandos_aux.setFechaUnion(unionBandos.getFechaUnion());
-            unionBandos_aux.setFechaAbandono(unionBandos.getFechaAbandono());
-            
-            session.beginTransaction();
-            session.save(unionBandos_aux);
-            session.getTransaction().commit();
-            session.close();
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente = (SELECT c FROM Contendiente c WHERE c.nombre = :contendiente) AND u.pais = (SELECT p FROM Pais p WHERE p.nombre = :pais)");
+        query.setParameter("contendiente", nombreContendiente);
+        query.setParameter("pais", nombrePais);
+
+        UnionBandos unionBandosBBDD = (UnionBandos) query.uniqueResult();
+
+        unionBandosBBDD.setFechaUnion(unionBandos.getFechaUnion());
+        unionBandosBBDD.setFechaAbandono(unionBandos.getFechaAbandono());
+
+        session.beginTransaction();
+        session.save(unionBandosBBDD);
+        session.getTransaction().commit();
+        session.close();
 
     }
 
-    
 }

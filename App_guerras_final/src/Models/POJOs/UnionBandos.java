@@ -32,11 +32,11 @@ public class UnionBandos  implements java.io.Serializable {
      private Integer idUnionBandos;
     
      @ManyToOne(fetch=FetchType.LAZY)
-     @JoinColumn(name="id_contendiente", nullable=false)
+     @JoinColumn(name="id_contendiente",unique=true, nullable=false)
      private Contendiente contendiente;
      
      @ManyToOne(fetch=FetchType.LAZY)
-     @JoinColumn(name="id_pais", nullable=false)
+     @JoinColumn(name="id_pais",unique=true, nullable=false)
      private Pais pais;
     
      @Column(name="fecha_union", length=10)

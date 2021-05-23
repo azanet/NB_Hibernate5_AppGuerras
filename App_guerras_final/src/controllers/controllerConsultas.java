@@ -6,7 +6,7 @@
 package controllers;
 
 import Models.POJOs.Guerra;
-import Models.UtilsAndDTOs.FormatTextDetailsWarUtil;
+import Models.ConsultFormatTextUtils.FormatTextDetailsWarUtil;
 import Models.DAOs.DAOGuerra;
 import Models.TableModels.JTableModel_Guerra;
 import java.awt.event.ActionEvent;
@@ -101,7 +101,7 @@ public final class controllerConsultas implements ActionListener {
 
     private void initComponents()  {
 
-        bussinessWar.queriesI();
+        bussinessWar.selectAllGuerras();
         warTable = new JTableModel_Guerra(bussinessWar);
         getFormatDetails = new FormatTextDetailsWarUtil();
         viewConsult.getJtableWarList().setModel(warTable);

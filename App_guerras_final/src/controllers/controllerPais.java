@@ -73,7 +73,7 @@ public final class controllerPais implements ActionListener {
         viewCountrie.getCheckBoxIndependent().addActionListener(this);
 
 //////// JTABLEEE HIBERNATE!!
-        businness.queriesI();
+        businness.selectAllPaises();
         country_TableView = new JTableModel_Pais(businness);
         viewCountrie.getJtableCountries().setModel(country_TableView);
  ////////////////////////////////////////////////////////  
@@ -152,7 +152,7 @@ public final class controllerPais implements ActionListener {
               
                 countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
                 
-                businness.insert(countryDTO);
+                businness.insertPais(countryDTO);
 		
                 if(viewCountrie.getTxtfDateBegin().getText().length()>0){
                          
@@ -173,7 +173,7 @@ public final class controllerPais implements ActionListener {
              
                     
                     countryDTO.setNombre(viewCountrie.getTxtfCountryName().getText());
-                    businness.insert(countryDTO);
+                    businness.insertPais(countryDTO);
                     
                
             }
@@ -192,7 +192,7 @@ public final class controllerPais implements ActionListener {
             if (viewCountrie.getCheckBoxIndependent().isSelected() == true) {
 
               
-                    businness.update(countryDTO);
+                    businness.updatePais(countryDTO);
                     //////////////////
                     
                     if(viewCountrie.getTxtfDateBegin().getText().length()>0){
@@ -219,7 +219,7 @@ public final class controllerPais implements ActionListener {
             } else {
 
              
-                    businness.update(countryDTO);
+                    businness.updatePais(countryDTO);
                     businnessPI.deleteIndependencePeriod(countryDTO);
           
             }
@@ -233,7 +233,7 @@ public final class controllerPais implements ActionListener {
           
                 Pais countryDTO = new Pais();
                 countryDTO.setIdPais(Integer.parseInt(viewCountrie.getTF_CountryId().getText()));
-                businness.delete(countryDTO);
+                businness.deletePais(countryDTO);
                 list();
 		clearTextFields();
         
@@ -283,7 +283,7 @@ public final class controllerPais implements ActionListener {
     }
 
     private void list()  {
-        businness.queriesI();
+        businness.selectAllPaises();
         country_TableView.fireTableDataChanged();
     }
 
@@ -298,7 +298,7 @@ public final class controllerPais implements ActionListener {
                 public void actionPerformed(ActionEvent evt) {
                    
                         timerbuscar = null;
-                        businness.lightSearch(viewCountrie.getTxtfSearch().getText());
+                        businness.lightSearchPaises(viewCountrie.getTxtfSearch().getText());
                         country_TableView.fireTableDataChanged();
                    
                 }

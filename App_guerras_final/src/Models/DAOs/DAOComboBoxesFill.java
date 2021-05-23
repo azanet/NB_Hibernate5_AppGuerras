@@ -6,7 +6,6 @@
 package Models.DAOs;
 
 import Models.POJOs.Contendiente;
-import Models.POJOs.Guerra;
 import Models.POJOs.Pais;
 import Models.POJOs.UnionBandos;
 import SessionFactory.HibernateUtil_SessionFactory;
@@ -25,124 +24,87 @@ public class DAOComboBoxesFill {
     public DAOComboBoxesFill() {
     }
     
-    
-    
-    
-    
-    //DEFAULTCOMBOBOXMODELS
+
+    //Rellenar ComboBOX de GUERRAS
     public DefaultComboBoxModel fillComboBoxModelWar() {
-	
-        DefaultComboBoxModel comboBoxModelWar = new DefaultComboBoxModel();      
+
+        DefaultComboBoxModel comboBoxModelWar = new DefaultComboBoxModel();
         comboBoxModelWar.addElement("Seleccione una guerra...");
-        
+
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
-        Query query=session.createQuery("Select g.nombre from Guerra g order by g.nombre");        
-             
-        comboBoxModelWar.addAll(query.list());
-        
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT g.nombre FROM Guerra g ORDER BY g.nombre");
+
+        comboBoxModelWar.addAll(query.list()); //INSERTANDO la lista entera recibida en el combobox
+
         session.close();
-        return comboBoxModelWar;	
+        return comboBoxModelWar;
     }
 
+    
+    //Rellenar ComboBOX de CONTENDIENTES de una GUERRA CONCRETA
+    public DefaultComboBoxModel fillComboBoxContender(String nombre) {
 
-    public DefaultComboBoxModel fillComboBoxContender(String nombre)  {
-
-        DefaultComboBoxModel comboBoxModelContender = new DefaultComboBoxModel();      
+        DefaultComboBoxModel comboBoxModelContender = new DefaultComboBoxModel();
         comboBoxModelContender.addElement("Seleccione un Contendiente...");
-        
+
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
-        Query query=session.createQuery("SELECT g From Guerra g WHERE g.nombre = :nombre");        
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT c FROM Contendiente c WHERE c.guerra=(SELECT g FROM Guerra g WHERE g.nombre = :nombre) ORDER BY c.nombre");
         query.setParameter("nombre", nombre);
-        
-        //Recuperando Guerra
-        Guerra guerra= (Guerra) query.uniqueResult();
-        
-        if(guerra != null){
-        //Obteniendo Los contendientes y agregandolos al comboBox
-        List<Contendiente> contendientes = new ArrayList<>(guerra.getContendientes());
-        
+
+        //Recuperando LISTA de CONTENDIENTES
+        List<Contendiente> contendientes = new ArrayList<>(query.list());
+
         for (Contendiente contendiente : contendientes) {
-            comboBoxModelContender.addElement(contendiente.getNombre());
-        }
+            comboBoxModelContender.addElement(contendiente.getNombre());//Insertando NOMBRE de CONTENDIENTE en el combobox
         }
         session.close();
-       ///////////////////////////////////////////////////////////////////////////7 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         return comboBoxModelContender;
     }
 
     
-    
-     
-    
+    //Rellenar ComboBOX de PAISES que PERTENECEN a UN CONTENDIENTE 
     public DefaultComboBoxModel fillComboBoxCountry(String nombre) {
-     
+
         DefaultComboBoxModel comboBoxModelCountry = new DefaultComboBoxModel();
-	        
         comboBoxModelCountry.addElement("Seleccione un PAÍS Contendiente...");
-        
+
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession(); 
-        Query query=session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");        
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente=(SELECT c FROM Contendiente c WHERE c.nombre = :nombre)");
         query.setParameter("nombre", nombre);
         
-        //Recuperando Guerra
-        Contendiente contendiente= (Contendiente) query.uniqueResult();
-        
-        //Obteniendo los Paises contendientes y agregandolos al comboBox
-        if (contendiente != null){
-        List<UnionBandos> unionBandos = new ArrayList<>(contendiente.getUnionBandoses());
-        
-        
-            for (UnionBandos unionBando : unionBandos) {
-                Pais pais= unionBando.getPais();
-                comboBoxModelCountry.addElement(pais.getNombre());
-            }
+        //Recuperando LISTA de UNION BANDOS, que tienen el CONTENDIENTE en COMUN 
+        List<UnionBandos> unionBandos = new ArrayList<>(query.list());
+ 
+        //RECORRIENDO LA LISTA e INSERTANDO el NOMBRE de cada PAIS incluido en el OBJETO UNION BANDOS recuperado al COMBOBOX.        
+        for (UnionBandos unionBando : unionBandos) {
+            Pais pais = unionBando.getPais();
+            comboBoxModelCountry.addElement(pais.getNombre()); //Insertando nombre de PAIS en el COMBOBOX
         }
-        
-        session.close(); 
-        
-        return comboBoxModelCountry;    
-    }
+        session.close();
 
+        return comboBoxModelCountry;
+    }
     
     
+   //Rellenar ComboBOX de PAISES con TODOS LOS PAISES EXISTENTES
     public DefaultComboBoxModel fillAllCountriesCombobox() {
 
         DefaultComboBoxModel comboBoxModelCountries = new DefaultComboBoxModel();
         comboBoxModelCountries.addElement("Seleccione un País...");
-        
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
-        Query query=session.createQuery("Select p.nombre from Pais p order by p.nombre");
-            
-        comboBoxModelCountries.addAll(query.list());
-        session.close();
-        
-        return comboBoxModelCountries;     
-    }
 
+        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT p.nombre FROM Pais p ORDER BY p.nombre");
+
+        comboBoxModelCountries.addAll(query.list()); //Insertando la LISTA en el COMBOBOX
+        session.close();
+
+        return comboBoxModelCountries;
+    }
     
     
-    
+
 }
