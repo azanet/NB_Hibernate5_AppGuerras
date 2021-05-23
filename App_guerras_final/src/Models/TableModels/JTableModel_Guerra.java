@@ -20,19 +20,19 @@ public class JTableModel_Guerra extends AbstractTableModel{
 
 
     private static final long serialVersionUID = 1L;
-    private final DAOGuerra business;
+    private final DAOGuerra DAOguerra;
     
-    public JTableModel_Guerra(DAOGuerra business)
+    public JTableModel_Guerra(DAOGuerra DAOguerra)
     {
         super();
      
-        this.business= business;
+        this.DAOguerra= DAOguerra;
     }
 
     @Override
     public int getRowCount()
     {
-        return business.getGuerraSizeList();
+        return DAOguerra.getGuerraSizeList();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class JTableModel_Guerra extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex){
              
-        Guerra g = business.getGuerraData(rowIndex);
+        Guerra g = DAOguerra.getGuerraData(rowIndex);
         
         Object[] values=new Object[]{g.getIdGuerra(), g.getNombre(),g.getAnioInicio(),g.getAnioFin()};
         return values[columnIndex];

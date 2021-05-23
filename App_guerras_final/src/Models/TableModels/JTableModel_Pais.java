@@ -19,13 +19,13 @@ public class JTableModel_Pais extends AbstractTableModel{
 
 
     private static final long serialVersionUID = 2L;
-    private final DAOPais business;
+    private final DAOPais DAOpais;
     
-    public JTableModel_Pais(DAOPais business)
+    public JTableModel_Pais(DAOPais DAOpais)
     {
         super();
      
-        this.business= business;
+        this.DAOpais= DAOpais;
 
 
     }
@@ -33,7 +33,7 @@ public class JTableModel_Pais extends AbstractTableModel{
     @Override
     public int getRowCount()
     {
-        return business.getPaisAllDataSizeList();
+        return DAOpais.getPaisAllDataSizeList();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JTableModel_Pais extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex)
     {
        
-            Object[] values = business.getPaisAllData(rowIndex);
+            Object[] values = DAOpais.getPaisAllData(rowIndex);
             
    
             return values[columnIndex];
