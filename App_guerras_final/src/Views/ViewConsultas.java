@@ -143,6 +143,7 @@ public class ViewConsultas extends JDialog {
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salir.png"))); // NOI18N
         btnExit.setBorderPainted(false);
         btnExit.setContentAreaFilled(false);
+        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExit.setFocusPainted(false);
         btnExit.setFocusable(false);
         jPanel2.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 205, -1, 80));

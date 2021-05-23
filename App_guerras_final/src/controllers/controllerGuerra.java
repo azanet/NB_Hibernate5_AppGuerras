@@ -32,6 +32,7 @@ public final class controllerGuerra implements ActionListener {
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
 
+    
     public controllerGuerra(ViewPrincipal viewPrincipal) {
 
         viewGuerras = new ViewGuerras(viewPrincipal, true);
@@ -41,19 +42,19 @@ public final class controllerGuerra implements ActionListener {
 
         viewGuerras.setVisible(true);
     }
-
     
     
     private void initComponents() {
+        
         resetViewComponents();
         initEvents();
 
         tableModelGuerra = new JTableModelGuerra(DAOguerra);
         viewGuerras.getJtableWars().setModel(tableModelGuerra);
         list();
+        
     }//Fin initComponents
 
-    
     
     private void initEvents() {
         //INICIALIZAR EVENTOS
@@ -63,13 +64,12 @@ public final class controllerGuerra implements ActionListener {
         viewGuerras.getExit_button().addActionListener(this);
         viewGuerras.getBtnLimpiarPantalla().addActionListener(this);
 
-
         /*Agregamos un evento de ratón a la tabla para seleccionar
         los valores de una fila y colocarlos en los cajones de texto*/
         viewGuerras.getJtableWars().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (me.getClickCount() == 2) {
+                if (me.getClickCount() == 1) {
                     selected_row();
                     viewGuerras.getEdit_button().setEnabled(true);
                     viewGuerras.getDelete_button().setEnabled(true);
@@ -109,6 +109,7 @@ public final class controllerGuerra implements ActionListener {
 
     }//Fin initEvents
 
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         //Boton Añadir Guerras
@@ -132,16 +133,20 @@ public final class controllerGuerra implements ActionListener {
           //Botón Limpiar Pantalla  
         } else if (ae.getSource() == viewGuerras.getBtnLimpiarPantalla()) {
               
-            resetViewComponents();         
+            //Al final no lleva nada aquí porque siempre limpiaremos pantalla despues de alguna accion    
             
             //Botón Salir
         } else if (ae.getSource() == viewGuerras.getExit_button()) {
             viewGuerras.dispose();
         }//Fin del else-if
-
+        
+        resetViewComponents(); 
+        
     }//Fin de action performed
 
+    
     private void selected_row() {
+        
         int row = viewGuerras.getJtableWars().getSelectedRow();
         if (row >= 0) {
             viewGuerras.getId_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 0)));
@@ -149,17 +154,21 @@ public final class controllerGuerra implements ActionListener {
             viewGuerras.getStart_date_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 2)));
             viewGuerras.getEnd_date_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 3)));
         }
+        
     }
     
     
     private void list() {
+        
         DAOguerra.selectAllGuerras();
         tableModelGuerra.fireTableDataChanged();
+        
     }
     
     
     //Limpiar TextFields y volver a SETEAR los estados de los botones
     private void resetViewComponents() {
+        
         viewGuerras.getJtableWars().clearSelection();
         
         viewGuerras.getName_text().setText("");
@@ -204,16 +213,18 @@ public final class controllerGuerra implements ActionListener {
 
     
     private void insertarGuerra() {
+        
         Guerra guerra = new Guerra();
-
         guerra.setNombre(viewGuerras.getName_text().getText());
         guerra.setAnioInicio(viewGuerras.getStart_date_text().getText());
         guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
         DAOguerra.insertGuerras(guerra);
+        
     }
 
     
     private void modificarGuerra() {
+        
         Guerra guerra = new Guerra();
         guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
         guerra.setNombre(viewGuerras.getName_text().getText());
@@ -221,10 +232,12 @@ public final class controllerGuerra implements ActionListener {
         guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
 
         DAOguerra.updateGuerras(guerra);
+        
     }
 
     
     private void eliminarGuerra() {
+        
         Guerra guerra = new Guerra();
         guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
 

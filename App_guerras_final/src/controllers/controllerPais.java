@@ -36,6 +36,7 @@ public final class controllerPais implements ActionListener {
     private Timer timerbuscar;
     //AGREGAR MODELs *** 
 
+    
     //Constructor
     public controllerPais(ViewPrincipal viewPrincipal) {
 
@@ -49,6 +50,7 @@ public final class controllerPais implements ActionListener {
 
     }//Fin del constructor
 
+    
     private void initComponents() {
         resetViewComponents();
         initEvents();
@@ -59,6 +61,7 @@ public final class controllerPais implements ActionListener {
 
     }//Fin initComponents
 
+    
     private void initEvents() {
         //INICIALIZAR EVENTOS
         viewPais.getBtnInsert().addActionListener(this);
@@ -73,7 +76,7 @@ public final class controllerPais implements ActionListener {
         viewPais.getJtableCountries().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (me.getClickCount() == 2) {
+                if (me.getClickCount() == 1) {
                     selected_row();
 
                     //SETEANDO ELEMENTOS DE LA VISTA
@@ -119,6 +122,7 @@ public final class controllerPais implements ActionListener {
 
     }//Fin initEvents
 
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
 
@@ -158,7 +162,6 @@ public final class controllerPais implements ActionListener {
 
     }//Fin de action performed
 
-
     
     private void list() {
         DAOpais.selectAllPaises();
@@ -166,7 +169,7 @@ public final class controllerPais implements ActionListener {
         resetViewComponents();
     }
 
-
+    
     private void resetViewComponents() {
 
         viewPais.getJtableCountries().clearSelection();
@@ -189,7 +192,7 @@ public final class controllerPais implements ActionListener {
     }
 
     
-        //Seteara las etiquetas acorde al CheckBox
+    //Seteara las etiquetas acorde al CheckBox
     private void setIndependent() {
         boolean aux = viewPais.getCheckBoxIndependent().isSelected();
         viewPais.getLblDateBegin().setEnabled(aux);
@@ -209,8 +212,7 @@ public final class controllerPais implements ActionListener {
         }
 
     }//Fin set independent
-    
-    
+
     
     private void selected_row() {
         int row = viewPais.getJtableCountries().getSelectedRow();
@@ -233,8 +235,6 @@ public final class controllerPais implements ActionListener {
         }
     }
 
-
-    
     
     //Timer que DISPARA "LA BUSQUEDA SUAVE"
     private void activoTimer() {
@@ -258,6 +258,7 @@ public final class controllerPais implements ActionListener {
         }
 
     }
+    
 
     private void eliminarPais() {
 
@@ -266,6 +267,7 @@ public final class controllerPais implements ActionListener {
         DAOpais.deletePais(pais);
     }
 
+    
     private void modificarPais() {
 
         Pais pais = new Pais();
@@ -313,6 +315,7 @@ public final class controllerPais implements ActionListener {
         }
     }
 
+    
     private void insertarPais() {
         Pais pais = new Pais();
         //insert pais con independencia

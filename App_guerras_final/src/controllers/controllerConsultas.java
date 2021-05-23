@@ -34,104 +34,125 @@ public final class controllerConsultas implements ActionListener {
     private FormatTextDetailsWarUtil formatTextDetailsWarUtil;
     private JTableModelGuerra tableModelGuerra;
     private Guerra guerra;
-    
+
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
 
+    
     //Constructor
     public controllerConsultas(ViewPrincipal viewPrincipal) {
 
         //AGREGAR MODELs ***
         viewConsultas = new ViewConsultas(viewPrincipal, true);
         DAOguerra = new DAOGuerra();
+        formatTextDetailsWarUtil = new FormatTextDetailsWarUtil();
         
         initComponents();
-        initEvents();
-
+    
         viewConsultas.setVisible(true);
+
     }//Fin del constructor
 
     
+    private void initComponents() {
+
+        DAOguerra.selectAllGuerras();
+        tableModelGuerra = new JTableModelGuerra(DAOguerra);        
+        viewConsultas.getJtableWarList().setModel(tableModelGuerra);
+        
+        viewConsultas.getBtnSeeDetails().setEnabled(false);
+        
+        initEvents();
+        
+    }//Fin initComponents
+
+    
     public void initEvents() {
+
         //INICIALIZAR EVENTOS
         viewConsultas.getBtnSeeDetails().addActionListener(this);
         viewConsultas.getBtnClean().addActionListener(this);
         viewConsultas.getBtnSave().addActionListener(this);
         viewConsultas.getBtnExit().addActionListener(this);
-        
-          
-            /*Agregamos un evento de ratón a la tabla para seleccionar
+
+        /*Agregamos un evento de ratón a la tabla para seleccionar
             los valores de una fila y almacenarlo en el OBJETO para ser utilizado
             para la consulta en caso de ser solicitado*/
-            viewConsultas.getJtableWarList().addMouseListener(new MouseAdapter() {
+        viewConsultas.getJtableWarList().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                    setWarDTO();
-                    viewConsultas.getBtnSeeDetails().setEnabled(true);
+
+                int row = viewConsultas.getJtableWarList().getSelectedRow();
+                if (row >= 0) {
+                    guerra = new Guerra();
+                    //Le pasaremos solo la ID del objeto que queremos Consultar Posteriormente, y con hibernate, haremos el resto del trabajo
+                    guerra.setIdGuerra(Integer.parseInt(String.valueOf(viewConsultas.getJtableWarList().getValueAt(row, 0))));
+                }
+                viewConsultas.getBtnSeeDetails().setEnabled(true);
             }
         }
         );
-            
-            
-            	viewConsultas.getTxtfFilterWar().getDocument().addDocumentListener(new DocumentListener() {
-	    @Override
-	    public void insertUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
-		    activoTimer();
-		    
-		}
-	    }
-	    
-	    @Override
-	    public void removeUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
-		    activoTimer();
-		}
-	    }
-	    
-	    @Override
-	    public void changedUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
-		    activoTimer();
-		    
-		}
-	    }
-	});
+
+        viewConsultas.getTxtfFilterWar().getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
+                    activoTimer();
+
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
+                    activoTimer();
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewConsultas.getTxtfFilterWar().getDocument()) {
+                    activoTimer();
+
+                }
+            }
+        });
 
     }//Fin initEvents
 
-    private void initComponents()  {
-
-        DAOguerra.selectAllGuerras();
-        tableModelGuerra = new JTableModelGuerra(DAOguerra);
-        formatTextDetailsWarUtil = new FormatTextDetailsWarUtil();
-        viewConsultas.getJtableWarList().setModel(tableModelGuerra);
-        
-        viewConsultas.getBtnSeeDetails().setEnabled(false);
-    }//Fin initComponents
-
     
+  
     
     @Override
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == viewConsultas.getBtnSeeDetails()) {
+            
+            //En esta linea... Se llama a "returnDetails" del DAO guerras, que retorna un ARRAYLIST con toda la info de la guerra"
+            //Ese array list es retornado al METODO "formatDetails" de la clase "formatTextDetailsWarUtil" y el resultado de este
+            // es una String FORMATEADA que será pasada al TextArea, para su visualizacion y posterior guardo en un archivo.
+            viewConsultas.getTxtAreaDetailsWar().setText(formatTextDetailsWarUtil.formatDetails(DAOguerra.returnDetails(guerra)));
+            initComponents();
 
-                viewConsultas.getTxtAreaDetailsWar().setText(formatTextDetailsWarUtil.formatDetails(DAOguerra.returnDetails(guerra)));
-
-                initComponents();
-         
-            } else if (ae.getSource() == viewConsultas.getBtnClean()) {
+            
+        } else if (ae.getSource() == viewConsultas.getBtnClean()) {
+            
             viewConsultas.getTxtAreaDetailsWar().setText("");
             viewConsultas.getTxtfFilterWar().setText("");
+            
+            
         } else if (ae.getSource() == viewConsultas.getBtnSave()) {
+            
             Export();
+            
+            
         } else if (ae.getSource() == viewConsultas.getBtnExit()) {
             viewConsultas.dispose();
         }//Fin del else-if
 
     }//Fin de action performed
 
+    
     private void Export() {
         try {
             JFileChooser archivo = new JFileChooser(System.getProperty("WarDetails.txt"));
@@ -147,36 +168,26 @@ public final class controllerConsultas implements ActionListener {
         }
     }
 
-        private void setWarDTO() {
-              int row = viewConsultas.getJtableWarList().getSelectedRow();
-        if (row >= 0) {
-            guerra = new Guerra();
-            //Le pasaremos solo la ID del objeto que queremos Consultar Posteriormente, y con hibernate, haremos el resto del trabajo
-            guerra.setIdGuerra(Integer.parseInt(String.valueOf(viewConsultas.getJtableWarList().getValueAt(row, 0))));
+    
+    private void activoTimer() {
+
+        if ((timerbuscar != null) && timerbuscar.isRunning()) {
+            timerbuscar.restart();
+        } else {
+            timerbuscar = new Timer(TIEMPOBUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+
+                    timerbuscar = null;
+                    DAOguerra.lightSearchGuerras(viewConsultas.getTxtfFilterWar().getText());
+                    tableModelGuerra.fireTableDataChanged();
+                }
+            });
+
+            timerbuscar.setRepeats(false);
+            timerbuscar.start();
         }
+
     }
 
-        
-        
-   private void activoTimer() {
-	
-	if ((timerbuscar != null) && timerbuscar.isRunning()) {
-	    timerbuscar.restart();
-	} else {
-	    timerbuscar = new Timer(TIEMPOBUSCAR, new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent evt) {
-		
-			timerbuscar = null;
-			DAOguerra.lightSearchGuerras(viewConsultas.getTxtfFilterWar().getText());
-			tableModelGuerra.fireTableDataChanged();			
-		}
-            });
-            
-	    timerbuscar.setRepeats(false);
-	    timerbuscar.start();
-	}
-	
-    }
-  
 }//Fin de la clase principal
