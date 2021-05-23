@@ -7,6 +7,7 @@ package Views;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -27,10 +28,9 @@ public class ViewGuerras extends JDialog {
     public ViewGuerras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
-             this.setContentPane(fondo);
+        this.setContentPane(fondo);
         initComponents();
         setWindow();
-
     }
 
     public JButton getBtnLimpiarPantalla() {
