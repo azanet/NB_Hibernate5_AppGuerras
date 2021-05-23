@@ -114,13 +114,20 @@ class controllerContendientes implements ActionListener {
 
 	viewContendientes.getBtnExit().addActionListener(this);
 
+        
+        
+        
 	 //COMBOBOX DE GUERRAS
 	viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
         
 	viewContendientes.getComboBoxSelectWar().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == e.SELECTED) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+                    
+                    System.out.println(e.getItem().toString());
+                    System.out.println(e.getID());
+                    
 		    viewContendientes.getComboBoxSelectContender().setEnabled(true);
 		  
 			String nombre = (String) viewContendientes.getComboBoxSelectWar().getSelectedItem();
@@ -144,7 +151,7 @@ class controllerContendientes implements ActionListener {
 	viewContendientes.getComboBoxSelectContender().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == e.SELECTED) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
                     
                     
 		    viewContendientes.getLblInsertNewCountry().setEnabled(true);
@@ -177,8 +184,11 @@ class controllerContendientes implements ActionListener {
 	viewContendientes.getComboBoxSelectCountryToContender().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == e.SELECTED) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
 
+                    System.out.println(e.getItem().toString());
+                    
+                    
 		    countriesUpdateDeactivate();
 		    countriesInsertSetActive();
 		    contenderUpdateDeactivate();
@@ -200,17 +210,18 @@ class controllerContendientes implements ActionListener {
 
 		if (e.getStateChange() == e.SELECTED) {
 		    String fecha1;
-		    String fecha2;
+		    String fecha2="";
 		    String nombrePais = (String) viewContendientes.getComboBoxSelectCountryADDED().getSelectedItem();
 		    String nombreContendiente = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
                     
                      UnionBandos unionBandos = DAOunionBandos.selectUnionBandos(nombreContendiente, nombrePais);
 
-                    fecha1 = unionBandos.getFechaUnion();
-                    fecha2 = unionBandos.getFechaAbandono();                 
+                    
+                                     
 
 			//parseo de fecha string a date
 			try {
+                            fecha1 = unionBandos.getFechaUnion();
 			    date1 = df.parse(fecha1);
 
 			} catch (Exception ex) {
@@ -224,15 +235,17 @@ class controllerContendientes implements ActionListener {
                         
 
 			try {
+                            fecha2 = unionBandos.getFechaAbandono();
 			    date2 = df.parse(fecha2);
                             viewContendientes.getjDC_updateEndDate().setDate(date2);
-			} catch (Exception ex) {
+		
+                           	} catch (Exception ex) {
 			   // date2 = df.parse("0001-01-01");
                             viewContendientes.getjDC_updateEndDate().setEnabled(false);
 			 //   viewContender.getjDC_updateEndDate().setEnabled(false);
 			}
 			
-
+                       
 		
 		    countriesInsertDeactivate();
 		    countriesUpdateSetActive();
