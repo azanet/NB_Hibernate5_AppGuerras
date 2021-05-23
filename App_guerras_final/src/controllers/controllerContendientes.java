@@ -21,8 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import views.viewContendientes;
-import views.viewPrincipal;
+import Views.ViewContendientes;
+import Views.ViewPrincipal;
 
 /**
  *
@@ -31,79 +31,79 @@ import views.viewPrincipal;
 class controllerContendientes implements ActionListener {
     
     /////////////////////////////////////
-    private viewContendientes viewContender;
-    private DAOContendiente businness;
+    private ViewContendientes viewContendientes;
+    private DAOContendiente DAOcontendiente;
     private DAOUnionBandos DAOunionBandos;
     private DAOComboBoxesFill DAOcomboBoxesFill;
     
     //AGREGAR MODELs *** 
 
     //Constructor
-    public controllerContendientes(viewPrincipal viewPpal){
+    public controllerContendientes(ViewPrincipal viewPrincipal){
 
 	//AGREGAR MODELs ***
-	viewContender = new viewContendientes(viewPpal, true);
-	businness = new DAOContendiente();
+	viewContendientes = new ViewContendientes(viewPrincipal, true);
+	DAOcontendiente = new DAOContendiente();
         DAOunionBandos = new DAOUnionBandos();
         DAOcomboBoxesFill = new DAOComboBoxesFill();
 	initComponents();
 	initEvents();
 
-	viewContender.setVisible(true);
+	viewContendientes.setVisible(true);
     }//Fin del constructor
 
     private void initComponents() {
-	viewContender.getComboBoxSelectContender().setEnabled(false);
-	viewContender.getBtnDeleteSelectedContender().setEnabled(false);
+	viewContendientes.getComboBoxSelectContender().setEnabled(false);
+	viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
 
-	viewContender.getLblInsertNewContender().setEnabled(false);
-	viewContender.getLblContenderName().setEnabled(false);
-	viewContender.getTxtfInsertNewContender().setEnabled(false);
-	viewContender.getBtnInsertNewContender().setEnabled(false);
+	viewContendientes.getLblInsertNewContender().setEnabled(false);
+	viewContendientes.getLblContenderName().setEnabled(false);
+	viewContendientes.getTxtfInsertNewContender().setEnabled(false);
+	viewContendientes.getBtnInsertNewContender().setEnabled(false);
 
-	viewContender.getLblUpdateSelectedContender().setEnabled(false);
-	viewContender.getLblUpdateContenderName().setEnabled(false);
-	viewContender.getTxtfUpdateSelectedContender().setEnabled(false);
-	viewContender.getBtnUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getLblUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getLblUpdateContenderName().setEnabled(false);
+	viewContendientes.getTxtfUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getBtnUpdateSelectedContender().setEnabled(false);
 
-	viewContender.getComboBoxSelectCountryADDED().setEnabled(false);
-	viewContender.getBtnDeleteSelectCountryADDED().setEnabled(false);
+	viewContendientes.getComboBoxSelectCountryADDED().setEnabled(false);
+	viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(false);
 
-	viewContender.getLblInsertNewCountry().setEnabled(false);
-	viewContender.getLblUpdateDateBegin().setEnabled(false);
-	viewContender.getLblUpdateDateEnd().setEnabled(false);
-	viewContender.getBtnUpdateDate().setEnabled(false);
+	viewContendientes.getLblInsertNewCountry().setEnabled(false);
+	viewContendientes.getLblUpdateDateBegin().setEnabled(false);
+	viewContendientes.getLblUpdateDateEnd().setEnabled(false);
+	viewContendientes.getBtnUpdateDate().setEnabled(false);
 
-	viewContender.getLblUpdateSelectedCountry().setEnabled(false);
-	viewContender.getLblDateBeginCountryToContender().setEnabled(false);
-	viewContender.getBtnInsertCountryToContender().setEnabled(false);
-	viewContender.getComboBoxSelectCountryToContender().setEnabled(false);
+	viewContendientes.getLblUpdateSelectedCountry().setEnabled(false);
+	viewContendientes.getLblDateBeginCountryToContender().setEnabled(false);
+	viewContendientes.getBtnInsertCountryToContender().setEnabled(false);
+	viewContendientes.getComboBoxSelectCountryToContender().setEnabled(false);
 
-	viewContender.getCb_Ganador().setEnabled(false);
-	viewContender.getCb_GanadorInsert().setEnabled(false);
+	viewContendientes.getCb_Ganador().setEnabled(false);
+	viewContendientes.getCb_GanadorInsert().setEnabled(false);
 
-	viewContender.getjDC_BeginDate().setEnabled(false);
-	viewContender.getjDC_EndDate().setEnabled(false);
+	viewContendientes.getjDC_BeginDate().setEnabled(false);
+	viewContendientes.getjDC_EndDate().setEnabled(false);
 
     }
 
     private void initEvents() {
-	viewContender.getBtnInsertNewContender().addActionListener(this);
-	viewContender.getBtnInsertCountryToContender().addActionListener(this);
+	viewContendientes.getBtnInsertNewContender().addActionListener(this);
+	viewContendientes.getBtnInsertCountryToContender().addActionListener(this);
 
-	viewContender.getBtnDeleteSelectedContender().addActionListener(this);
-	viewContender.getBtnDeleteSelectCountryADDED().addActionListener(this);
+	viewContendientes.getBtnDeleteSelectedContender().addActionListener(this);
+	viewContendientes.getBtnDeleteSelectCountryADDED().addActionListener(this);
 
-	viewContender.getBtnUpdateDate().addActionListener(this);
-	viewContender.getBtnUpdateSelectedContender().addActionListener(this);
+	viewContendientes.getBtnUpdateDate().addActionListener(this);
+	viewContendientes.getBtnUpdateSelectedContender().addActionListener(this);
 
-	viewContender.getCb_Ganador().addActionListener(this);
-	viewContender.getCb_GanadorInsert().addActionListener(this);
-	viewContender.getCB_FechaAbandono().addActionListener(this);
-	viewContender.getCB_updateFechaAbandono().addActionListener(this);
+	viewContendientes.getCb_Ganador().addActionListener(this);
+	viewContendientes.getCb_GanadorInsert().addActionListener(this);
+	viewContendientes.getCB_FechaAbandono().addActionListener(this);
+	viewContendientes.getCB_updateFechaAbandono().addActionListener(this);
 
 //IMPLEMENTAR AQUÍ VACIADO DE TODO EL FORMULARIO AL CLICKAR FUERA
-	viewContender.addMouseListener(new MouseAdapter() {
+	viewContendientes.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 		resetComboboxes();
@@ -112,19 +112,19 @@ class controllerContendientes implements ActionListener {
 	    }
 	});
 
-	viewContender.getBtnExit().addActionListener(this);
+	viewContendientes.getBtnExit().addActionListener(this);
 
 	 //COMBOBOX DE GUERRAS
-	viewContender.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
+	viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
         
-	viewContender.getComboBoxSelectWar().addItemListener(new ItemListener() {
+	viewContendientes.getComboBoxSelectWar().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == e.SELECTED) {
-		    viewContender.getComboBoxSelectContender().setEnabled(true);
+		    viewContendientes.getComboBoxSelectContender().setEnabled(true);
 		  
-			String nombre = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
-			viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes(nombre));
+			String nombre = (String) viewContendientes.getComboBoxSelectWar().getSelectedItem();
+			viewContendientes.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes(nombre));
 		
 		    contenderInsertSetActive();
 		    countriesUpdateDeactivate();
@@ -141,29 +141,29 @@ class controllerContendientes implements ActionListener {
 	);
 
 	//COMBOBOX CONTENDER
-	viewContender.getComboBoxSelectContender().addItemListener(new ItemListener() {
+	viewContendientes.getComboBoxSelectContender().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == e.SELECTED) {
                     
                     
-		    viewContender.getLblInsertNewCountry().setEnabled(true);
-		    viewContender.getComboBoxSelectCountryADDED().setEnabled(true);
-		    viewContender.getComboBoxSelectCountryToContender().setEnabled(true);
-		    String nombre = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-		    viewContender.getTxtfUpdateSelectedContender().setText(nombre);
+		    viewContendientes.getLblInsertNewCountry().setEnabled(true);
+		    viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);
+		    viewContendientes.getComboBoxSelectCountryToContender().setEnabled(true);
+		    String nombre = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
+		    viewContendientes.getTxtfUpdateSelectedContender().setText(nombre);
 		    //marcar checkbox ganador
 		    int ganador = 0;
 		   
-			ganador = businness.isWinnerContender(nombre);
+			ganador = DAOcontendiente.isWinnerContender(nombre);
 	
 		    if (ganador == 1) {
-			viewContender.getCb_Ganador().setSelected(true);
+			viewContendientes.getCb_Ganador().setSelected(true);
 		    } else {
-			viewContender.getCb_Ganador().setSelected(false);
+			viewContendientes.getCb_Ganador().setSelected(false);
 		    }
-			viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises(nombre));
-			viewContender.getComboBoxSelectCountryToContender().setModel(DAOcomboBoxesFill.fillComboBoxAllPaises());
+			viewContendientes.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises(nombre));
+			viewContendientes.getComboBoxSelectCountryToContender().setModel(DAOcomboBoxesFill.fillComboBoxAllPaises());
 
 
 		    contenderUpdateSetActive();
@@ -174,7 +174,7 @@ class controllerContendientes implements ActionListener {
 	});
 
 	//COMBOBOX INSERTAR PAIS
-	viewContender.getComboBoxSelectCountryToContender().addItemListener(new ItemListener() {
+	viewContendientes.getComboBoxSelectCountryToContender().addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == e.SELECTED) {
@@ -188,7 +188,7 @@ class controllerContendientes implements ActionListener {
 	});
 
 	//COMBOBOX MODIFICAR PAIS	
-	viewContender.getComboBoxSelectCountryADDED().addItemListener(new ItemListener() {
+	viewContendientes.getComboBoxSelectCountryADDED().addItemListener(new ItemListener() {
             
             
 	    @Override
@@ -201,8 +201,8 @@ class controllerContendientes implements ActionListener {
 		if (e.getStateChange() == e.SELECTED) {
 		    String fecha1;
 		    String fecha2;
-		    String nombrePais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
-		    String nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
+		    String nombrePais = (String) viewContendientes.getComboBoxSelectCountryADDED().getSelectedItem();
+		    String nombreContendiente = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
                     
                      UnionBandos unionBandos = DAOunionBandos.selectUnionBandos(nombreContendiente, nombrePais);
 
@@ -215,20 +215,20 @@ class controllerContendientes implements ActionListener {
 
 			} catch (Exception ex) {
 
-			 viewContender.getjDC_updateBeginDate().setEnabled(false);
+			 viewContendientes.getjDC_updateBeginDate().setEnabled(false);
 			}
          
-			viewContender.getjDC_updateBeginDate().setDate(date1);
+			viewContendientes.getjDC_updateBeginDate().setDate(date1);
                         
                         
                         
 
 			try {
 			    date2 = df.parse(fecha2);
-                            viewContender.getjDC_updateEndDate().setDate(date2);
+                            viewContendientes.getjDC_updateEndDate().setDate(date2);
 			} catch (Exception ex) {
 			   // date2 = df.parse("0001-01-01");
-                            viewContender.getjDC_updateEndDate().setEnabled(false);
+                            viewContendientes.getjDC_updateEndDate().setEnabled(false);
 			 //   viewContender.getjDC_updateEndDate().setEnabled(false);
 			}
 			
@@ -236,19 +236,19 @@ class controllerContendientes implements ActionListener {
 		
 		    countriesInsertDeactivate();
 		    countriesUpdateSetActive();
-		    viewContender.getBtnDeleteSelectCountryADDED().setEnabled(true);
+		    viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(true);
                     
                     try{
                         if(!fecha2.equals("")){
-                         viewContender.getCB_updateFechaAbandono().setSelected(true);
-                        viewContender.getjDC_updateEndDate().setEnabled(true);
+                         viewContendientes.getCB_updateFechaAbandono().setSelected(true);
+                        viewContendientes.getjDC_updateEndDate().setEnabled(true);
                     }else{
-                        viewContender.getjDC_updateEndDate().setEnabled(false);
-                        viewContender.getCB_updateFechaAbandono().setSelected(false);
+                        viewContendientes.getjDC_updateEndDate().setEnabled(false);
+                        viewContendientes.getCB_updateFechaAbandono().setSelected(false);
                         }
                     }catch(NullPointerException npe){
-                        viewContender.getjDC_updateEndDate().setEnabled(false);
-                        viewContender.getCB_updateFechaAbandono().setSelected(false);
+                        viewContendientes.getjDC_updateEndDate().setEnabled(false);
+                        viewContendientes.getCB_updateFechaAbandono().setSelected(false);
                         
                     }
 		}
@@ -259,28 +259,28 @@ class controllerContendientes implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	if (e.getSource() == viewContender.getBtnExit()) {
-	    viewContender.dispose();
+	if (e.getSource() == viewContendientes.getBtnExit()) {
+	    viewContendientes.dispose();
 	}
 
 	//Insertar nuevo contendiente
-	if (e.getSource() == viewContender.getBtnInsertNewContender()) {
+	if (e.getSource() == viewContendientes.getBtnInsertNewContender()) {
 	  
 		int ganador;
                 
-                if (viewContender.getCb_GanadorInsert().isSelected()) {
+                if (viewContendientes.getCb_GanadorInsert().isSelected()) {
 		    ganador = 1;
 		} else {
 		    ganador = 0;
 		}
 
-                String nombreGuerra = (String) viewContender.getComboBoxSelectWar().getSelectedItem();
+                String nombreGuerra = (String) viewContendientes.getComboBoxSelectWar().getSelectedItem();
                 
                 Contendiente contendiente = new Contendiente();
-                contendiente.setNombre(viewContender.getTxtfInsertNewContender().getText());
+                contendiente.setNombre(viewContendientes.getTxtfInsertNewContender().getText());
                 contendiente.setGanador(ganador);
          
-                businness.insertContendiente(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
+                DAOcontendiente.insertContendiente(contendiente, nombreGuerra); //Enviando el contendiente Seteado y el NOMBRE de la GUERRA
                 
 		cleanContenderForm();
 		refreshContenderComboBox();
@@ -289,12 +289,12 @@ class controllerContendientes implements ActionListener {
 	}
 
 	//Eliminar contendiente seleccionado
-	if (e.getSource() == viewContender.getBtnDeleteSelectedContender()) {
-	    String contenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
+	if (e.getSource() == viewContendientes.getBtnDeleteSelectedContender()) {
+	    String contenderName = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
 	    Contendiente contendiente = new Contendiente();
 	    contendiente.setNombre(contenderName);
 	
-		businness.deleteContendiente(contendiente);
+		DAOcontendiente.deleteContendiente(contendiente);
 		refreshContenderComboBox();
 		cleanUpdateContenderForm();
 
@@ -302,15 +302,15 @@ class controllerContendientes implements ActionListener {
 	}
 
 	//Actualizar contendiente seleccionado
-	if (e.getSource() == viewContender.getBtnUpdateSelectedContender()) {
+	if (e.getSource() == viewContendientes.getBtnUpdateSelectedContender()) {
       
                 int ganador;
                 Contendiente contendiente = new Contendiente();
-                String newContenderName = viewContender.getTxtfUpdateSelectedContender().getText();
-                String oldContenderName = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
+                String newContenderName = viewContendientes.getTxtfUpdateSelectedContender().getText();
+                String oldContenderName = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
                 contendiente.setNombre(newContenderName);
                 
-                if (viewContender.getCb_Ganador().isSelected()) {
+                if (viewContendientes.getCb_Ganador().isSelected()) {
                     ganador = 1;
                 } else {
                     ganador = 0;
@@ -318,7 +318,7 @@ class controllerContendientes implements ActionListener {
                 contendiente.setGanador(ganador);
                 
                 
-                businness.updateContendiente(contendiente, oldContenderName);
+                DAOcontendiente.updateContendiente(contendiente, oldContenderName);
                 refreshContenderComboBox();
                 cleanUpdateContenderForm();
        
@@ -326,20 +326,20 @@ class controllerContendientes implements ActionListener {
 	}
 
 	//Insertar países a contendientes
-	if (e.getSource() == viewContender.getBtnInsertCountryToContender()) {
+	if (e.getSource() == viewContendientes.getBtnInsertCountryToContender()) {
 	    String pais, contendiente, fecha_abandono = "";
 	    UnionBandos unionBandos = new UnionBandos();
 	
-		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-		pais = (String) viewContender.getComboBoxSelectCountryToContender().getSelectedItem();
+		contendiente = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
+		pais = (String) viewContendientes.getComboBoxSelectCountryToContender().getSelectedItem();
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date date1 = viewContender.getjDC_BeginDate().getDate();
+		Date date1 = viewContendientes.getjDC_BeginDate().getDate();
 		String fecha_union = df.format(date1);
 
-		if (viewContender.getCB_FechaAbandono().isSelected()) {
-		    viewContender.getjDC_EndDate().setEnabled(true);
-		    Date date2 = viewContender.getjDC_EndDate().getDate();
+		if (viewContendientes.getCB_FechaAbandono().isSelected()) {
+		    viewContendientes.getjDC_EndDate().setEnabled(true);
+		    Date date2 = viewContendientes.getjDC_EndDate().getDate();
 		    fecha_abandono = df.format(date2);
 
 		} else {
@@ -352,19 +352,19 @@ class controllerContendientes implements ActionListener {
                 DAOunionBandos.insertUnionBandos(unionBandos,contendiente,pais);
                 
 		cleanCountriesForm();
-		if (viewContender.getComboBoxSelectCountryToContender().getSelectedIndex() == 0) {
+		if (viewContendientes.getComboBoxSelectCountryToContender().getSelectedIndex() == 0) {
 		    countriesUpdateSetActive();
 		}
 		refreshCountriesAddedComboBox();
 	}
 
 	//Eliminar países de contendientes
-	if (e.getSource() == viewContender.getBtnDeleteSelectCountryADDED()) {
+	if (e.getSource() == viewContendientes.getBtnDeleteSelectCountryADDED()) {
 	    String pais, contendiente;
 	
 	
-		contendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-		pais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
+		contendiente = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
+		pais = (String) viewContendientes.getComboBoxSelectCountryADDED().getSelectedItem();
 	        DAOunionBandos.deleteUnionBandos(contendiente, pais);
 		refreshCountriesAddedComboBox();
 	
@@ -372,26 +372,26 @@ class controllerContendientes implements ActionListener {
 
 	
 	//Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de insertar paises
-	viewContender.getCB_FechaAbandono().addChangeListener(new ChangeListener() {
+	viewContendientes.getCB_FechaAbandono().addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
-		if (viewContender.getCB_FechaAbandono().isSelected()) {
-		    viewContender.getjDC_EndDate().setEnabled(true);
+		if (viewContendientes.getCB_FechaAbandono().isSelected()) {
+		    viewContendientes.getjDC_EndDate().setEnabled(true);
 		}else{
-		    viewContender.getjDC_EndDate().setEnabled(false);
+		    viewContendientes.getjDC_EndDate().setEnabled(false);
 		}
 	    }
 	});
         
         
         //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de updateContendiente paises
-	viewContender.getCB_updateFechaAbandono().addChangeListener(new ChangeListener() {
+	viewContendientes.getCB_updateFechaAbandono().addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
-		if (viewContender.getCB_updateFechaAbandono().isSelected()) {
-		    viewContender.getjDC_updateEndDate().setEnabled(true);
+		if (viewContendientes.getCB_updateFechaAbandono().isSelected()) {
+		    viewContendientes.getjDC_updateEndDate().setEnabled(true);
 		}else{
-		    viewContender.getjDC_updateEndDate().setEnabled(false);
+		    viewContendientes.getjDC_updateEndDate().setEnabled(false);
 		}
 	    }
 	});
@@ -399,20 +399,20 @@ class controllerContendientes implements ActionListener {
 
 
 	//Actualizar países de contendientes
-	if (e.getSource() == viewContender.getBtnUpdateDate()) {
+	if (e.getSource() == viewContendientes.getBtnUpdateDate()) {
 	    String nombrePais, nombreContendiente;
 	    UnionBandos unionBandos = new UnionBandos();
 	
-		nombreContendiente = (String) viewContender.getComboBoxSelectContender().getSelectedItem();
-		nombrePais = (String) viewContender.getComboBoxSelectCountryADDED().getSelectedItem();
+		nombreContendiente = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
+		nombrePais = (String) viewContendientes.getComboBoxSelectCountryADDED().getSelectedItem();
 
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date date1 = viewContender.getjDC_updateBeginDate().getDate();
+		Date date1 = viewContendientes.getjDC_updateBeginDate().getDate();
 		String fecha_union = df.format(date1);
-		Date date2 = viewContender.getjDC_updateEndDate().getDate();
+		Date date2 = viewContendientes.getjDC_updateEndDate().getDate();
 		String fecha_abandono = df.format(date2);      
-                if (!viewContender.getCB_updateFechaAbandono().isSelected()) {
+                if (!viewContendientes.getCB_updateFechaAbandono().isSelected()) {
 		    fecha_abandono = "";
                     unionBandos.setFechaAbandono(fecha_abandono);
 		}else{
@@ -429,93 +429,93 @@ class controllerContendientes implements ActionListener {
     }
 
     private void resetComboboxes() {
-	viewContender.getComboBoxSelectWar().setSelectedIndex(0);
-	viewContender.getComboBoxSelectContender().setSelectedIndex(0);
-	viewContender.getComboBoxSelectCountryToContender().setSelectedIndex(0);
-	viewContender.getComboBoxSelectCountryADDED().setSelectedIndex(0);
+	viewContendientes.getComboBoxSelectWar().setSelectedIndex(0);
+	viewContendientes.getComboBoxSelectContender().setSelectedIndex(0);
+	viewContendientes.getComboBoxSelectCountryToContender().setSelectedIndex(0);
+	viewContendientes.getComboBoxSelectCountryADDED().setSelectedIndex(0);
 
     }
 
     private void contenderInsertSetActive() {
-	viewContender.getLblInsertNewContender().setEnabled(true);
-	viewContender.getLblContenderName().setEnabled(true);
-	viewContender.getTxtfInsertNewContender().setEnabled(true);
-	viewContender.getBtnInsertNewContender().setEnabled(true);
-	viewContender.getCb_GanadorInsert().setEnabled(true);
+	viewContendientes.getLblInsertNewContender().setEnabled(true);
+	viewContendientes.getLblContenderName().setEnabled(true);
+	viewContendientes.getTxtfInsertNewContender().setEnabled(true);
+	viewContendientes.getBtnInsertNewContender().setEnabled(true);
+	viewContendientes.getCb_GanadorInsert().setEnabled(true);
 
     }
 
     private void contenderInsertDeactivate() {
-	viewContender.getLblInsertNewContender().setEnabled(false);
-	viewContender.getLblContenderName().setEnabled(false);
-	viewContender.getTxtfInsertNewContender().setEnabled(false);
-	viewContender.getBtnInsertNewContender().setEnabled(false);
-	viewContender.getCb_GanadorInsert().setEnabled(false);
+	viewContendientes.getLblInsertNewContender().setEnabled(false);
+	viewContendientes.getLblContenderName().setEnabled(false);
+	viewContendientes.getTxtfInsertNewContender().setEnabled(false);
+	viewContendientes.getBtnInsertNewContender().setEnabled(false);
+	viewContendientes.getCb_GanadorInsert().setEnabled(false);
     }
 
     private void contenderUpdateSetActive() {
-	viewContender.getLblUpdateSelectedContender().setEnabled(true);
-	viewContender.getLblUpdateContenderName().setEnabled(true);
-	viewContender.getTxtfUpdateSelectedContender().setEnabled(true);
-	viewContender.getBtnUpdateSelectedContender().setEnabled(true);
-	viewContender.getBtnDeleteSelectedContender().setEnabled(true);
-	viewContender.getCb_Ganador().setEnabled(true);
+	viewContendientes.getLblUpdateSelectedContender().setEnabled(true);
+	viewContendientes.getLblUpdateContenderName().setEnabled(true);
+	viewContendientes.getTxtfUpdateSelectedContender().setEnabled(true);
+	viewContendientes.getBtnUpdateSelectedContender().setEnabled(true);
+	viewContendientes.getBtnDeleteSelectedContender().setEnabled(true);
+	viewContendientes.getCb_Ganador().setEnabled(true);
 
     }
 
     private void contenderUpdateDeactivate() {
-	viewContender.getLblUpdateSelectedContender().setEnabled(false);
-	viewContender.getLblUpdateContenderName().setEnabled(false);
-	viewContender.getTxtfUpdateSelectedContender().setEnabled(false);
-	viewContender.getBtnUpdateSelectedContender().setEnabled(false);
-	viewContender.getBtnDeleteSelectedContender().setEnabled(false);
-	viewContender.getCb_Ganador().setEnabled(false);
+	viewContendientes.getLblUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getLblUpdateContenderName().setEnabled(false);
+	viewContendientes.getTxtfUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getBtnUpdateSelectedContender().setEnabled(false);
+	viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
+	viewContendientes.getCb_Ganador().setEnabled(false);
    
     }
 
     private void countriesInsertSetActive() {
-	viewContender.getLblDateBeginCountryToContender().setEnabled(true);
-	viewContender.getBtnInsertCountryToContender().setEnabled(true);
-	viewContender.getjDC_BeginDate().setEnabled(true);
-	viewContender.getCB_FechaAbandono().setSelected(false);
-	viewContender.getjDC_EndDate().setEnabled(false);
+	viewContendientes.getLblDateBeginCountryToContender().setEnabled(true);
+	viewContendientes.getBtnInsertCountryToContender().setEnabled(true);
+	viewContendientes.getjDC_BeginDate().setEnabled(true);
+	viewContendientes.getCB_FechaAbandono().setSelected(false);
+	viewContendientes.getjDC_EndDate().setEnabled(false);
 
     }
 
     private void countriesInsertDeactivate() {
-	viewContender.getLblDateBeginCountryToContender().setEnabled(false);
-	viewContender.getBtnInsertCountryToContender().setEnabled(false);
-	viewContender.getComboBoxSelectCountryToContender().setEnabled(false);
-	viewContender.getLblInsertNewCountry().setEnabled(false);
-	viewContender.getjDC_BeginDate().setEnabled(false);
-	viewContender.getjDC_EndDate().setEnabled(false);
+	viewContendientes.getLblDateBeginCountryToContender().setEnabled(false);
+	viewContendientes.getBtnInsertCountryToContender().setEnabled(false);
+	viewContendientes.getComboBoxSelectCountryToContender().setEnabled(false);
+	viewContendientes.getLblInsertNewCountry().setEnabled(false);
+	viewContendientes.getjDC_BeginDate().setEnabled(false);
+	viewContendientes.getjDC_EndDate().setEnabled(false);
 
     }
 
     private void countriesUpdateSetActive() {
-	viewContender.getComboBoxSelectCountryADDED().setEnabled(true);
-	viewContender.getLblUpdateSelectedCountry().setEnabled(true);
-	viewContender.getLblUpdateDateBegin().setEnabled(true);
-	viewContender.getBtnUpdateDate().setEnabled(true);
-	viewContender.getjDC_updateBeginDate().setEnabled(true);
+	viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);
+	viewContendientes.getLblUpdateSelectedCountry().setEnabled(true);
+	viewContendientes.getLblUpdateDateBegin().setEnabled(true);
+	viewContendientes.getBtnUpdateDate().setEnabled(true);
+	viewContendientes.getjDC_updateBeginDate().setEnabled(true);
                 
-        viewContender.getLblUpdateDateEnd().setEnabled(true);
-	viewContender.getjDC_updateEndDate().setEnabled(false);
-        viewContender.getCB_updateFechaAbandono().setSelected(false);
+        viewContendientes.getLblUpdateDateEnd().setEnabled(true);
+	viewContendientes.getjDC_updateEndDate().setEnabled(false);
+        viewContendientes.getCB_updateFechaAbandono().setSelected(false);
 
 
     }
 
     private void countriesUpdateDeactivate() {
-	viewContender.getLblUpdateDateBegin().setEnabled(false);
-	viewContender.getLblUpdateDateEnd().setEnabled(false);
-	viewContender.getBtnUpdateDate().setEnabled(false);
-	viewContender.getBtnDeleteSelectCountryADDED().setEnabled(false);
-	viewContender.getComboBoxSelectCountryADDED().setEnabled(false);
-	viewContender.getLblUpdateSelectedCountry().setEnabled(false);
-	viewContender.getjDC_updateBeginDate().setEnabled(false);
-	viewContender.getjDC_updateEndDate().setEnabled(false);
-        viewContender.getCB_updateFechaAbandono().setSelected(false);
+	viewContendientes.getLblUpdateDateBegin().setEnabled(false);
+	viewContendientes.getLblUpdateDateEnd().setEnabled(false);
+	viewContendientes.getBtnUpdateDate().setEnabled(false);
+	viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(false);
+	viewContendientes.getComboBoxSelectCountryADDED().setEnabled(false);
+	viewContendientes.getLblUpdateSelectedCountry().setEnabled(false);
+	viewContendientes.getjDC_updateBeginDate().setEnabled(false);
+	viewContendientes.getjDC_updateEndDate().setEnabled(false);
+        viewContendientes.getCB_updateFechaAbandono().setSelected(false);
 
 
     }
@@ -524,34 +524,34 @@ class controllerContendientes implements ActionListener {
     }
 
     private void cleanContenderForm() {
-	viewContender.getTxtfInsertNewContender().setText("");
-	viewContender.getCb_GanadorInsert().setSelected(false);
+	viewContendientes.getTxtfInsertNewContender().setText("");
+	viewContendientes.getCb_GanadorInsert().setSelected(false);
     }
 
     private void cleanUpdateContenderForm() {
-	viewContender.getTxtfUpdateSelectedContender().setText("");
-	viewContender.getCb_Ganador().setSelected(false);
+	viewContendientes.getTxtfUpdateSelectedContender().setText("");
+	viewContendientes.getCb_Ganador().setSelected(false);
     }
 
     private void cleanCountriesForm() {
-	viewContender.getjDC_BeginDate().setDate(new Date());
-	viewContender.getjDC_EndDate().setDate(new Date());
-	viewContender.getComboBoxSelectCountryToContender().setSelectedIndex(0);
+	viewContendientes.getjDC_BeginDate().setDate(new Date());
+	viewContendientes.getjDC_EndDate().setDate(new Date());
+	viewContendientes.getComboBoxSelectCountryToContender().setSelectedIndex(0);
     }
 
     private void cleanUpdateCountriesForm() {
-	viewContender.getjDC_updateBeginDate().setDate(new Date());
-	viewContender.getjDC_updateEndDate().setDate(new Date());
+	viewContendientes.getjDC_updateBeginDate().setDate(new Date());
+	viewContendientes.getjDC_updateEndDate().setDate(new Date());
     }
 
     private void refreshContenderComboBox() {
-	viewContender.getComboBoxSelectContender().removeAllItems();
-	viewContender.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes((String) viewContender.getComboBoxSelectWar().getSelectedItem()));
+	viewContendientes.getComboBoxSelectContender().removeAllItems();
+	viewContendientes.getComboBoxSelectContender().setModel(DAOcomboBoxesFill.fillComboBoxContendientes((String) viewContendientes.getComboBoxSelectWar().getSelectedItem()));
     }
 
     private void refreshCountriesAddedComboBox()  {
-	viewContender.getComboBoxSelectCountryADDED().removeAllItems();
-	viewContender.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises((String) viewContender.getComboBoxSelectContender().getSelectedItem()));
+	viewContendientes.getComboBoxSelectCountryADDED().removeAllItems();
+	viewContendientes.getComboBoxSelectCountryADDED().setModel(DAOcomboBoxesFill.fillComboBoxPaises((String) viewContendientes.getComboBoxSelectContender().getSelectedItem()));
     }
 
 }//Fin clase proincipal

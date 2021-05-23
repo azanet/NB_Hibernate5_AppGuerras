@@ -5,10 +5,9 @@
  */
 package controllers;
 
-import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import views.viewPrincipal;
+import Views.ViewPrincipal;
 
 /**
  *
@@ -17,28 +16,25 @@ import views.viewPrincipal;
 public class controllerPrincipal implements ActionListener{
     
     
-    viewPrincipal viewPpal;
-    controllerPais ctrlCountry;
-    controllerGuerra ctrlWar;
-    controllerContendientes ctrlContender;
-    controllerConsultas ctrlConsult;
-    
+    private ViewPrincipal viewPrincipal;
+
+
     public controllerPrincipal() {
-        this.viewPpal =  new viewPrincipal();
+        this.viewPrincipal =  new ViewPrincipal();
               
         initComponents();
-        viewPpal.setVisible(true);
+        viewPrincipal.setVisible(true);
     }//Fin constructor
 
     
     
     
     private void initComponents() {
-        viewPpal.getBtnWars().addActionListener(this);
-        viewPpal.getBtnContender().addActionListener(this);
-        viewPpal.getBtnCountry().addActionListener(this);
-        viewPpal.getBtnConsult().addActionListener(this);
-        viewPpal.getBtnExit().addActionListener(this);
+        viewPrincipal.getBtnWars().addActionListener(this);
+        viewPrincipal.getBtnContender().addActionListener(this);
+        viewPrincipal.getBtnCountry().addActionListener(this);
+        viewPrincipal.getBtnConsult().addActionListener(this);
+        viewPrincipal.getBtnExit().addActionListener(this);
         
     }//Fin initComponents
 
@@ -48,36 +44,32 @@ public class controllerPrincipal implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         
-        if (ae.getSource()==viewPpal.getBtnWars()){
+        if (ae.getSource()==viewPrincipal.getBtnWars()){
 
-            
-            ctrlWar= new controllerGuerra(viewPpal);  
+           controllerGuerra ctrlGuerra= new controllerGuerra(viewPrincipal);  
            
-        }else if(ae.getSource()==viewPpal.getBtnContender()){
+           
+        }else if(ae.getSource()==viewPrincipal.getBtnContender()){
 
-		ctrlContender= new controllerContendientes(viewPpal);
+           controllerContendientes ctrlContendientes= new controllerContendientes(viewPrincipal);
 	
             
-        }else if(ae.getSource()==viewPpal.getBtnCountry()){
+        }else if(ae.getSource()==viewPrincipal.getBtnCountry()){
 	
-		ctrlCountry= new controllerPais(viewPpal);
+            controllerPais ctrlPais = new controllerPais(viewPrincipal);
 	  
             
-        }else if(ae.getSource()==viewPpal.getBtnConsult()){
-            ctrlConsult= new controllerConsultas(viewPpal);
+        }else if(ae.getSource()==viewPrincipal.getBtnConsult()){
+             
+            controllerConsultas ctrlConsultas = new controllerConsultas(viewPrincipal);
         
-        }else if(ae.getSource()==viewPpal.getBtnExit()){
+            
+        }else if(ae.getSource()==viewPrincipal.getBtnExit()){
+            
             System.exit(0);
         }
           
-    }//Fin de ActionPerformed
-            
-                        
-            
-            
-            
-       
-          
+    }//Fin de ActionPerformed        
     
 }//Fin de la clase principal
 

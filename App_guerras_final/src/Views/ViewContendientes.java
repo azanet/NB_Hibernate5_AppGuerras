@@ -1,4 +1,4 @@
-package views;
+package Views;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
@@ -11,13 +11,13 @@ import javax.swing.JTextField;
  *
  * @author davidf
  */
-public class viewContendientes extends javax.swing.JDialog {
+public class ViewContendientes extends javax.swing.JDialog {
 
     /**
      * Creates new form viewContenders1
      */
-           imagenPanel fondo = new imagenPanel();
-    public viewContendientes(java.awt.Frame parent, boolean modal) {
+           ImagenPanel fondo = new ImagenPanel();
+    public ViewContendientes(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
         
          this.setContentPane(fondo);

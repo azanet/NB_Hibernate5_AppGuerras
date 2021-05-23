@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package Views;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  *
  * @author davidf
  */
-public class imagenPanel extends JPanel{
+public class ImagenPanel extends JPanel{
     private Image imagen;
         
         @Override

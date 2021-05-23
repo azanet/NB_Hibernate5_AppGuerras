@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package Views;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  *
  * @author davidf
  */
-public class viewConsultas extends JDialog {
+public class ViewConsultas extends JDialog {
 
     /**
      * Creates new form viewSearch
@@ -24,8 +24,8 @@ public class viewConsultas extends JDialog {
      * @param modal
      */
     
-       imagenPanel fondo = new imagenPanel();
-    public viewConsultas(java.awt.Frame parent, boolean modal) {
+       ImagenPanel fondo = new ImagenPanel();
+    public ViewConsultas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
    this.setContentPane(fondo);

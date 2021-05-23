@@ -14,14 +14,14 @@ import javax.swing.table.AbstractTableModel;
  * 
  */
 
-public class JTableModel_Pais extends AbstractTableModel{
+public class JTableModelPais extends AbstractTableModel{
 
 
 
     private static final long serialVersionUID = 2L;
     private final DAOPais DAOpais;
     
-    public JTableModel_Pais(DAOPais DAOpais)
+    public JTableModelPais(DAOPais DAOpais)
     {
         super();
      

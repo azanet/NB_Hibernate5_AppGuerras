@@ -15,14 +15,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author davidf
  */
-public class JTableModel_Guerra extends AbstractTableModel{
+public class JTableModelGuerra extends AbstractTableModel{
 
 
 
     private static final long serialVersionUID = 1L;
     private final DAOGuerra DAOguerra;
     
-    public JTableModel_Guerra(DAOGuerra DAOguerra)
+    public JTableModelGuerra(DAOGuerra DAOguerra)
     {
         super();
      

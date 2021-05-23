@@ -5,9 +5,8 @@
  */
 package controllers;
 
-
 import Models.POJOs.Guerra;
-import Models.TableModels.JTableModel_Guerra;
+import Models.TableModels.JTableModelGuerra;
 import Models.DAOs.DAOGuerra;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +15,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import views.viewPrincipal;
-import views.viewGuerras;
+import Views.ViewPrincipal;
+import Views.ViewGuerras;
+import java.awt.Color;
 
 /**
  *
@@ -25,67 +25,55 @@ import views.viewGuerras;
  */
 public final class controllerGuerra implements ActionListener {
 
-    viewGuerras viewWar;
-    JTableModel_Guerra warTableView;//= new JTableModel_Guerra();
-    DAOGuerra bussinessWar;
-    Guerra wardto;
+    private ViewGuerras viewGuerras;
+    private final DAOGuerra DAOguerra;
+    private JTableModelGuerra tableModelGuerra;
+
     private static final int TIEMPOBUSCAR = 300;
     private Timer timerbuscar;
 
-    public controllerGuerra(viewPrincipal viewPpal) {
-        viewWar = new viewGuerras(viewPpal, true);
+    public controllerGuerra(ViewPrincipal viewPrincipal) {
 
-    
-            bussinessWar = new DAOGuerra();
-   
+        viewGuerras = new ViewGuerras(viewPrincipal, true);
+        DAOguerra = new DAOGuerra();
+
         initComponents();
-        initEvents();
 
-        viewWar.setVisible(true);
+        viewGuerras.setVisible(true);
     }
 
+    
+    
     private void initComponents() {
-        viewWar.getId_text().setEnabled(false);
-        viewWar.getEdit_button().setEnabled(false);
-        viewWar.getDelete_button().setEnabled(false);
-        viewWar.getAdd_button().setEnabled(true);
+        resetViewComponents();
+        initEvents();
 
+        tableModelGuerra = new JTableModelGuerra(DAOguerra);
+        viewGuerras.getJtableWars().setModel(tableModelGuerra);
+        list();
     }//Fin initComponents
 
-    public void initEvents() {
+    
+    
+    private void initEvents() {
         //INICIALIZAR EVENTOS
-        viewWar.getAdd_button().addActionListener(this);
-        viewWar.getDelete_button().addActionListener(this);
-        viewWar.getEdit_button().addActionListener(this);
-        viewWar.getExit_button().addActionListener(this);
+        viewGuerras.getAdd_button().addActionListener(this);
+        viewGuerras.getDelete_button().addActionListener(this);
+        viewGuerras.getEdit_button().addActionListener(this);
+        viewGuerras.getExit_button().addActionListener(this);
+        viewGuerras.getBtnLimpiarPantalla().addActionListener(this);
 
 
-//            //AQUI INICIAMOS LA JTABLE ETC ETC
-        bussinessWar.selectAllGuerras();
-        warTableView = new JTableModel_Guerra(bussinessWar);
-        viewWar.getJtableWars().setModel(warTableView);
-  /////////     ///////////////////              ////////////       
-  
-     /////Dotando de EVENTOS a LA JTABLE
-        viewWar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                viewWar.getJtableWars().clearSelection();
-                clearTextFields();
-                initComponents();
-
-            }
-        });
         /*Agregamos un evento de ratón a la tabla para seleccionar
         los valores de una fila y colocarlos en los cajones de texto*/
-        viewWar.getJtableWars().addMouseListener(new MouseAdapter() {
+        viewGuerras.getJtableWars().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 if (me.getClickCount() == 2) {
                     selected_row();
-                    viewWar.getEdit_button().setEnabled(true);
-                    viewWar.getDelete_button().setEnabled(true);
-                    viewWar.getAdd_button().setEnabled(false);
+                    viewGuerras.getEdit_button().setEnabled(true);
+                    viewGuerras.getDelete_button().setEnabled(true);
+                    viewGuerras.getAdd_button().setEnabled(false);
 
                 }
 
@@ -93,121 +81,155 @@ public final class controllerGuerra implements ActionListener {
 
         }
         );
-	
-		viewWar.getTxtfFilterSearch().getDocument().addDocumentListener(new DocumentListener() {
-	    @Override
-	    public void insertUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewWar.getTxtfFilterSearch().getDocument()) {
-		    activoTimer();
-		    
-		}
-	    }
-	    
-	    @Override
-	    public void removeUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewWar.getTxtfFilterSearch().getDocument()) {
-		    activoTimer();
-		}
-	    }
-	    
-	    @Override
-	    public void changedUpdate(DocumentEvent e) {
-		if (e.getDocument() == viewWar.getTxtfFilterSearch().getDocument()) {
-		    activoTimer();
-		    
-		}
-	    }
-	});
+
+        viewGuerras.getTxtfFilterSearch().getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewGuerras.getTxtfFilterSearch().getDocument()) {
+                    activoTimer();
+
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewGuerras.getTxtfFilterSearch().getDocument()) {
+                    activoTimer();
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (e.getDocument() == viewGuerras.getTxtfFilterSearch().getDocument()) {
+                    activoTimer();
+
+                }
+            }
+        });
 
     }//Fin initEvents
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         //Boton Añadir Guerras
-        if (ae.getSource() == viewWar.getAdd_button()) {
-            wardto = new Guerra();
-   
-                wardto.setNombre(viewWar.getName_text().getText());
-                wardto.setAnioInicio(viewWar.getStart_date_text().getText());
-                wardto.setAnioFin(viewWar.getEnd_date_text().getText());
-                bussinessWar.insertGuerras(wardto);
-                list();
-                System.out.println("INSERT Pais SOLO, METER LAS LLAMADAS A MODELO AQUI");
+        if (ae.getSource() == viewGuerras.getAdd_button()) {
 
-  
+            insertarGuerra();
+            list();
+
             //Boton Editar Guerras
-        } else if (ae.getSource() == viewWar.getEdit_button()) {
-            wardto = new Guerra();
-            wardto.setIdGuerra(Integer.parseInt(viewWar.getId_text().getText()));
-            wardto.setNombre(viewWar.getName_text().getText());
-            wardto.setAnioInicio(viewWar.getStart_date_text().getText());
-            wardto.setAnioFin(viewWar.getEnd_date_text().getText());
-           
-     
-                bussinessWar.updateGuerras(wardto);
-                list();
+        } else if (ae.getSource() == viewGuerras.getEdit_button()) {
+
+            modificarGuerra();
+            list();
 
             //Boton Eliminar Guerras
-        } else if (ae.getSource() == viewWar.getDelete_button()) {
-            wardto = new Guerra();
-            wardto.setIdGuerra(Integer.parseInt(viewWar.getId_text().getText()));
+        } else if (ae.getSource() == viewGuerras.getDelete_button()) {
+
+            eliminarGuerra();
+            list();
             
-            bussinessWar.deleteGuerras(wardto);
-          
-                list();
-    
-            System.out.println("REALIZANDO DELETE, METER LAS LLAMADAS A MODELO AQUI");
+          //Botón Limpiar Pantalla  
+        } else if (ae.getSource() == viewGuerras.getBtnLimpiarPantalla()) {
+              
+            resetViewComponents();         
+            
             //Botón Salir
-        } else if (ae.getSource() == viewWar.getExit_button()) {
-            viewWar.dispose();
+        } else if (ae.getSource() == viewGuerras.getExit_button()) {
+            viewGuerras.dispose();
         }//Fin del else-if
 
     }//Fin de action performed
 
     private void selected_row() {
-        int row = viewWar.getJtableWars().getSelectedRow();
+        int row = viewGuerras.getJtableWars().getSelectedRow();
         if (row >= 0) {
-            viewWar.getId_text().setText(String.valueOf(viewWar.getJtableWars().getValueAt(row, 0)));
-            viewWar.getName_text().setText(String.valueOf(viewWar.getJtableWars().getValueAt(row, 1)));
-            viewWar.getStart_date_text().setText(String.valueOf(viewWar.getJtableWars().getValueAt(row, 2)));
-            viewWar.getEnd_date_text().setText(String.valueOf(viewWar.getJtableWars().getValueAt(row, 3)));
+            viewGuerras.getId_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 0)));
+            viewGuerras.getName_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 1)));
+            viewGuerras.getStart_date_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 2)));
+            viewGuerras.getEnd_date_text().setText(String.valueOf(viewGuerras.getJtableWars().getValueAt(row, 3)));
         }
     }
-
-    //Limpiar TextFields
-    private void clearTextFields() {
-        viewWar.getName_text().setText("");
-        viewWar.getId_text().setText("");
-        viewWar.getEnd_date_text().setText("");
-        viewWar.getStart_date_text().setText("");
-
-    }
+    
     
     private void list() {
-        bussinessWar.selectAllGuerras();
-        warTableView.fireTableDataChanged();
+        DAOguerra.selectAllGuerras();
+        tableModelGuerra.fireTableDataChanged();
     }
     
-     private void activoTimer() {
-	
-	if ((timerbuscar != null) && timerbuscar.isRunning()) {
-	    timerbuscar.restart();
-	} else {
-	    timerbuscar = new Timer(TIEMPOBUSCAR, new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent evt) {
-	
-			timerbuscar = null;
-			bussinessWar.lightSearchGuerras(viewWar.getTxtfFilterSearch().getText());
-			warTableView.fireTableDataChanged();
-		
-		}
-		
-	    });
-	    timerbuscar.setRepeats(false);
-	    timerbuscar.start();
-	}
-	
+    
+    //Limpiar TextFields y volver a SETEAR los estados de los botones
+    private void resetViewComponents() {
+        viewGuerras.getJtableWars().clearSelection();
+        
+        viewGuerras.getName_text().setText("");
+        viewGuerras.getId_text().setText("");
+        viewGuerras.getEnd_date_text().setText("");
+        viewGuerras.getStart_date_text().setText("");
+
+        viewGuerras.getId_text().setEnabled(false);
+        viewGuerras.getEdit_button().setEnabled(false);
+        viewGuerras.getDelete_button().setEnabled(false);
+        viewGuerras.getAdd_button().setEnabled(true);
+        
+        
+        viewGuerras.getId_text().setBackground(new Color(178, 191, 237));
+        viewGuerras.getId_text().setDisabledTextColor(new Color(0, 0, 98));
+        
     }
 
-}
+
+
+    private void activoTimer() {
+
+        if ((timerbuscar != null) && timerbuscar.isRunning()) {
+            timerbuscar.restart();
+        } else {
+            timerbuscar = new Timer(TIEMPOBUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+
+                    timerbuscar = null;
+                    DAOguerra.lightSearchGuerras(viewGuerras.getTxtfFilterSearch().getText());
+                    tableModelGuerra.fireTableDataChanged();
+
+                }
+
+            });
+            timerbuscar.setRepeats(false);
+            timerbuscar.start();
+        }
+
+    }
+
+    
+    private void insertarGuerra() {
+        Guerra guerra = new Guerra();
+
+        guerra.setNombre(viewGuerras.getName_text().getText());
+        guerra.setAnioInicio(viewGuerras.getStart_date_text().getText());
+        guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
+        DAOguerra.insertGuerras(guerra);
+    }
+
+    
+    private void modificarGuerra() {
+        Guerra guerra = new Guerra();
+        guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
+        guerra.setNombre(viewGuerras.getName_text().getText());
+        guerra.setAnioInicio(viewGuerras.getStart_date_text().getText());
+        guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
+
+        DAOguerra.updateGuerras(guerra);
+    }
+
+    
+    private void eliminarGuerra() {
+        Guerra guerra = new Guerra();
+        guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
+
+        DAOguerra.deleteGuerras(guerra);
+
+    }
+
+}//FIN DE LA CLASE
