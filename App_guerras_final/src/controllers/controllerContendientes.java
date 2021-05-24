@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import Views.ViewContendientes;
 import Views.ViewPrincipal;
+import java.awt.Color;
 
 /**
  *
@@ -35,7 +36,6 @@ class controllerContendientes implements ActionListener {
     private DAOContendiente DAOcontendiente;
     private DAOUnionBandos DAOunionBandos;
     private DAOComboBoxesFill DAOcomboBoxesFill;
-
     //AGREGAR MODELs *** 
     //Constructor
     public controllerContendientes(ViewPrincipal viewPrincipal) {
@@ -45,6 +45,9 @@ class controllerContendientes implements ActionListener {
         DAOcontendiente = new DAOContendiente();
         DAOunionBandos = new DAOUnionBandos();
         DAOcomboBoxesFill = new DAOComboBoxesFill();
+
+                                                                                //ALFA= Transpatrencia
+        viewContendientes.getPanelSelecContend().setBackground(new Color(0, 0, 0, 175));
         initComponents();
         initEvents();
 

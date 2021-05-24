@@ -87,10 +87,11 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
             System.exit(0);
         }
  
-        ///Comprobando CONEXION ANTES de ABRIR ninguna Ventana
+        ///Comprobando CONEXION
         checkBBDDStatus();
         
-        
+        //Si el ESTADo de la CONEXION es CORRECTO, se abrirá la ventana solicitada
+        //En caso contrario, mostrará un JDialog con un mensaje de error
         if(statusBBDD){
         
      
@@ -119,12 +120,9 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
             viewPrincipal.setVisible(true);
 
         }//Fin de ElseIf GetSOURCE
-        
-        
-      
+                 
         }//Find e StatusBBDD
-        
-        
+          
         //Comprobando de una (si viene de este controlador, o de algún otro) si 
         //Tenemos que lanzar el mensaje de error
         if(!statusBBDD){
@@ -136,6 +134,14 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
     
     
+    /**
+     * En este METODO DE EVENTO y el SIGUIENTE se DETECTA el MOUSSE 
+     * cuando ENTRA (metodo " mouseEntered ") o SALE (metodo " mouseExited ")
+     * de los BOTONES
+     * 
+     * Depende cual sea el botón se establecerá una etiqueta, otra o ninguna.
+     * @param evt 
+     */
     @Override
     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
@@ -167,8 +173,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         }
 
     }
-
-    
+  
     @Override
     public void mouseExited(java.awt.event.MouseEvent evt) {
 
@@ -176,9 +181,13 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     }
 
     
-    
-    
-    
+  //////////////////////////////////////////////////////////////////////////  
+  //////////////////////////////////////////////////////////////////////////  
+    /**
+     * Este METODO, es el que COMPRUEBA la CONEXIÓN 
+     * y ACTIVA EL TIMER de RECONEXION
+     * En caso de NO Existir CONEXION
+     */
     private void checkBBDDStatus(){
 
         statusBBDD= HibernateUtil_SessionFactory.isConnected();
@@ -200,11 +209,6 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         }
      
     }
-    
-    
-    
-    
-    
        
     //Timer que DISPARA "LA RECONEXION" en caso de NO TENER CONEXION
     private void reconnectTimer() {
