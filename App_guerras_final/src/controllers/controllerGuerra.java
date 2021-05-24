@@ -8,6 +8,7 @@ package controllers;
 import Models.POJOs.Guerra;
 import Models.TableModels.JTableModelGuerra;
 import Models.DAOs.DAOGuerra;
+import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -112,6 +113,16 @@ public final class controllerGuerra implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent ae) {
+        
+        if (ae.getSource() == viewGuerras.getExit_button()) {
+            viewGuerras.dispose();
+        }
+        
+        
+        //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
+        if(HibernateUtil_SessionFactory.isConnected()){
+             
+         
         //Boton Añadir Guerras
         if (ae.getSource() == viewGuerras.getAdd_button()) {
 
@@ -136,11 +147,14 @@ public final class controllerGuerra implements ActionListener {
             //Al final no lleva nada aquí porque siempre limpiaremos pantalla despues de alguna accion    
             
             //Botón Salir
-        } else if (ae.getSource() == viewGuerras.getExit_button()) {
-            viewGuerras.dispose();
         }//Fin del else-if
         
         resetViewComponents(); 
+        
+        }else{
+            viewGuerras.dispose();
+        }
+        
         
     }//Fin de action performed
 

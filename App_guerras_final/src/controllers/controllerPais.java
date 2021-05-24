@@ -10,6 +10,7 @@ import Models.DAOs.DAOPais;
 import Models.DAOs.DAOPeriodoIndependecia;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
+import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -126,6 +127,19 @@ public final class controllerPais implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
 
+        
+        if (ae.getSource() == viewPais.getBtnExit()) {
+
+            viewPais.dispose();
+
+            //CheckBox Independencia    
+        }
+        
+        
+        
+        if(HibernateUtil_SessionFactory.isConnected()){
+        
+        
         //BOTON INSERT
         if (ae.getSource() == viewPais.getBtnInsert()) {
 
@@ -150,15 +164,17 @@ public final class controllerPais implements ActionListener {
             resetViewComponents();
 
             //BOTON EXIT
-        } else if (ae.getSource() == viewPais.getBtnExit()) {
-
-            viewPais.dispose();
-
-            //CheckBox Independencia    
-        } else if (ae.getSource() == viewPais.getCheckBoxIndependent()) {
+        }  else if (ae.getSource() == viewPais.getCheckBoxIndependent()) {
 
             setIndependent();
         }
+        
+        
+        }else{
+            viewPais.dispose();
+        }
+        
+        
 
     }//Fin de action performed
 

@@ -9,6 +9,7 @@ import Models.POJOs.Guerra;
 import Models.ConsultFormatTextUtils.FormatTextDetailsWarUtil;
 import Models.DAOs.DAOGuerra;
 import Models.TableModels.JTableModelGuerra;
+import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -81,6 +82,10 @@ public final class controllerConsultas implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent me) {
 
+                //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
+                if(HibernateUtil_SessionFactory.isConnected()){
+          
+                
                 int row = viewConsultas.getJtableWarList().getSelectedRow();
                 if (row >= 0) {
                     guerra = new Guerra();
@@ -90,7 +95,11 @@ public final class controllerConsultas implements ActionListener {
             //////FORMATEANDO EL "Texto a mostrar en el TextAREA"/////////////////////
                 viewConsultas.getTxtAreaDetailsWar().setText(formatTextDetailsWarUtil.formatDetails(DAOguerra.returnDetails(guerra)));
                 viewConsultas.getTxtAreaDetailsWar().setCaretPosition(0); //Posicionando el "Caret" al principio del TextArea
-               
+                
+                
+                }else{
+                    viewConsultas.dispose();
+                }//Fin de If-Else que COMPRUEBA LA CONEXION
             }
         }
         );
@@ -128,17 +137,10 @@ public final class controllerConsultas implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         //BOTON LIMPIAR PANTALLA
-        if (ae.getSource() == viewConsultas.getBtnClean()) {
-
-            viewConsultas.getTxtAreaDetailsWar().setText("");
-            viewConsultas.getTxtfFilterWar().setText("");
-            viewConsultas.getJtableWarList().clearSelection();
-            //REFRESCANDO TABLA DE GUERRAS (actualizando por si hubiese algun cambio en ella)
-            DAOguerra.selectAllGuerras();
-            tableModelGuerra.fireTableDataChanged();
+       
          
         //BOTON GUARDAR
-        } else if (ae.getSource() == viewConsultas.getBtnSave()) {
+         if (ae.getSource() == viewConsultas.getBtnSave()) {
 
             Export();
             //Cambiando el SOURCE del EVENTO a uno que no exista, para que cuando vuelva no vuelva a reconocer el evento(devuelto inevitablemente por el JfileChooser y Heredado por nuestro botón "guardar" que es su padre)
@@ -147,8 +149,29 @@ public final class controllerConsultas implements ActionListener {
         //BOTON SALIR    
         } else if (ae.getSource() == viewConsultas.getBtnExit()) {
             viewConsultas.dispose();
+        }
+            
+            
+        //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
+        if(HibernateUtil_SessionFactory.isConnected()){
+          
         
+        if (ae.getSource() == viewConsultas.getBtnClean()) {
+
+            viewConsultas.getTxtAreaDetailsWar().setText("");
+            viewConsultas.getTxtfFilterWar().setText("");
+            viewConsultas.getJtableWarList().clearSelection();
+            //REFRESCANDO TABLA DE GUERRAS (actualizando por si hubiese algun cambio en ella)
+            DAOguerra.selectAllGuerras();
+            tableModelGuerra.fireTableDataChanged();
         }//Fin del else-if
+        
+        }else{
+            viewConsultas.dispose();
+            
+        }
+        
+        
 
     }//Fin de action performed
 

@@ -120,8 +120,9 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
             viewPrincipal.setVisible(true);
 
         }//Fin de ElseIf GetSOURCE
-                 
-        }//Find e StatusBBDD
+                checkBBDDStatus(); 
+        
+        }//Fin del IF StatusBBDD
           
         //Comprobando de una (si viene de este controlador, o de algún otro) si 
         //Tenemos que lanzar el mensaje de error
