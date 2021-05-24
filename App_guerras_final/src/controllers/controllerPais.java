@@ -242,16 +242,10 @@ public final class controllerPais implements ActionListener {
         if ((timerbuscar != null) && timerbuscar.isRunning()) {
             timerbuscar.restart();
         } else {
-            timerbuscar = new Timer(TIEMPOBUSCAR, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-
-                    timerbuscar = null;
-                    DAOpais.lightSearchPaises(viewPais.getTxtfSearch().getText());
-                    tableModelPais.fireTableDataChanged();
-
-                }
-
+            timerbuscar = new Timer(TIEMPOBUSCAR, (ActionEvent evt) -> {
+                timerbuscar = null;
+                DAOpais.lightSearchPaises(viewPais.getTxtfSearch().getText());
+                tableModelPais.fireTableDataChanged();
             });
             timerbuscar.setRepeats(false);
             timerbuscar.start();

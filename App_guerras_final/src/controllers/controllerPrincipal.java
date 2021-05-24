@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import Views.ViewPrincipal;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 
@@ -119,9 +120,17 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
         }//Fin de ElseIf GetSOURCE
         
-        checkBBDDStatus();
+        
       
         }//Find e StatusBBDD
+        
+        
+        //Comprobando de una (si viene de este controlador, o de algún otro) si 
+        //Tenemos que lanzar el mensaje de error
+        if(!statusBBDD){
+            JOptionPane.showMessageDialog(viewPrincipal, "Se ha producido un error en la conexíon", "CONNECTION ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
         
     }//Fin de ActionPerformed       
 
@@ -147,7 +156,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
         } else if (evt.getSource().equals(viewPrincipal.getBtnConsult())) {
             
-            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/previewExit.png"))); 
+            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
             viewPrincipal.getLblPreview().setVisible(true);
 
         }else if (evt.getSource().equals(viewPrincipal.getBtnExit())) {
