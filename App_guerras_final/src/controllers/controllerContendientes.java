@@ -55,7 +55,7 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getComboBoxSelectContender().setEnabled(false);
         viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
 
-        viewContendientes.getLblInsertNewContender().setEnabled(false);
+     
         viewContendientes.getLblContenderName().setEnabled(false);
         viewContendientes.getTxtfInsertNewContender().setEnabled(false);
         viewContendientes.getBtnInsertNewContender().setEnabled(false);
@@ -70,7 +70,7 @@ class controllerContendientes implements ActionListener {
 
         viewContendientes.getLblInsertNewCountry().setEnabled(false);
         viewContendientes.getLblUpdateDateBegin().setEnabled(false);
-        viewContendientes.getLblUpdateDateEnd().setEnabled(false);
+  
         viewContendientes.getBtnUpdateDate().setEnabled(false);
 
         viewContendientes.getLblUpdateSelectedCountry().setEnabled(false);
@@ -433,7 +433,7 @@ class controllerContendientes implements ActionListener {
     }
 
     private void contenderInsertSetActive() {
-        viewContendientes.getLblInsertNewContender().setEnabled(true);
+
         viewContendientes.getLblContenderName().setEnabled(true);
         viewContendientes.getTxtfInsertNewContender().setEnabled(true);
         viewContendientes.getBtnInsertNewContender().setEnabled(true);
@@ -442,7 +442,7 @@ class controllerContendientes implements ActionListener {
     }
 
     private void contenderInsertDeactivate() {
-        viewContendientes.getLblInsertNewContender().setEnabled(false);
+
         viewContendientes.getLblContenderName().setEnabled(false);
         viewContendientes.getTxtfInsertNewContender().setEnabled(false);
         viewContendientes.getBtnInsertNewContender().setEnabled(false);
@@ -495,7 +495,7 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getBtnUpdateDate().setEnabled(true);
         viewContendientes.getjDC_updateBeginDate().setEnabled(true);
 
-        viewContendientes.getLblUpdateDateEnd().setEnabled(true);
+
         viewContendientes.getjDC_updateEndDate().setEnabled(false);
         viewContendientes.getCB_updateFechaAbandono().setSelected(false);
 
@@ -503,7 +503,7 @@ class controllerContendientes implements ActionListener {
 
     private void countriesUpdateDeactivate() {
         viewContendientes.getLblUpdateDateBegin().setEnabled(false);
-        viewContendientes.getLblUpdateDateEnd().setEnabled(false);
+
         viewContendientes.getBtnUpdateDate().setEnabled(false);
         viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(false);
         viewContendientes.getComboBoxSelectCountryADDED().setEnabled(false);

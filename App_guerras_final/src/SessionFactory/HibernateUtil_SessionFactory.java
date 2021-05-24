@@ -5,12 +5,11 @@
  */
 package SessionFactory;
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 
 /**
@@ -37,37 +36,41 @@ public class HibernateUtil_SessionFactory {
 
     private static SessionFactory sessionFactory;
     private static Session session;
-
+    private static boolean statusBBDD=false; 
+ 
+    
     //Fabricando la sesionFactory
     public static void buildSessionFactory() {
-        if (sessionFactory == null) {
-            
-            StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure().build();
 
-            Metadata metadata = new MetadataSources(standardRegistry).buildMetadata(standardRegistry);
+        if (sessionFactory == null) {
   
-            sessionFactory = metadata.getSessionFactoryBuilder().build();
-   
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+
+             statusBBDD=true;
         }
     }
 
+    
     
     
     /**
    * Abre una nueva sesión
    */
   private static void openSession() {
-    session = sessionFactory.openSession();
-  }
+
+        session = sessionFactory.openSession();
+        
+    }
  
   /**
    * Devuelve la sesión actual
    * @return
    */
   public static Session getCurrentSession() {
- 
+
     if ((session == null) || (!session.isOpen()))
       openSession();
+
     return session;
   }
  
@@ -83,193 +86,53 @@ public class HibernateUtil_SessionFactory {
       sessionFactory.close();
   }
     
-    
-
-  
-  
-  }
-
-/*
-  ///////////////////////////////////////////////////////////////
-  ////////   EJEMPLOS DE UTILIZACION DE HIBERNATE  //////////////
-  //////////////////////////////////////////////////////////////
-
-******************************************************************************
-****************************************************************************
-##############################################################  
-     ### CRUD  
-############################################################## 
-  
-  
-  ###REGISTRANDO UN OBJETO 
- ########################################################
-        UnaClase unObjeto = new UnaClase();
-        . . .
-        Session sesion = HibernateUtil.getCurrentSession();
-        sesion.beginTransaction();
-        sesion.save(unObjeto);
-        sesion.getTransaction().commit();
-        sesion.close();
-   ########################################################
-    
-
-
-    ###MODIFICANDO UN OBJETO 
- ########################################################
-        UnaClase unObjeto = new UnaClase();
-        . . .
-        Session sesion = HibernateUtil.getCurrentSession();
-
-      //  OBTENER EL OBJETO DE LA BBDD (usando por ejemplo el ID)
-       int id= 23; //este será el ida, podemos recogerlo como queramos, pero debemos insertar un ENTERO DESPUES en el parámetro ID
-       Persona persona = session.get(Persona.class, id);
-
-      //Seteamos los campos que queramos del objeto
-        persona.setNombre("la gaviota");
-        persona.setApellido("del cielo");
-
-      //y reinsertamos el objeto
-        sesion.beginTransaction();
-        sesion.save(persona);
-        sesion.getTransaction().commit();
-        sesion.close();
-   ########################################################
-  
-  
-   ###REGISTRANDO UN OBJETO con OBJETOS RELACIONADOS (ejemplo de PEDIDO y DETALLES PEDIDO)
-   ########################################################
-  . . .
-        Session sesion = HibernateUtil.getCurrentSession();
-        sesion.beginTransaction();
-        sesion.save(unPedido);  //este objeto, contiene un SET de "Detalles pedido" que le indicaremos que tiene que ir añadiendo
-  
-        for (DetallePedido detallePedido : detallesDelPedido)
-                sesion.save(detallePedido);
-  
-        sesion.getTransaction().commit();
-        sesion.close();
-        . . .
-    ########################################################  
-  
-  
-    
-   ### ELIMINANDO UN OBJETO 
-   ########################################################
-    . . .
-    Session sesion = HibernateUtil.getCurrentSession();
- //  OBTENER EL OBJETO DE LA BBDD (usando por ejemplo el ID)
-       int id= 23; //este será el ID, podemos recogerlo como queramos, pero debemos insertar un ENTERO DESPUES en el parámetro ID
-       Persona persona = session.get(Persona.class, id);
-   //Procedemos a su eliminación
-    sesion.beginTransaction();
-    sesion.delete(persona);
-    sesion.getTransaction().commit();
-    sesion.close();
-    ######################################################## 
-  
-  
-  
-******************************************************************************
-****************************************************************************
-##############################################################  
-     ### BUSQUEDAS 
-############################################################## 
-    
-  
-    ##Obtener OBJETO por el "id" 
-    ########################################################
-    int id = . . .;
-    Cliente cliente = HibernateUtil.getCurrentSession().get(Cliente.class, id);
-    ######################################################## 
-    
-  
-  
-    ##Obtener TODOS los OBJETOS de una CLASE 
-    ########################################################
-    Query query = HibernateUtil.getCurrentSession().createQuery("FROM Cliente");
-    ArrayList<Cliente> clientes = (ArrayList<Cliente>) query.list();
-    ########################################################  
-
-  
-  
-  
-    ######################################################## 
-      ##BUSQUEDAS - AÑADIENDO CRITERIOS DE BUSQUEDA
-    ########################################################
-  
-  
-    -##Si el criterio especificado nos devuelve-- UN SOLO OBJETO:
-    ########################################################
-    . . .
-    String nombre = . . .;
-    . . .
-    Query query = HibernateUtil.getCurrentSession().
-    createQuery("FROM Cliente c WHERE c.nombre = :nombre");
-    query.setParameter("nombre", nombre);
-    Cliente cliente = (Cliente) query.uniqueResult();
-    ########################################################  
-
-
-  
-    -##Si el criterio especificado nos puede devolver-- MÁS DE UN OBJETO: 
-    ########################################################
-    . . .
-    String ciudad = . . .;
-    . . .
-    Query query = HibernateUtil.getCurrentSession().
-    createQuery("FROM Cliente c WHERE c.ciudad = :ciudad");
-    query.setParameter("ciudad", ciudad);
-    ArrayList<Cliente> clientes = (ArrayList<Cliente>) query.list();
-    ########################################################  
-
-   
-  
-    ##Obtener OBJETOS DE UNA CLASE utilizando las RELACIONES entre CLASES
-    ########################################################
-    . . .
-    Query query = HibernateUtil.getCurrentSession().
-    createQuery("FROM DetallePedido dp WHERE dp.pedido.numeroPedido = :numeroPedido");
-    query.setParameter("numeroPedido", numeroPedido);
-    ArrayList<DetallePedido> detalles = (ArrayList<DetallePedido>) query.list();
-    ########################################################  
-  
-    
-  
-    ##lanzar consultas DIRECTAMENTE en lenguaje SQL, trabajando entonces directamente con las tablas y campos de la base de datos
-    ########################################################
-    . . .
-    SQLQuery sqlQuery = HibernateUtil.getCurrentSession().createSQLQuery("SELECT nombre, apellidos FROM clientes WHERE ciudad = :ciudad");
-    query.setParameter("ciudad", ciudad);
-    List resultado = query.list();
  
-    for (Object objeto : resultado) {
-    Map fila = (Map) objeto;
-    String nombre = fila.get("nombre"); 
-    String apellidos = fila.get("apellidos");
-    . . .
-    }
-    ########################################################  
-  
-  
+  ///////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////
 
-
-    ###CONSULTA A MULTIPLES TABLAS y recogiendo en un MAP
-    ########################################################  
-    . . .
-    String queryHQL="SELECT new Map(p.nombrePagina, ur.id) FROM User_rol as ur
-    INNER JOIN Rol_pagina as rp ON rp.id = ur.id 
-    INNER JOIN Pagina as p ON p.id = rp.listaWeb_id
-    WHERE ur.User_id =:param1 AND p.nombrePagina =:param2 ";
-
-    Session session=sessionFactory.getCurrentSession();
-
-    Query consultaHQL = session.createQuery(queryHQL);
-    consultaHQL.setParameter("param1", 1);
-    consultaHQL.setParameter("param2","mani.jsp");
-
-    ArrayList<Map> respuestaHQL=(ArrayList<Map>) consultaHQL.list();
-    . . .
-    ########################################################  
-
+    /**
+     * Devuelve el Valor de la variable "statusBBDD" 
+     * despues de ejecutar el metodo PRIVADO "CheckConn"
+     * 
+     * El metodo "CheckConn" =
+     * Lanzará una consulta y SI SE REALIZA CON EXITO la variable "statusBBDD" se pone a TRUE,
+     * en caso de LANZAR ERROR la variable "statusBBDD" se pone a FALSE.
+     * 
+     * Crearemos un TIMER en la CLASE que QUERAMOS comprobar si la conexión es VALIDA, 
+     * para que itere y repita la llamada al Metodo "isConnected"
+     * en caso de ser FALLIDA la conexión.
+     * En el momento que la conexión funcione, 
+     * se realizará la consulta y cambiará el estado de 
+     * la variable "statusBBDD" (Y ya sabremos que tenemos conexión)
+     * 
+     * @return
      */
+    public static boolean isConnected() {
+        
+        checkConn(); //Llamada al Metodo privado "checkConn"
+        return statusBBDD;
+    }
 
+    
+    //Cuidao que "SE TENSA LA COSA" 
+    private static void checkConn() {
+        
+        statusBBDD=false;   
+         
+        try{ 
+            session = getCurrentSession();
+            Query query = session.createSQLQuery("SELECT VERSION() testConnection");
+            query.list();
+            session.close();
+    
+            statusBBDD=true; 
+            
+        }catch(Exception e){
+
+            statusBBDD=false;
+        }
+               
+    }//Fin de CheckConn
+    
+ 
+  }//Fin de la clase
