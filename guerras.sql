@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-05-2021 a las 21:01:02
+-- Tiempo de generación: 23-05-2021 a las 03:53:30
 -- Versión del servidor: 10.5.9-MariaDB-1
 -- Versión de PHP: 7.4.15
 
@@ -56,7 +56,9 @@ INSERT INTO `contendiente` (`id_contendiente`, `ganador`, `nombre`, `id_guerra`)
 (15, 0, 'Fuerzas Búlgaras', 9),
 (16, 1, 'Fuerzas Serbias y Griegas', 9),
 (17, 0, 'Partido NACIONALISTA Chino', 10),
-(18, 1, 'Partido COMUNISTA Chino', 10);
+(18, 1, 'Partido COMUNISTA Chino', 10),
+(33, 0, 'aaaaa', 12),
+(34, 1, 'bbbbbb', 12);
 
 -- --------------------------------------------------------
 
@@ -85,8 +87,7 @@ INSERT INTO `guerra` (`id_guerra`, `anio_inicio`, `anio_fin`, `nombre`) VALUES
 (9, '1913-07-01', '1913-12-31', 'Segunda Guerra de los Balcanes'),
 (10, '1927-08-01', '1950-05-01', 'Guerra Civil China'),
 (11, '1964-07-04', '1979-04-24', 'Guerra Civil de Rodesia'),
-(12, '2021', '2022', 'aaaaaaayyy bendito'),
-(15, 'ARREGLAR', '1022-13-11', 'test');
+(12, '2021-456', '2022', 'aaaaa bendito');
 
 -- --------------------------------------------------------
 
@@ -104,6 +105,7 @@ CREATE TABLE `pais` (
 --
 
 INSERT INTO `pais` (`id_pais`, `nombre`) VALUES
+(89, 'aaaaaaaaaaaaa'),
 (15, 'Alemania Nazi'),
 (20, 'Australia'),
 (29, 'Bélgica'),
@@ -141,6 +143,7 @@ INSERT INTO `pais` (`id_pais`, `nombre`) VALUES
 (44, 'República Popular China'),
 (43, 'República Popular Democrática de Corea'),
 (37, 'Rodesia'),
+(79, 'sdsg3'),
 (34, 'Unión Soviética'),
 (23, 'Unión Sudáfricana');
 
@@ -249,7 +252,9 @@ INSERT INTO `union_bandos` (`id_union_bandos`, `id_contendiente`, `id_pais`, `fe
 (46, 16, 47, '1913-06-29', ''),
 (47, 16, 50, '1913-06-29', ''),
 (48, 17, 51, '1927-08-01', ''),
-(49, 18, 51, '1927-08-01', '');
+(49, 18, 51, '1927-08-01', ''),
+(70, 34, 89, '2021-05-23', ''),
+(71, 33, 29, '2021-05-23', '');
 
 --
 -- Índices para tablas volcadas
@@ -260,13 +265,15 @@ INSERT INTO `union_bandos` (`id_union_bandos`, `id_contendiente`, `id_pais`, `fe
 --
 ALTER TABLE `contendiente`
   ADD PRIMARY KEY (`id_contendiente`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
   ADD KEY `c_fk` (`id_guerra`);
 
 --
 -- Indices de la tabla `guerra`
 --
 ALTER TABLE `guerra`
-  ADD PRIMARY KEY (`id_guerra`);
+  ADD PRIMARY KEY (`id_guerra`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
 -- Indices de la tabla `pais`
@@ -299,31 +306,31 @@ ALTER TABLE `union_bandos`
 -- AUTO_INCREMENT de la tabla `contendiente`
 --
 ALTER TABLE `contendiente`
-  MODIFY `id_contendiente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_contendiente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `guerra`
 --
 ALTER TABLE `guerra`
-  MODIFY `id_guerra` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_guerra` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
-  MODIFY `id_pais` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_pais` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT de la tabla `periodo_independecia`
 --
 ALTER TABLE `periodo_independecia`
-  MODIFY `id_periodo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_periodo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT de la tabla `union_bandos`
 --
 ALTER TABLE `union_bandos`
-  MODIFY `id_union_bandos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_union_bandos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- Restricciones para tablas volcadas
