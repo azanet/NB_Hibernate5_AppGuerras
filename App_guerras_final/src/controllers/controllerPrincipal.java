@@ -25,7 +25,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     private ViewPrincipal viewPrincipal;
     private static final int CHECKTIME = 5000;
     private Timer timerbuscar;
-    private boolean statusBBDD;
+    private boolean statusBBDD=false;
     
     public controllerPrincipal() {
         
@@ -35,19 +35,23 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
         viewPrincipal.setVisible(true);
         
+        checkBBDDStatus();
     }//Fin constructor
 
     
     
     private void initComponents() {
         
+        viewPrincipal.getBtnWars().setEnabled(statusBBDD);
+        viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
+        viewPrincipal.getBtnContender().setEnabled(statusBBDD);
+        viewPrincipal.getBtnConsult().setEnabled(statusBBDD);
         viewPrincipal.getLblPreview().setVisible(false);
 
         viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
-        initEvents();
         
-       checkBBDDStatus();
-
+        initEvents();
+    
     }//Fin initComponents
 
     
@@ -128,6 +132,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         //Tenemos que lanzar el mensaje de error
         if(!statusBBDD){
             JOptionPane.showMessageDialog(viewPrincipal, "Se ha producido un error en la conexíon", "CONNECTION ERROR", JOptionPane.ERROR_MESSAGE);
+           
         }
         
         
@@ -190,8 +195,12 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
      * En caso de NO Existir CONEXION
      */
     private void checkBBDDStatus(){
-
+        try{
         statusBBDD= HibernateUtil_SessionFactory.isConnected();
+        }catch(Exception e){
+            System.out.println("LA MMUETEEEEEEEEEEEE");
+            
+        }
         viewPrincipal.getBtnWars().setEnabled(statusBBDD);
         viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
         viewPrincipal.getBtnContender().setEnabled(statusBBDD);
@@ -217,7 +226,12 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
             timerbuscar = new Timer(CHECKTIME, (ActionEvent evt) -> {
                 
                 System.out.println("Comprobando conexion");
+                try{
                 checkBBDDStatus();
+                }catch(Exception e){
+                    System.out.println("WIIIIIIIIIIIIIIIIIIIIIIIIII");
+                }
+               
             });
             
             timerbuscar.setRepeats(false);

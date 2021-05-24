@@ -43,11 +43,11 @@ public class HibernateUtil_SessionFactory {
     public static void buildSessionFactory() {
 
         if (sessionFactory == null) {
-  
+     
             sessionFactory = new Configuration().configure().buildSessionFactory();
 
-             statusBBDD=true;
         }
+        
     }
 
     
@@ -57,9 +57,9 @@ public class HibernateUtil_SessionFactory {
    * Abre una nueva sesión
    */
   private static void openSession() {
-
-        session = sessionFactory.openSession();
-        
+      
+      session = sessionFactory.openSession();
+      
     }
  
   /**
@@ -68,7 +68,7 @@ public class HibernateUtil_SessionFactory {
    */
   public static Session getCurrentSession() {
 
-    if ((session == null) || (!session.isOpen()))
+    if ((session == null) || (!session.isOpen() ))
       openSession();
 
     return session;
@@ -117,19 +117,27 @@ public class HibernateUtil_SessionFactory {
     //Cuidao que "SE TENSA LA COSA" 
     private static void checkConn() {
         
+         if (sessionFactory != null) { 
         statusBBDD=false;   
-         
+        
         try{ 
             session = getCurrentSession();
+            
             Query query = session.createSQLQuery("SELECT VERSION() testConnection");
             query.list();
             session.close();
-    
-            statusBBDD=true; 
-            
+             statusBBDD=true; 
+      
         }catch(Exception e){
-
+            
             statusBBDD=false;
+         
+            buildSessionFactory();
+         
+        }
+//        }else{
+//             
+//         buildSessionFactory();
         }
                
     }//Fin de CheckConn

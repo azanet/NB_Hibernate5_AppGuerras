@@ -10,6 +10,7 @@ import Models.DAOs.DAOComboBoxesFill;
 import Models.DAOs.DAOUnionBandos;
 import Models.POJOs.Contendiente;
 import Models.POJOs.UnionBandos;
+import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -50,11 +51,18 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getPanelSelecContend().setBackground(new Color(0, 0, 0, 175));
         initComponents();
         initEvents();
-
+        
+        if(HibernateUtil_SessionFactory.isConnected()){
+        viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras()); 
+        }
+        
         viewContendientes.setVisible(true);
     }//Fin del constructor
 
     private void initComponents() {
+        
+        
+        
         viewContendientes.getComboBoxSelectContender().setEnabled(false);
         viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
 
@@ -117,12 +125,19 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getBtnExit().addActionListener(this);
 
         //COMBOBOX DE GUERRAS
-        viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
+       
 
+        //COMBOBOX Seleccionar GUERRAS
         viewContendientes.getComboBoxSelectWar().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
+                
+              //Comprobando CONEXION  
+              if(HibernateUtil_SessionFactory.isConnected()){
+                  
+                  
+                //if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (viewContendientes.getComboBoxSelectWar().getSelectedIndex() > 0) {
                     
                     
                     
@@ -147,7 +162,12 @@ class controllerContendientes implements ActionListener {
                     refreshCountriesAddedComboBox();
 
                 }
-            }
+                
+              }else{
+                  viewContendientes.dispose();
+              }//Fin de IF comprobacionCONEXION
+            
+            }//Fin ItemStateChanged
         }
         );
 
@@ -155,7 +175,14 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getComboBoxSelectContender().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
+                
+                    //Comprobando CONEXION  
+              if(HibernateUtil_SessionFactory.isConnected()){
+                  
+               
+                
+               // if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (viewContendientes.getComboBoxSelectContender().getSelectedIndex() > 0) {
 
                     viewContendientes.getLblInsertNewCountry().setEnabled(true);
                     viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);
@@ -178,7 +205,11 @@ class controllerContendientes implements ActionListener {
                     contenderUpdateSetActive();
                     contenderInsertDeactivate();
 
-                }
+                }//Fin del IF que COMPRUEBA EL INDICE SELECCIONADO
+               
+              }else{
+                  viewContendientes.dispose();
+              }//Fin de IF comprobacionCONEXION
             }
         });
 
@@ -186,7 +217,13 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getComboBoxSelectCountryToContender().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
+                
+              //Comprobando CONEXION  
+              if(HibernateUtil_SessionFactory.isConnected()){
+                
+                
+                //if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (viewContendientes.getComboBoxSelectCountryToContender().getSelectedIndex() > 0) {
 
     /////////////////////////////////////////////////////////////////////////                
                     System.out.println(e.getItem().toString());
@@ -197,6 +234,10 @@ class controllerContendientes implements ActionListener {
                     contenderUpdateDeactivate();
 
                 }
+                
+              }else{
+                  viewContendientes.dispose();
+              }//Fin de IF comprobacionCONEXION
             }
         });
 
@@ -212,7 +253,10 @@ class controllerContendientes implements ActionListener {
                 Date date2;
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-                if (e.getStateChange() == e.SELECTED) {
+                //Comprobando CONEXION  
+                if(HibernateUtil_SessionFactory.isConnected()){
+              
+                if (viewContendientes.getComboBoxSelectCountryADDED().getSelectedIndex() > 0) {
                     String fecha1;
                     String fecha2 = "";
                     String nombrePais = (String) viewContendientes.getComboBoxSelectCountryADDED().getSelectedItem();
@@ -260,17 +304,54 @@ class controllerContendientes implements ActionListener {
                         viewContendientes.getCB_updateFechaAbandono().setSelected(false);
 
                     }
+                }// Fin de SELECTED Index
+                
+                }else{
+                  viewContendientes.dispose();
+              }//Fin de IF comprobacionCONEXION
+            }
+        });
+        
+
+        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de insertar paises
+        viewContendientes.getCB_FechaAbandono().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (viewContendientes.getCB_FechaAbandono().isSelected()) {
+                    viewContendientes.getjDC_EndDate().setEnabled(true);
+                } else {
+                    viewContendientes.getjDC_EndDate().setEnabled(false);
                 }
             }
         });
 
-    }
+        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de updateContendiente paises
+        viewContendientes.getCB_updateFechaAbandono().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (viewContendientes.getCB_updateFechaAbandono().isSelected()) {
+                    viewContendientes.getjDC_updateEndDate().setEnabled(true);
+                } else {
+                    viewContendientes.getjDC_updateEndDate().setEnabled(false);
+                }
+            }
+        });
 
+    }//FIN DE InitEVENTS
+
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        //BOTON SALIR
         if (e.getSource() == viewContendientes.getBtnExit()) {
             viewContendientes.dispose();
         }
+        
+        
+        //Comprobando CONEXION  
+        if(HibernateUtil_SessionFactory.isConnected()){
 
         //Insertar nuevo contendiente
         if (e.getSource() == viewContendientes.getBtnInsertNewContender()) {
@@ -374,29 +455,6 @@ class controllerContendientes implements ActionListener {
 
         }
 
-        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de insertar paises
-        viewContendientes.getCB_FechaAbandono().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (viewContendientes.getCB_FechaAbandono().isSelected()) {
-                    viewContendientes.getjDC_EndDate().setEnabled(true);
-                } else {
-                    viewContendientes.getjDC_EndDate().setEnabled(false);
-                }
-            }
-        });
-
-        //Evento que detecta cambio en el checkbox para habilitar JDC fecha_abandono de updateContendiente paises
-        viewContendientes.getCB_updateFechaAbandono().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (viewContendientes.getCB_updateFechaAbandono().isSelected()) {
-                    viewContendientes.getjDC_updateEndDate().setEnabled(true);
-                } else {
-                    viewContendientes.getjDC_updateEndDate().setEnabled(false);
-                }
-            }
-        });
 
         //Actualizar países de contendientes
         if (e.getSource() == viewContendientes.getBtnUpdateDate()) {
@@ -425,7 +483,11 @@ class controllerContendientes implements ActionListener {
             cleanUpdateCountriesForm();
 
         }
-    }
+        
+        }else{
+                  viewContendientes.dispose();
+        }//Fin de IF comprobacionCONEXION
+    }//Fin del ActionPERFORMED
 
     private void resetComboboxes() {
         viewContendientes.getComboBoxSelectWar().setSelectedIndex(0);
