@@ -6,6 +6,7 @@
 package SessionFactory;
 
 
+import Views.ViewPrincipal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -36,16 +37,16 @@ public class HibernateUtil_SessionFactory {
 
     private static SessionFactory sessionFactory;
     private static Session session;
-    private static boolean statusBBDD=false; 
+    public static boolean statusBBDD=false; 
+    
+    
  
     
     //Fabricando la sesionFactory
     public static void buildSessionFactory() {
-
+        
         if (sessionFactory == null) {
-     
             sessionFactory = new Configuration().configure().buildSessionFactory();
-
         }
         
     }
@@ -118,26 +119,26 @@ public class HibernateUtil_SessionFactory {
     private static void checkConn() {
         
          if (sessionFactory != null) { 
-        statusBBDD=false;   
-        
+             
+             statusBBDD=false; 
         try{ 
             session = getCurrentSession();
-            
+             
             Query query = session.createSQLQuery("SELECT VERSION() testConnection");
-            query.list();
+   
+             query.list();
             session.close();
-             statusBBDD=true; 
-      
+            statusBBDD=true; 
+
         }catch(Exception e){
             
             statusBBDD=false;
-         
+            
             buildSessionFactory();
-         
+        
+            
         }
-//        }else{
-//             
-//         buildSessionFactory();
+        
         }
                
     }//Fin de CheckConn

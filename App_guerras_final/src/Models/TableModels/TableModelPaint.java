@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -192,6 +193,51 @@ public class TableModelPaint {
         //Seteando que NO puedan ser seleccionadas las celdas
         table.setFocusable(true);
         
+        
+    //Seteando TAMAÑO por DEFECTO de las COLUMNAS    
+    TableColumnModel columnModel = table.getColumnModel();
+    
+    //Obteniendo num de columnas de la tabla
+    int numColumnas= table.getColumnCount();
+
+    
+       if(numColumnas==4){
+               columnModel.getColumn(0).setPreferredWidth(100);
+    columnModel.getColumn(0).setMinWidth(100);
+    columnModel.getColumn(0).setMaxWidth(100);
+ /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
+// columnModel.getColumn(1).setPreferredWidth(150);  
+    columnModel.getColumn(2).setPreferredWidth(150);
+    columnModel.getColumn(2).setMinWidth(150);
+    columnModel.getColumn(2).setMaxWidth(150);
+    columnModel.getColumn(3).setPreferredWidth(150);
+    columnModel.getColumn(3).setMinWidth(150);
+    columnModel.getColumn(3).setMaxWidth(150);
+       
+       }
+       
+       
+       if (numColumnas==5){
+                      columnModel.getColumn(0).setPreferredWidth(100);
+    columnModel.getColumn(0).setMinWidth(100);
+    columnModel.getColumn(0).setMaxWidth(100);
+ /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
+// columnModel.getColumn(1).setPreferredWidth(150);  
+    columnModel.getColumn(2).setPreferredWidth(100);
+    columnModel.getColumn(2).setMinWidth(100);
+    columnModel.getColumn(2).setMaxWidth(100);
+    columnModel.getColumn(3).setPreferredWidth(150);
+    columnModel.getColumn(3).setMinWidth(150);
+    columnModel.getColumn(3).setMaxWidth(150);
+    columnModel.getColumn(4).setPreferredWidth(150);
+    columnModel.getColumn(4).setMinWidth(150);
+    columnModel.getColumn(4).setMaxWidth(150);
+       
+       }
+    
+
+    //columnModel.getColumn(3).setPreferredWidth(150);
+   
     }//Fin de initJtable
 
     
