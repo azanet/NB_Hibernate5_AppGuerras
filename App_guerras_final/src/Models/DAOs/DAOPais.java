@@ -182,7 +182,13 @@ public class DAOPais {
     
     //Obtener la "dimension" del ArrayList de guerras
     public int getPaisAllDataSizeList() {
-        return paisesAllData.size();
+        
+        try{       
+            return paisesAllData.size();
+        }catch(NullPointerException npe){
+            return 0;
+        }
+        
     }
 
 }//FIN DE LA CLASE

@@ -33,6 +33,18 @@ public class ViewGuerras extends JDialog {
         setWindow();
     }
 
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public void setJtableWars(JTable jtableWars) {
+        this.jtableWars = jtableWars;
+    }
+
     public JButton getBtnLimpiarPantalla() {
         return btnLimpiarPantalla;
     }
@@ -108,6 +120,8 @@ public class ViewGuerras extends JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(1103, 627));
 
         lblFilterSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFilterSearch.setForeground(new java.awt.Color(204, 204, 204));

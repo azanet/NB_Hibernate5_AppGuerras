@@ -10,6 +10,7 @@ import Models.DAOs.DAOPais;
 import Models.DAOs.DAOPeriodoIndependecia;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
+import Models.TableModels.TableModelPaint;
 import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,11 +55,27 @@ public final class controllerPais implements ActionListener {
     
     private void initComponents() {
         resetViewComponents();
-        initEvents();
+        
 
+        
+//        viewPais.getJtableCountries().setModel(tableModelPais);
+//        
+        //Inicializando el TableModel
         tableModelPais = new JTableModelPais(DAOpais);
-        viewPais.getJtableCountries().setModel(tableModelPais);
+        
+        //Creando objeto de TableModelPaint, pasandole el MODELO que QUEREMOS ESTABLECERLE
+        TableModelPaint  tableModelPaint = new TableModelPaint(tableModelPais);
+        
+        //Seteando la JTable de la vista, con la JTable TUNEADA que nos devuelve la clase TableModelPaint
+        viewPais.setJtableCountries(tableModelPaint.getJtable());
+        
+        //Seteando la JTable al ScrollPane, para que se vea, ya que si no NO PODRÄ MOSTRARLA
+        viewPais.getjScrollPane1().setViewportView(viewPais.getJtableCountries());    
+        //LISTO!, tabla tuning agregada
+  
         list();
+        
+        initEvents();
 
     }//Fin initComponents
 

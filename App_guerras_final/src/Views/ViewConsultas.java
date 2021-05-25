@@ -8,6 +8,7 @@ package Views;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -34,6 +35,17 @@ public class ViewConsultas extends JDialog {
         setWindow();
     }
 
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setJtableWarList(JTable jtableWarList) {
+        this.jtableWarList = jtableWarList;
+    }
+
+    
+    
+    
     public JButton getBtnClean() {
         return btnClean;
     }
@@ -95,6 +107,8 @@ public class ViewConsultas extends JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(924, 650));
 
         lblFilterWar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFilterWar.setForeground(new java.awt.Color(204, 204, 204));
@@ -113,6 +127,7 @@ public class ViewConsultas extends JDialog {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtAreaDetailsWar.setEditable(false);
         txtAreaDetailsWar.setColumns(20);
         txtAreaDetailsWar.setRows(5);
         jScrollPane2.setViewportView(txtAreaDetailsWar);

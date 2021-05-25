@@ -127,7 +127,14 @@ public class DAOGuerra {
     //Obtener la "dimension" del ArrayList de guerras
     public int getGuerraSizeList() {
         
-        return GuerrasList.size();
+        try{
+        
+            return GuerrasList.size();
+        
+        }catch(NullPointerException e){
+             return 0;
+        }
+        
     }
 ///////////////////////////////////////////////////////////////////////    
 

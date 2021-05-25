@@ -313,6 +313,8 @@ public class ViewContendientes extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(1067, 751));
 
         jPanel1.setOpaque(false);
 
@@ -405,9 +407,8 @@ public class ViewContendientes extends javax.swing.JDialog {
             .addGroup(panelSelecContendLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(comboBoxSelectContender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(lblUpdateSelectedContender)
-                .addGap(18, 18, 18)
                 .addGroup(panelSelecContendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelSelecContendLayout.createSequentialGroup()
                         .addGap(10, 10, 10)

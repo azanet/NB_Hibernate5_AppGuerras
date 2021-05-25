@@ -9,6 +9,7 @@ import Models.POJOs.Guerra;
 import Models.ConsultFormatTextUtils.FormatTextDetailsWarUtil;
 import Models.DAOs.DAOGuerra;
 import Models.TableModels.JTableModelGuerra;
+import Models.TableModels.TableModelPaint;
 import SessionFactory.HibernateUtil_SessionFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,8 +58,24 @@ public final class controllerConsultas implements ActionListener {
     private void initComponents() {
 
         DAOguerra.selectAllGuerras();
+       
+///Tabla modo NORMAL ////FUE SUSTITUIDA
+//        tableModelGuerra = new JTableModelGuerra(DAOguerra);
+//        viewConsultas.getJtableWarList().setModel(tableModelGuerra);
+
+
+////////////////////INSERTANDO JTABLE TUNEADA Y JTableMODEL ///////////       
+///////////////////////////////////////////////////////////////////////
+        //Inicializando el TableModel
         tableModelGuerra = new JTableModelGuerra(DAOguerra);
-        viewConsultas.getJtableWarList().setModel(tableModelGuerra);
+        //Creando objeto de TableModelPaint, pasandole el MODELO que QUEREMOS ESTABLECERLE
+        TableModelPaint  tableModelPaint = new TableModelPaint(tableModelGuerra);
+        //Seteando la JTable de la vista, con la JTable TUNEADA que nos devuelve la clase TableModelPaint
+        viewConsultas.setJtableWarList(tableModelPaint.getJtable());
+        //Seteando la JTable al ScrollPane, para que se vea, ya que si no NO PODRÄ MOSTRARLA
+        viewConsultas.getjScrollPane1().setViewportView(viewConsultas.getJtableWarList());
+        //LISTO!, tabla tuning agregada
+///////////////////////////////////////////////////////////////////   
 
    
         initEvents();

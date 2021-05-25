@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -35,6 +36,19 @@ public class ViewPaises extends JDialog {
        setWindow();
     }
 
+    public void setJtableCountries(JTable jtableCountries) {
+        this.jtableCountries = jtableCountries;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+     
+     
+     
+     
+     
     public JButton getBtnLimpiarPantalla() {
         return btnLimpiarPantalla;
     }
@@ -140,6 +154,8 @@ public class ViewPaises extends JDialog {
         btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(1000, 588));
 
         lblSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblSearch.setForeground(new java.awt.Color(204, 204, 204));
