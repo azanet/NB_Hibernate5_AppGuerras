@@ -64,8 +64,9 @@ public final class controllerGuerra implements ActionListener {
         //Seteando la JTable al ScrollPane, para que se vea, ya que si no NO PODRÄ MOSTRARLA
         viewGuerras.getjScrollPane1().setViewportView(viewGuerras.getJtableWars());
         //LISTO!, tabla tuning agregada
-///////////////////////////////////////////////////////////////////     
-        
+/////////////////////////////////////////////////////////////////// 
+
+            
         //Llamada al método que refresca la JTable
         list();
         

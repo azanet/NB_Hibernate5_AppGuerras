@@ -177,11 +177,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         lblIntentandoConectar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         lblIntentandoConectar.setForeground(new java.awt.Color(255, 102, 0));
-        lblIntentandoConectar.setText("Intentando Conectar");
+        lblIntentandoConectar.setText("Conectando ...");
         jPanel4.add(lblIntentandoConectar);
-        lblIntentandoConectar.setBounds(10, 40, 155, 15);
+        lblIntentandoConectar.setBounds(10, 40, 110, 15);
         jPanel4.add(pBarIntentandoConn);
-        pBarIntentandoConn.setBounds(170, 40, 79, 15);
+        pBarIntentandoConn.setBounds(119, 40, 130, 15);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

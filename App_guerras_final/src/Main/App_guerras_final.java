@@ -6,6 +6,8 @@
 package Main;
 
 import controllers.controllerPrincipal;
+import java.awt.Color;
+import static javax.swing.UIManager.put;
 
 /**
  *
@@ -20,8 +22,40 @@ public class App_guerras_final {
         // TODO code application logic here
 
         
+        
+        //////Necesario estableces el tema de la UI de windows, GTK o Metal, para que se puedan PINTAR LOS HEADERS DE LA TABLA
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+            
+                    put("ProgressBar.background", Color.WHITE);
+        put("ProgressBar.foreground", Color. GREEN);
+        put("ProgressBar.selectionBackground", Color. BLACK);
+        put("ProgressBar.selectionForeground", Color. BLACK);
+            
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (InstantiationException ex) {
+             System.out.println(ex.getMessage());        
+        } catch (IllegalAccessException ex) {
+             System.out.println(ex.getMessage());
+        } catch (javax.swing.UnsupportedLookAndFeelException ex){
+            System.out.println(ex.getMessage());        
+        }
+
+        
+        
+        
         controllerPrincipal ctrlWar= new controllerPrincipal();  
 
+        
+        
+        
+        
     }
 
 }

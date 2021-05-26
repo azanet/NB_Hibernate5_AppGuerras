@@ -23,12 +23,17 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
     
     private ViewPrincipal viewPrincipal;
+    
+    //Variables para el TIMER de la Conexion/Reconexion
     private static final int CHECKTIME = 5000;
     private Timer timerbuscar;
+    private int pBarValue=0;
+    //Variable del estado de la BBDD
     private boolean statusBBDD=false;
+    private int countTryConnect=1;
     
     public controllerPrincipal() {
-        
+
         this.viewPrincipal = new ViewPrincipal();
 
         initComponents();
@@ -46,10 +51,10 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
         viewPrincipal.getBtnContender().setEnabled(statusBBDD);
         viewPrincipal.getBtnConsult().setEnabled(statusBBDD);
-        viewPrincipal.getLblPreview().setVisible(false);
 
-        viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
-        
+        viewPrincipal.getpBarIntentandoConn().setStringPainted(true);
+        viewPrincipal.getLblPreview().setVisible(false);
+        viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
         initEvents();
     
     }//Fin initComponents
@@ -195,7 +200,10 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
      * En caso de NO Existir CONEXION
      */
     private void checkBBDDStatus(){
+        
 
+       
+        viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
         //Este METODO es el que comprueba y REALIZA LA RECONEXIÓN EN CASO de ERROR de CONEXIÓN
         statusBBDD= HibernateUtil_SessionFactory.isConnected();
 
@@ -203,17 +211,33 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
         viewPrincipal.getBtnContender().setEnabled(statusBBDD);
         viewPrincipal.getBtnConsult().setEnabled(statusBBDD);
-      
+        viewPrincipal.getLblIntentandoConectar().setVisible(!statusBBDD);
+        viewPrincipal.getpBarIntentandoConn().setVisible(!statusBBDD);
+        
+        //Seteando la lblIntentandoConectar y la pBar
+        if (countTryConnect==0){
+            viewPrincipal.getLblIntentandoConectar().setText("Reiniciando ...");
+            viewPrincipal.getpBarIntentandoConn().setBackground(Color.red);
+        }else{
+            viewPrincipal.getLblIntentandoConectar().setText("Conectando ...");
+            viewPrincipal.getpBarIntentandoConn().setBackground(Color.white);
+        }
+        
+
         //Si la BBDD está desconectada, Activo el TIMER, para que compruebe periodicamente la conexion
-        if(!statusBBDD){          
+        if(!statusBBDD){        
+
             reconnectTimer();
            
-            viewPrincipal.getLblStatusBBDD().setText("NOT CONNECTED");
+            viewPrincipal.getLblStatusBBDD().setText("NO CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.red);
+
         
         }else{       
-            viewPrincipal.getLblStatusBBDD().setText("CONNECTED");
+            viewPrincipal.getLblStatusBBDD().setText("CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.green);
+            pBarValue=0;
+            countTryConnect=0;
         }
      
     }
@@ -227,14 +251,23 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
             timerbuscar = new Timer(CHECKTIME, (ActionEvent evt) -> {
                 
-                System.out.println("Comprobando conexion");
-                try{
- //               HibernateUtil_SessionFactory.buildSessionFactory();              
-                checkBBDDStatus();
-
-                }catch(Exception e){
-                    System.out.println("WIIIIIIIIIIIIIIIIIIIIIIIIII");
+                System.out.println("Comprobando conexion"); 
+                
+                ///Seteando la pBAR haciendo uso del contador para controlar los 30 segundos
+                pBarValue +=12;
+                countTryConnect++;
+                if (countTryConnect==6){
+                    viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
+                    
+                    countTryConnect=0;
+                    pBarValue=0;
+                }else{
+                    viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
                 }
+                
+                
+                    checkBBDDStatus();
+            
                
             });
             

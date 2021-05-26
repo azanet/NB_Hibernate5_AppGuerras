@@ -5,6 +5,7 @@
  */
 package SessionFactory;
 
+import static java.lang.System.currentTimeMillis;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,13 +17,14 @@ import org.hibernate.query.Query;
  * Utilizando las LIBRERIAS de HIBERNATE 5.4.31
  *
  * @author davidf
- *
+ * https://github.com/azanet/
+ * 
  * 
  * DESCRIPCION: 
  * Clase para crear la "Session" de Hibernate
  * 
  * ## MODO DE USO ##
- * 
+ * #############################################################################
  *  Solo tiene 3 metodos PUBLICOS y ESTÁTICOS (el resto son Private):
  *  
  *  1)-- isConnected() = Utilizar este método directamente para Crear la factoria de sesiones
@@ -32,16 +34,19 @@ import org.hibernate.query.Query;
  * 
  * 2)-- getCurrentSession() = Devuelve el objeto "Session" listo para ser utilizado
  * 
- * 3)-- 
- *
- *
+ * 3)-- closeSessionFactory() = Cierra la session y la factorySession
+ *#############################################################################
  * 
  */
 public class HibernateUtil_SessionFactory {
 
     private static SessionFactory sessionFactory;
     private static Session session;
-    public static boolean statusBBDD = false;
+    private static boolean statusBBDD = false;
+    
+    //Variables para controlar la creacion de sesiones
+    private static long flagTimeOut ;
+    private final static long TIMEOUT = 30000L;
 
     //Fabricando la sesionFactory
     /**
@@ -59,6 +64,7 @@ public class HibernateUtil_SessionFactory {
                     statusBBDD = false;
                     sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
                     statusBBDD = true;
+                    flagTimeOut=0;
 
                 }
             }).start();
@@ -138,13 +144,17 @@ public class HibernateUtil_SessionFactory {
          *  -En caso de error, cerrará la FactorySession, la pondrá a NULL
          * 
          *  -En caso de la SessionFactory ser NULL, Tratará de iniciar una nueva factoría.
+         *  -Cuenta con un temporizador, que evitará que se creen factorias nuevas antes de 35 segundos
+         *   para respetar su tiempo de escucha a alguna conexion.
          */
     private static void checkConn() {
         
         if (sessionFactory != null) {
 
          
-            try {
+             
+           
+         try {
                 session = getCurrentSession();
 
                 Query query = session.createSQLQuery("SELECT VERSION() testConnection");
@@ -163,10 +173,21 @@ public class HibernateUtil_SessionFactory {
 
             }
 
+
+         
         } else {
             
+            long actualtime = currentTimeMillis();          
+            if ((actualtime - flagTimeOut) > TIMEOUT){
+               
+                System.out.println("han pasado 35 segundoas");
+               flagTimeOut = actualtime;
+             
             //Creando la FactorySession
             buildSessionFactory();
+                     }
+            
+            
         }
 
     }//Fin de CheckConn
