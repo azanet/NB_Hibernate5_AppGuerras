@@ -107,8 +107,11 @@ public class ViewConsultas extends JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1237, 676));
+        setMinimumSize(new java.awt.Dimension(1237, 676));
+        setPreferredSize(new java.awt.Dimension(1237, 676));
         setResizable(false);
-        setSize(new java.awt.Dimension(924, 650));
+        setSize(new java.awt.Dimension(1237, 676));
 
         lblFilterWar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFilterWar.setForeground(new java.awt.Color(204, 204, 204));
@@ -208,7 +211,7 @@ public class ViewConsultas extends JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
