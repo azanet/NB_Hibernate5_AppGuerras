@@ -305,7 +305,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblIntentandoConectar;
     private javax.swing.JLabel lblPreview;
     private javax.swing.JLabel lblStatusBBDD;
-    public static javax.swing.JProgressBar pBarIntentandoConn;
+    private javax.swing.JProgressBar pBarIntentandoConn;
     // End of variables declaration//GEN-END:variables
  private void setWindow() {
         setTitle("GUERRAS DEL MUNDO");

@@ -5,7 +5,6 @@
  */
 package Main;
 
-import SessionFactory.HibernateUtil_SessionFactory;
 import controllers.controllerPrincipal;
 
 /**
@@ -22,14 +21,7 @@ public class App_guerras_final {
 
         
         controllerPrincipal ctrlWar= new controllerPrincipal();  
-        
-               /////////////////////////////////////////////////  
-       //CREANDO LA FACTORIA DE SESIONES 
-      
-           HibernateUtil_SessionFactory.buildSessionFactory();
 
     }
-    
-
 
 }

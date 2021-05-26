@@ -87,7 +87,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     public void actionPerformed(ActionEvent ae) {
         
         if (ae.getSource() == viewPrincipal.getBtnExit()) {
-
+            HibernateUtil_SessionFactory.closeSessionFactory();
             System.exit(0);
         }
  
@@ -191,16 +191,14 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
   //////////////////////////////////////////////////////////////////////////  
     /**
      * Este METODO, es el que COMPRUEBA la CONEXIÓN 
-     * y ACTIVA EL TIMER de RECONEXION
+     * y ACTIVA EL TIMER de RECONEXION (que llamará a este método otra vez)
      * En caso de NO Existir CONEXION
      */
     private void checkBBDDStatus(){
-        try{
+
+        //Este METODO es el que comprueba y REALIZA LA RECONEXIÓN EN CASO de ERROR de CONEXIÓN
         statusBBDD= HibernateUtil_SessionFactory.isConnected();
-        }catch(Exception e){
-            System.out.println("LA MMUETEEEEEEEEEEEE");
-            
-        }
+
         viewPrincipal.getBtnWars().setEnabled(statusBBDD);
         viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
         viewPrincipal.getBtnContender().setEnabled(statusBBDD);
@@ -209,7 +207,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         //Si la BBDD está desconectada, Activo el TIMER, para que compruebe periodicamente la conexion
         if(!statusBBDD){          
             reconnectTimer();
-            
+           
             viewPrincipal.getLblStatusBBDD().setText("NOT CONNECTED");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.red);
         
@@ -219,6 +217,10 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         }
      
     }
+    
+    
+    
+    
        
     //Timer que DISPARA "LA RECONEXION" en caso de NO TENER CONEXION
     private void reconnectTimer() {
@@ -227,7 +229,9 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
                 
                 System.out.println("Comprobando conexion");
                 try{
+ //               HibernateUtil_SessionFactory.buildSessionFactory();              
                 checkBBDDStatus();
+
                 }catch(Exception e){
                     System.out.println("WIIIIIIIIIIIIIIIIIIIIIIIIII");
                 }
