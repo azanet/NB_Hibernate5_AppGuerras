@@ -8,8 +8,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -76,6 +78,8 @@ public class TableModelPaint {
     private JTableHeader header;
     private JTable table;
     
+       DefaultTableCellRenderer AlignCENTER = new DefaultTableCellRenderer();
+
     
     /**
      * AÑADIENDO LOS "JTableModels" para las tablas de la vista aquí 
@@ -97,24 +101,6 @@ public class TableModelPaint {
         initJtable(tableModelGuerra);
            
         setJtableHeaders();
-
-        //////Necesario estableces el tema de la UI de windows, GTK o Metal, para que se puedan PINTAR LOS HEADERS DE LA TABLA
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        } catch (InstantiationException ex) {
-             System.out.println(ex.getMessage());        
-        } catch (IllegalAccessException ex) {
-             System.out.println(ex.getMessage());
-        } catch (javax.swing.UnsupportedLookAndFeelException ex){
-            System.out.println(ex.getMessage());        
-        }
 
     } //Fin del constructor
 
@@ -181,38 +167,45 @@ public class TableModelPaint {
 
                 if (row % 2 == 0) {
                     ((JComponent) c).setBackground(Color.GREEN);
+     
                 } else {
                     ((JComponent) c).setBackground(Color.YELLOW);
                 }
-                return c;
+                   
+                 return c;
             }
-        };
-               
-        //Seteando altura de las CELDAS
+        };  
+              
+              //Seteando altura de las CELDAS
         table.setRowHeight(40);
+        table.setSelectionForeground(Color.BLUE);
         //Seteando que NO puedan ser seleccionadas las celdas
         table.setFocusable(true);
         
         
+        
     //Seteando TAMAÑO por DEFECTO de las COLUMNAS    
     TableColumnModel columnModel = table.getColumnModel();
+    
+     AlignCENTER.setHorizontalAlignment(SwingConstants.CENTER);
     
     //Obteniendo num de columnas de la tabla
     int numColumnas= table.getColumnCount();
 
     
        if(numColumnas==4){
-               columnModel.getColumn(0).setPreferredWidth(100);
+    columnModel.getColumn(0).setPreferredWidth(100);
     columnModel.getColumn(0).setMinWidth(100);
     columnModel.getColumn(0).setMaxWidth(100);
+
  /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
 // columnModel.getColumn(1).setPreferredWidth(150);  
-    columnModel.getColumn(2).setPreferredWidth(150);
-    columnModel.getColumn(2).setMinWidth(150);
-    columnModel.getColumn(2).setMaxWidth(150);
-    columnModel.getColumn(3).setPreferredWidth(150);
-    columnModel.getColumn(3).setMinWidth(150);
-    columnModel.getColumn(3).setMaxWidth(150);
+    columnModel.getColumn(2).setPreferredWidth(120);
+    columnModel.getColumn(2).setMinWidth(120);
+    columnModel.getColumn(2).setMaxWidth(120);
+    columnModel.getColumn(3).setPreferredWidth(120);
+    columnModel.getColumn(3).setMinWidth(120);
+    columnModel.getColumn(3).setMaxWidth(120);
        
        }
        
@@ -221,6 +214,7 @@ public class TableModelPaint {
                       columnModel.getColumn(0).setPreferredWidth(100);
     columnModel.getColumn(0).setMinWidth(100);
     columnModel.getColumn(0).setMaxWidth(100);
+    
  /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
 // columnModel.getColumn(1).setPreferredWidth(150);  
     columnModel.getColumn(2).setPreferredWidth(100);
@@ -231,45 +225,23 @@ public class TableModelPaint {
     columnModel.getColumn(3).setMaxWidth(150);
     columnModel.getColumn(4).setPreferredWidth(150);
     columnModel.getColumn(4).setMinWidth(150);
-    columnModel.getColumn(4).setMaxWidth(150);
-       
+    columnModel.getColumn(4).setMaxWidth(150);    
+
+    columnModel.getColumn(4).setCellRenderer(AlignCENTER);   
+    
        }
     
 
-    //columnModel.getColumn(3).setPreferredWidth(150);
+    columnModel.getColumn(0).setCellRenderer(AlignCENTER);   
+    columnModel.getColumn(2).setCellRenderer(AlignCENTER);   
+    columnModel.getColumn(3).setCellRenderer(AlignCENTER);   
    
     }//Fin de initJtable
 
     
     
 
-    
-    
-//    
-// //////////////////////////////////////////////////////   
-//  //INICIALIZANDO EL "MODEL" PARA APLICARLE A LA TABLA
-//    private void initDefaultTableModel(){
-//    model = new DefaultTableModel(data, columnNames) {
-//        private static final long serialVersionUID = 1L;
-//
-//        @Override
-//        public Class<?> getColumnClass(int column) {
-//            return getValueAt(0, column).getClass();
-//        }
-//
-//        @Override
-//        public boolean isCellEditable(int row, int column) {
-//            // Aquí devolvemos true o false según queramos que una celda
-//            // identificada por fila,columna (row,column), sea o no editable
-//            return false;
-//        }
-//
-//        
-//    };
-//    }//Fin de defaultTableModel
-//
-//    
-//    
+
 /////////////////////////////////////////////    
    //PINTANDO EL HEADER(TITULO) DE LA JTABLE 
     private void setJtableHeaders() {
@@ -290,6 +262,7 @@ public class TableModelPaint {
             public Component getTableCellRendererComponent(
                     JTable table, Object value, boolean isSelected, boolean hasFocus,
                     int row, int column) {
+
 
                 lbl = (JLabel) hr.getTableCellRendererComponent(table, value,
                         false, false, row, column);
