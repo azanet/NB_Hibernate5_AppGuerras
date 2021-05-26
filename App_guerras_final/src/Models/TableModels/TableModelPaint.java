@@ -4,6 +4,7 @@ package Models.TableModels;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -114,24 +115,7 @@ public class TableModelPaint {
            
         setJtableHeaders();
 
-        //////Necesario estableces el tema de la UI de windows, GTK o Metal, para que se puedan PINTAR LOS HEADERS DE LA TABLA
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        } catch (InstantiationException ex) {
-             System.out.println(ex.getMessage());        
-        } catch (IllegalAccessException ex) {
-             System.out.println(ex.getMessage());
-        } catch (javax.swing.UnsupportedLookAndFeelException ex){
-            System.out.println(ex.getMessage());        
-        }
-
+    
     } //Fin del constructor
     
     
@@ -166,10 +150,10 @@ public class TableModelPaint {
                 Component c = super.prepareRenderer(renderer, row, column);
 
                 if (row % 2 == 0) {
-                    ((JComponent) c).setBackground(Color.GREEN);
+                    ((JComponent) c).setBackground(new Color(223, 247, 252));
      
                 } else {
-                    ((JComponent) c).setBackground(Color.YELLOW);
+                    ((JComponent) c).setBackground(new Color(252, 252, 223 ));
                 }
                    
                  return c;
@@ -181,6 +165,10 @@ public class TableModelPaint {
         table.setSelectionForeground(Color.BLUE);
         //Seteando que NO puedan ser seleccionadas las celdas
         table.setFocusable(true);
+        
+       //Estableciendo  FUENTE a la TABLE
+        Font aux= new Font(table.getFont().toString(), Font.BOLD, 12);
+        table.setFont(aux);
         
         
         
@@ -270,11 +258,14 @@ public class TableModelPaint {
                         lbl.getBorder(),
                         BorderFactory.createEmptyBorder(1, 1, 1, 1)));
                 lbl.setHorizontalAlignment(SwingConstants.CENTER);
-                lbl.setBackground(Color.ORANGE);
+                lbl.setBackground(new Color( 31, 5, 86 ));
 
                 // lbl.setForeground(header.getForeground());
-                lbl.setForeground(Color.BLACK);
+                lbl.setForeground(Color.WHITE);
 
+                //Estableciendo la Font a los HEADERS de la Table
+                Font aux= new Font(table.getFont().toString(), Font.BOLD, 14);
+                lbl.setFont(aux);
                 /*return (value == selectedColumn) ? hr.getTableCellRendererComponent(
 table, value, true, true, row, column) : hr.getTableCellRendererComponent(
 table, value, false, false, row, column);*/
