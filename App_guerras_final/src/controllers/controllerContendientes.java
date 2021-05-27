@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 import Views.ViewContendientes;
 import Views.ViewPrincipal;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -116,6 +117,10 @@ class controllerContendientes implements ActionListener {
     
     
     private void initEvents() {
+        
+      viewContendientes.getBtnExit().addActionListener(this);
+         viewContendientes.getBtnLimpiarPantalla().addActionListener(this);
+         
         viewContendientes.getBtnInsertNewContender().addActionListener(this);
         viewContendientes.getBtnInsertCountryToContender().addActionListener(this);
 
@@ -129,17 +134,18 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getCb_GanadorInsert().addActionListener(this);
         viewContendientes.getCB_FechaAbandono().addActionListener(this);
         viewContendientes.getCB_updateFechaAbandono().addActionListener(this);
+       
+//
+////IMPLEMENTAR AQUÍ VACIADO DE TODO EL FORMULARIO AL CLICKAR FUERA
+//        viewContendientes.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//            resetComponents();
+//
+//            }
+//        });
 
-//IMPLEMENTAR AQUÍ VACIADO DE TODO EL FORMULARIO AL CLICKAR FUERA
-        viewContendientes.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            resetComponents();
-
-            }
-        });
-
-        viewContendientes.getBtnExit().addActionListener(this);
+      
 
         //COMBOBOX DE GUERRAS
        
@@ -375,9 +381,19 @@ class controllerContendientes implements ActionListener {
         //Comprobando CONEXION  
         if(HibernateUtil_SessionFactory.isConnected()){
 
+           
+         //LimpiarPantalla
+        if (e.getSource() == viewContendientes.getBtnLimpiarPantalla()) {
+            resetComponents();
+
+        }
+            
+            
         //Insertar nuevo contendiente
         if (e.getSource() == viewContendientes.getBtnInsertNewContender()) {
-
+            
+            if (viewContendientes.getTxtfInsertNewContender().getText().length() > 0){
+            
             int ganador;
 
             if (viewContendientes.getCb_GanadorInsert().isSelected()) {
@@ -396,6 +412,10 @@ class controllerContendientes implements ActionListener {
 
             cleanContenderForm();
             refreshContenderComboBox();
+            
+           }else{
+            JOptionPane.showMessageDialog(viewContendientes, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
 
         }
 
@@ -414,6 +434,8 @@ class controllerContendientes implements ActionListener {
         //Actualizar contendiente seleccionado
         if (e.getSource() == viewContendientes.getBtnUpdateSelectedContender()) {
 
+            if (viewContendientes.getTxtfUpdateSelectedContender().getText().length() > 0){
+                
             int ganador;
             Contendiente contendiente = new Contendiente();
             String newContenderName = viewContendientes.getTxtfUpdateSelectedContender().getText();
@@ -430,6 +452,11 @@ class controllerContendientes implements ActionListener {
             DAOcontendiente.updateContendiente(contendiente, oldContenderName);
             refreshContenderComboBox();
             cleanUpdateContenderForm();
+            
+            }else{
+                JOptionPane.showMessageDialog(viewContendientes, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            
 
         }
 
@@ -509,6 +536,7 @@ class controllerContendientes implements ActionListener {
         }else{
                   viewContendientes.dispose();
         }//Fin de IF comprobacionCONEXION
+        
     }//Fin del ActionPERFORMED
 
     private void resetComboboxes() {

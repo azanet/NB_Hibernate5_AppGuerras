@@ -109,7 +109,6 @@ public class ViewConsultas extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1237, 676));
         setMinimumSize(new java.awt.Dimension(1237, 676));
-        setPreferredSize(new java.awt.Dimension(1237, 676));
         setResizable(false);
         setSize(new java.awt.Dimension(1237, 676));
 

@@ -22,6 +22,7 @@ import javax.swing.event.DocumentListener;
 import Views.ViewPaises;
 import Views.ViewPrincipal;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -297,6 +298,8 @@ public final class controllerPais implements ActionListener {
     
     private void modificarPais() {
 
+        if(viewPais.getTxtfCountryName().getText().length()>0){
+        
         Pais pais = new Pais();
 
         pais.setIdPais(Integer.parseInt(viewPais.getTF_CountryId().getText()));
@@ -312,16 +315,24 @@ public final class controllerPais implements ActionListener {
 
                 PeriodoIndependecia pi = new PeriodoIndependecia();
 
+                if(viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")){
+                
                 try {
                     pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
                 } catch (NumberFormatException nfe) {
                     pi.setAnioInicio(null);
                 }
-
+                
+    
+                
+                if(viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")){
                 try {
                     pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
                 } catch (NumberFormatException nfe) {
                     pi.setAnioFin(null);
+                }
+                }else{
+                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA, SE OMITIRÁ", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
                 }
 
                 //Añadiendo al objeto el periodo de independencia
@@ -329,6 +340,12 @@ public final class controllerPais implements ActionListener {
 
                 //UPDATEANDO PeriodoIndependencia  (En el DAO comprobará si se MODIFICA o INSERTA el REGISTRO según EXISTA O NO)
                 DAOperiodoIndependencia.updatePeriodoIndependencia(pais);
+                
+                
+                
+                            }else{
+                JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                }
             }
 
             //SI EL CHECKBOX !!NOO¡¡ Esta marcado, ELIMINAREMOS EL PERIODO DE INDEPENDENCIA (en caso de que exista)    
@@ -340,10 +357,18 @@ public final class controllerPais implements ActionListener {
             DAOperiodoIndependencia.deletePeriodoIndependencia(pais);
 
         }
+        
+        }else{
+            JOptionPane.showMessageDialog(viewPais, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    
     }
 
     
     private void insertarPais() {
+      
+        if(viewPais.getTxtfCountryName().getText().length()>0){
+        
         Pais pais = new Pais();
         //insert pais con independencia
         if (viewPais.getCheckBoxIndependent().isSelected() == true) {
@@ -355,13 +380,25 @@ public final class controllerPais implements ActionListener {
             if (viewPais.getTxtfDateBegin().getText().length() > 0) {
 
                 PeriodoIndependecia pi = new PeriodoIndependecia();
+                
+                 if(viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")){
                 pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
-                pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
 
+                
+                 
+                 if(viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")){
+                pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
+                    }else{
+                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                }
                 //Añadiendo al objeto el periodo de independencia
                 pais.getPeriodoIndependecias().add(pi);
                 //
-                DAOperiodoIndependencia.insertPeriodoIndependencia(pais);
+                DAOperiodoIndependencia.insertPeriodoIndependencia(pais);                  
+                 }else{
+                JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                }
+                
             }
 
             //insert de pais solo
@@ -370,6 +407,10 @@ public final class controllerPais implements ActionListener {
             pais.setNombre(viewPais.getTxtfCountryName().getText());
             DAOpais.insertPais(pais);
 
+        }
+        
+        }else{
+            JOptionPane.showMessageDialog(viewPais, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }
 

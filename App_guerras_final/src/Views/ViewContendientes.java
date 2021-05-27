@@ -26,6 +26,12 @@ public class ViewContendientes extends javax.swing.JDialog {
 	setWindow();
     }
 
+    public JButton getBtnLimpiarPantalla() {
+        return btnLimpiarPantalla;
+    }
+
+    
+    
     public JPanel getPanelCreateNewContender() {
         return panelCreateNewContender;
     }
@@ -289,14 +295,13 @@ public class ViewContendientes extends javax.swing.JDialog {
         jDC_BeginDate = new com.toedter.calendar.JDateChooser();
         comboBoxSelectCountryToContender = new javax.swing.JComboBox<>();
         btnExit = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnLimpiarPantalla = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1237, 676));
         setMinimumSize(new java.awt.Dimension(1237, 676));
-        setPreferredSize(new java.awt.Dimension(1237, 676));
         setResizable(false);
         setSize(new java.awt.Dimension(1237, 676));
 
@@ -452,9 +457,11 @@ public class ViewContendientes extends javax.swing.JDialog {
                 .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(Cb_GanadorInsert)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelCreateNewContenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfInsertNewContender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblContenderName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelCreateNewContenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblContenderName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelCreateNewContenderLayout.createSequentialGroup()
+                        .addComponent(txtfInsertNewContender)
+                        .addGap(1, 1, 1)))
                 .addGap(28, 28, 28)
                 .addComponent(btnInsertNewContender, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
@@ -570,7 +577,7 @@ public class ViewContendientes extends javax.swing.JDialog {
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExit.setFocusPainted(false);
 
-        jButton1.setText("LIMPIAR PANTALLA");
+        btnLimpiarPantalla.setText("LIMPIAR PANTALLA");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -581,7 +588,7 @@ public class ViewContendientes extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -605,7 +612,7 @@ public class ViewContendientes extends javax.swing.JDialog {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(45, 45, 45))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -646,12 +653,12 @@ public class ViewContendientes extends javax.swing.JDialog {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnInsertCountryToContender;
     private javax.swing.JButton btnInsertNewContender;
+    private javax.swing.JButton btnLimpiarPantalla;
     private javax.swing.JButton btnUpdateDate;
     private javax.swing.JButton btnUpdateSelectedContender;
     private javax.swing.JComboBox<String> comboBoxSelectContender;
     private javax.swing.JComboBox<String> comboBoxSelectCountryADDED;
     private javax.swing.JComboBox<String> comboBoxSelectCountryToContender;
-    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDC_BeginDate;
     private com.toedter.calendar.JDateChooser jDC_EndDate;
     private com.toedter.calendar.JDateChooser jDC_updateBeginDate;

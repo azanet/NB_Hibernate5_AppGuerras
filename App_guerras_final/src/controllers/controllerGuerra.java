@@ -20,6 +20,7 @@ import javax.swing.event.DocumentListener;
 import Views.ViewPrincipal;
 import Views.ViewGuerras;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -245,17 +246,21 @@ public final class controllerGuerra implements ActionListener {
     
     private void insertarGuerra() {
         
+        if(viewGuerras.getName_text().getText().length()>0){
         Guerra guerra = new Guerra();
         guerra.setNombre(viewGuerras.getName_text().getText());
         guerra.setAnioInicio(viewGuerras.getStart_date_text().getText());
         guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
         DAOguerra.insertGuerras(guerra);
+        }else {       
+              JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
         
     }
 
     
     private void modificarGuerra() {
-        
+         if(viewGuerras.getName_text().getText().length()>0){
         Guerra guerra = new Guerra();
         guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
         guerra.setNombre(viewGuerras.getName_text().getText());
@@ -263,7 +268,9 @@ public final class controllerGuerra implements ActionListener {
         guerra.setAnioFin(viewGuerras.getEnd_date_text().getText());
 
         DAOguerra.updateGuerras(guerra);
-        
+       }else {       
+              JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }   
     }
 
     
