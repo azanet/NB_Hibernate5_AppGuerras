@@ -47,7 +47,7 @@ public class JTableModelGuerra extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        String[] columnNames = new String[]{"ID GUERRA", "NOMBRE", "AÑO INICIO", "AÑO FIN"};
+        String[] columnNames = new String[]{"ID GUERRA", "NOMBRE GUERRA", "AÑO INICIO", "AÑO FIN"};
         return columnNames[column];
     }
     

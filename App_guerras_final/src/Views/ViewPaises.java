@@ -129,8 +129,16 @@ public class ViewPaises extends JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblSearch = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        btnInsert = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnLimpiarPantalla = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
         txtfSearch = new javax.swing.JTextField();
+        lblSearch = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableCountries = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -145,72 +153,23 @@ public class ViewPaises extends JDialog {
         lblCountryName1 = new javax.swing.JLabel();
         TF_CountryId = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        btnInsert = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnLimpiarPantalla = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1237, 676));
+        setMinimumSize(new java.awt.Dimension(1237, 676));
+        setPreferredSize(new java.awt.Dimension(1237, 676));
         setResizable(false);
-        setSize(new java.awt.Dimension(1000, 588));
+        setSize(new java.awt.Dimension(1237, 676));
+        getContentPane().setLayout(null);
 
-        lblSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblSearch.setForeground(new java.awt.Color(204, 204, 204));
-        lblSearch.setText("Busqueda:");
-
-        jtableCountries.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(jtableCountries);
-
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblCountryId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblCountryId.setForeground(new java.awt.Color(204, 204, 204));
-        lblCountryId.setText("Id. País:");
-        jPanel2.add(lblCountryId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 80, 32));
-        jPanel2.add(txtfCountryName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 370, 30));
-
-        checkBoxIndependent.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        checkBoxIndependent.setForeground(new java.awt.Color(204, 204, 204));
-        checkBoxIndependent.setText("País Independiente");
-        checkBoxIndependent.setBorderPainted(true);
-        checkBoxIndependent.setContentAreaFilled(false);
-        checkBoxIndependent.setFocusable(false);
-        jPanel2.add(checkBoxIndependent, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
-
-        lblDateBegin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblDateBegin.setForeground(new java.awt.Color(204, 204, 204));
-        lblDateBegin.setText("Año Inicio:");
-        jPanel2.add(lblDateBegin, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 101, 32));
-        jPanel2.add(txtfDateBegin, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 173, 32));
-
-        lblDateEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblDateEnd.setForeground(new java.awt.Color(204, 204, 204));
-        lblDateEnd.setText("Año Fin:");
-        jPanel2.add(lblDateEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 100, 30));
-        jPanel2.add(txtfDateEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 173, 30));
-
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(409, 10, -1, 150));
-
-        lblCountryName1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblCountryName1.setForeground(new java.awt.Color(204, 204, 204));
-        lblCountryName1.setText("Nombre País:");
-        jPanel2.add(lblCountryName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 140, 32));
-        jPanel2.add(TF_CountryId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 140, 30));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 390, 10));
+        jPanel3.setMaximumSize(new java.awt.Dimension(1237, 676));
+        jPanel3.setMinimumSize(new java.awt.Dimension(1237, 676));
+        jPanel3.setOpaque(false);
+        jPanel3.setPreferredSize(new java.awt.Dimension(1237, 676));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setMaximumSize(new java.awt.Dimension(172, 634));
+        jPanel1.setMinimumSize(new java.awt.Dimension(172, 634));
         jPanel1.setOpaque(false);
 
         btnInsert.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -247,73 +206,137 @@ public class ViewPaises extends JDialog {
                     .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1)
+                        .addGap(0, 12, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit)
-                .addGap(36, 36, 36))
+                .addGap(51, 51, 51))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(22, 22, 22)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
                 .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(107, 107, 107)
                 .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(17, 17, 17))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(55, 55, 55))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
+        lblSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblSearch.setForeground(new java.awt.Color(204, 204, 204));
+        lblSearch.setText("Busqueda:");
+
+        jtableCountries.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jtableCountries);
+
+        jPanel2.setFocusable(false);
+        jPanel2.setMaximumSize(new java.awt.Dimension(755, 160));
+        jPanel2.setMinimumSize(new java.awt.Dimension(755, 160));
+        jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(755, 160));
+        jPanel2.setRequestFocusEnabled(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblCountryId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCountryId.setForeground(new java.awt.Color(204, 204, 204));
+        lblCountryId.setText("Id. País:");
+        jPanel2.add(lblCountryId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 80, 32));
+        jPanel2.add(txtfCountryName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 370, 30));
+
+        checkBoxIndependent.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        checkBoxIndependent.setForeground(new java.awt.Color(204, 204, 204));
+        checkBoxIndependent.setText("País Independiente");
+        checkBoxIndependent.setBorderPainted(true);
+        checkBoxIndependent.setContentAreaFilled(false);
+        checkBoxIndependent.setFocusable(false);
+        jPanel2.add(checkBoxIndependent, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
+
+        lblDateBegin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDateBegin.setForeground(new java.awt.Color(204, 204, 204));
+        lblDateBegin.setText("Año Inicio:");
+        jPanel2.add(lblDateBegin, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 101, 32));
+        jPanel2.add(txtfDateBegin, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 173, 32));
+
+        lblDateEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDateEnd.setForeground(new java.awt.Color(204, 204, 204));
+        lblDateEnd.setText("Año Fin:");
+        jPanel2.add(lblDateEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 100, 30));
+        jPanel2.add(txtfDateEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 173, 30));
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(409, 10, -1, 140));
+
+        lblCountryName1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCountryName1.setForeground(new java.awt.Color(204, 204, 204));
+        lblCountryName1.setText("Nombre País:");
+        jPanel2.add(lblCountryName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 140, 32));
+        jPanel2.add(TF_CountryId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 140, 30));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 390, 10));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(225, 225, 225)
                                 .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 944, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                            .addComponent(lblSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
+
+        getContentPane().add(jPanel3);
+        jPanel3.setBounds(0, 0, 1237, 676);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,6 +356,7 @@ public class ViewPaises extends JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

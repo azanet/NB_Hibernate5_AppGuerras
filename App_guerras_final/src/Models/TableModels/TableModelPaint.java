@@ -86,6 +86,7 @@ public class TableModelPaint {
      * AÑADIENDO LOS "JTableModels" para las tablas de la vista aquí 
      * LOS DEJO PARA VERLOS Y SABER QUE VAN AQUÍ, Porque estos definidos nose utilizan,
      * El constructor utiliza en que viene del controlador directamente.
+     * @param tableModelGuerra
      */
     
 //    private JTableModelGuerra tableModelGuerra ;
@@ -95,7 +96,7 @@ public class TableModelPaint {
 
 
     
-    public TableModelPaint(JTableModelGuerra tableModelGuerra) {
+    public TableModelPaint(Object tableModelGuerra) {
         
 //        this.tableModelGuerra = tableModelGuerra;
         
@@ -105,20 +106,7 @@ public class TableModelPaint {
 
     } //Fin del constructor
 
-    
-    
-    public TableModelPaint(JTableModelPais tableModelPais) {
-        
-//        this.tableModelPais = tableModelPais;
-        
-        initJtable(tableModelPais);
-           
-        setJtableHeaders();
 
-    
-    } //Fin del constructor
-    
-    
     
     
      ///////////////////////////////////////////////
@@ -151,6 +139,7 @@ public class TableModelPaint {
 
                 if (row % 2 == 0) {
                     ((JComponent) c).setBackground(new Color(223, 247, 252));
+              
      
                 } else {
                     ((JComponent) c).setBackground(new Color(252, 252, 223 ));
@@ -169,8 +158,8 @@ public class TableModelPaint {
        //Estableciendo  FUENTE a la TABLE
         Font aux= new Font(table.getFont().toString(), Font.BOLD, 12);
         table.setFont(aux);
-        
-        
+
+
         
     //Seteando TAMAÑO por DEFECTO de las COLUMNAS    
     TableColumnModel columnModel = table.getColumnModel();
@@ -182,16 +171,16 @@ public class TableModelPaint {
 
     
        if(numColumnas==4){
-    columnModel.getColumn(0).setPreferredWidth(100);
+
     columnModel.getColumn(0).setMinWidth(100);
     columnModel.getColumn(0).setMaxWidth(100);
 
  /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
 // columnModel.getColumn(1).setPreferredWidth(150);  
-    columnModel.getColumn(2).setPreferredWidth(120);
+
     columnModel.getColumn(2).setMinWidth(120);
     columnModel.getColumn(2).setMaxWidth(120);
-    columnModel.getColumn(3).setPreferredWidth(120);
+
     columnModel.getColumn(3).setMinWidth(120);
     columnModel.getColumn(3).setMaxWidth(120);
        
@@ -199,21 +188,21 @@ public class TableModelPaint {
        
        
        if (numColumnas==5){
-                      columnModel.getColumn(0).setPreferredWidth(100);
+
     columnModel.getColumn(0).setMinWidth(100);
     columnModel.getColumn(0).setMaxWidth(100);
     
  /////Esta de enmedio se deja, para que ocupe todo el espacio Restante \\\\\\\\\
 // columnModel.getColumn(1).setPreferredWidth(150);  
-    columnModel.getColumn(2).setPreferredWidth(100);
+
     columnModel.getColumn(2).setMinWidth(100);
     columnModel.getColumn(2).setMaxWidth(100);
-    columnModel.getColumn(3).setPreferredWidth(150);
-    columnModel.getColumn(3).setMinWidth(150);
-    columnModel.getColumn(3).setMaxWidth(150);
-    columnModel.getColumn(4).setPreferredWidth(150);
-    columnModel.getColumn(4).setMinWidth(150);
-    columnModel.getColumn(4).setMaxWidth(150);    
+ 
+    columnModel.getColumn(3).setMinWidth(120);
+    columnModel.getColumn(3).setMaxWidth(120);
+
+    columnModel.getColumn(4).setMinWidth(120);
+    columnModel.getColumn(4).setMaxWidth(120);    
 
     columnModel.getColumn(4).setCellRenderer(AlignCENTER);   
     
@@ -240,7 +229,7 @@ public class TableModelPaint {
         header.setReorderingAllowed(false);
 
         //Estableciendo TAMAÑO para los HEADER (titulos) de la JTable
-        table.getTableHeader().setPreferredSize(new Dimension(table.getPreferredSize().width, 35));
+        table.getTableHeader().setPreferredSize(new Dimension(table.getPreferredSize().width, 30));
 
         final TableCellRenderer hr = table.getTableHeader().getDefaultRenderer();
         header.setDefaultRenderer(new TableCellRenderer() {

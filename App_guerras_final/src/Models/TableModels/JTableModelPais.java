@@ -57,7 +57,7 @@ public class JTableModelPais extends AbstractTableModel{
     @Override
     public String getColumnName(int column)
     {
-        String[] columnNames=new String[]{"ID PAIS","NOMBRE","ID PERIODO","AÑO INICIO","AÑO FIN"};
+        String[] columnNames=new String[]{"ID PAIS","NOMBRE PAIS","ID PERIODO","AÑO INICIO","AÑO FIN"};
         return columnNames[column];
     }
 

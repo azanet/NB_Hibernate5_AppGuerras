@@ -32,7 +32,7 @@ public class DAOGuerra {
     public void selectAllGuerras() {
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("SELECT g FROM Guerra g");
+        Query query = session.createQuery("SELECT g FROM Guerra g ORDER BY g.nombre");
         GuerrasList = new ArrayList<>(query.list());
 
         session.close();

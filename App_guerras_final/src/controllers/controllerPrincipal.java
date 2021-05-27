@@ -27,7 +27,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     //Variables para el TIMER de la Conexion/Reconexion
     private static final int CHECKTIME = 5000;
     private Timer timerbuscar;
-    private int pBarValue=0;
+    private int pBarValue=15;
     //Variable del estado de la BBDD
     private boolean statusBBDD=false;
     private int countTryConnect=1;
@@ -54,7 +54,6 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
         viewPrincipal.getpBarIntentandoConn().setStringPainted(true);
         viewPrincipal.getLblPreview().setVisible(false);
-        viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
         initEvents();
     
     }//Fin initComponents
@@ -163,17 +162,17 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
 
         } else if (evt.getSource().equals(viewPrincipal.getBtnCountry())) {
             
-            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
+            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/paisPreview.png"))); 
             viewPrincipal.getLblPreview().setVisible(true);
 
         } else if (evt.getSource().equals(viewPrincipal.getBtnContender())) {
             
-            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
+            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/contendientesPreview.png"))); 
             viewPrincipal.getLblPreview().setVisible(true);
 
         } else if (evt.getSource().equals(viewPrincipal.getBtnConsult())) {
             
-            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guerrasPreview.png"))); 
+            viewPrincipal.getLblPreview().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/consultasPreview.png"))); 
             viewPrincipal.getLblPreview().setVisible(true);
 
         }else if (evt.getSource().equals(viewPrincipal.getBtnExit())) {
@@ -216,11 +215,13 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         
         //Seteando la lblIntentandoConectar y la pBar
         if (countTryConnect==0){
-            viewPrincipal.getLblIntentandoConectar().setText("Reiniciando ...");
+            viewPrincipal.getLblIntentandoConectar().setText("Error de Conex.");
             viewPrincipal.getpBarIntentandoConn().setBackground(Color.red);
+            viewPrincipal.getLblIntentandoConectar().setForeground(Color.YELLOW);
         }else{
             viewPrincipal.getLblIntentandoConectar().setText("Conectando ...");
             viewPrincipal.getpBarIntentandoConn().setBackground(Color.white);
+            viewPrincipal.getLblIntentandoConectar().setForeground(new Color(  245, 139, 19 ));
         }
         
 
@@ -231,11 +232,13 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
            
             viewPrincipal.getLblStatusBBDD().setText("NO CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.red);
+            
 
         
         }else{       
             viewPrincipal.getLblStatusBBDD().setText("CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.green);
+            
             pBarValue=0;
             countTryConnect=0;
         }
@@ -254,7 +257,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
                 System.out.println("Comprobando conexion"); 
                 
                 ///Seteando la pBAR haciendo uso del contador para controlar los 30 segundos
-                pBarValue +=12;
+                pBarValue +=15;
                 countTryConnect++;
                 if (countTryConnect==6){
                     viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);

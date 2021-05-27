@@ -47,10 +47,12 @@ class controllerContendientes implements ActionListener {
         DAOunionBandos = new DAOUnionBandos();
         DAOcomboBoxesFill = new DAOComboBoxesFill();
 
-                                                                                //ALFA= Transpatrencia
-        viewContendientes.getPanelSelecContend().setBackground(new Color(0, 0, 0, 175));
+                                                                                
+
         initComponents();
         initEvents();
+        resetComponents();
+ 
         
         if(HibernateUtil_SessionFactory.isConnected()){
         viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras()); 
@@ -60,9 +62,10 @@ class controllerContendientes implements ActionListener {
     }//Fin del constructor
 
     private void initComponents() {
-        
-        
-        
+                                                                                 //ALFA= Transpatrencia (de 0 a 255)
+        viewContendientes.getPanelSelecContend().setBackground(new Color(0, 0, 0, 175));
+        viewContendientes.getPanelCreateNewContender().setBackground(new Color(0, 0, 0, 175));
+   
         viewContendientes.getComboBoxSelectContender().setEnabled(false);
         viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
 
@@ -71,7 +74,6 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getTxtfInsertNewContender().setEnabled(false);
         viewContendientes.getBtnInsertNewContender().setEnabled(false);
 
-        viewContendientes.getLblUpdateSelectedContender().setEnabled(false);
         viewContendientes.getLblUpdateContenderName().setEnabled(false);
         viewContendientes.getTxtfUpdateSelectedContender().setEnabled(false);
         viewContendientes.getBtnUpdateSelectedContender().setEnabled(false);
@@ -79,12 +81,12 @@ class controllerContendientes implements ActionListener {
         viewContendientes.getComboBoxSelectCountryADDED().setEnabled(false);
         viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(false);
 
-        viewContendientes.getLblInsertNewCountry().setEnabled(false);
+     
         viewContendientes.getLblUpdateDateBegin().setEnabled(false);
   
         viewContendientes.getBtnUpdateDate().setEnabled(false);
 
-        viewContendientes.getLblUpdateSelectedCountry().setEnabled(false);
+
         viewContendientes.getLblDateBeginCountryToContender().setEnabled(false);
         viewContendientes.getBtnInsertCountryToContender().setEnabled(false);
         viewContendientes.getComboBoxSelectCountryToContender().setEnabled(false);
@@ -94,9 +96,25 @@ class controllerContendientes implements ActionListener {
 
         viewContendientes.getjDC_BeginDate().setEnabled(false);
         viewContendientes.getjDC_EndDate().setEnabled(false);
-
+        viewContendientes.getjDC_updateBeginDate().setEnabled(false);
+        viewContendientes.getjDC_updateEndDate().setEnabled(false);
+    
     }
-
+    
+   
+  ///////////////////  
+    private void resetComponents(){
+                    resetComboboxes();
+                    contenderInsertDeactivate();
+                     contenderUpdateDeactivate();
+                     countriesInsertDeactivate();
+                     countriesUpdateDeactivate();
+                     viewContendientes.getComboBoxSelectContender().setEnabled(false);
+    }
+///////////////////////
+    
+    
+    
     private void initEvents() {
         viewContendientes.getBtnInsertNewContender().addActionListener(this);
         viewContendientes.getBtnInsertCountryToContender().addActionListener(this);
@@ -116,8 +134,7 @@ class controllerContendientes implements ActionListener {
         viewContendientes.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                resetComboboxes();
-                initComponents();
+            resetComponents();
 
             }
         });
@@ -184,7 +201,7 @@ class controllerContendientes implements ActionListener {
                // if (e.getStateChange() == ItemEvent.SELECTED) {
                 if (viewContendientes.getComboBoxSelectContender().getSelectedIndex() > 0) {
 
-                    viewContendientes.getLblInsertNewCountry().setEnabled(true);
+         
                     viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);
                     viewContendientes.getComboBoxSelectCountryToContender().setEnabled(true);
                     String nombre = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
@@ -339,6 +356,11 @@ class controllerContendientes implements ActionListener {
 
     }//FIN DE InitEVENTS
 
+    
+    
+    
+    
+    
     
     
     @Override
@@ -498,43 +520,69 @@ class controllerContendientes implements ActionListener {
     }
 
     private void contenderInsertSetActive() {
-
+        
+        viewContendientes.getTxtfInsertNewContender().setBackground(Color.WHITE);
+        viewContendientes.getCb_GanadorInsert().setBackground(Color.WHITE);        
+        
         viewContendientes.getLblContenderName().setEnabled(true);
         viewContendientes.getTxtfInsertNewContender().setEnabled(true);
         viewContendientes.getBtnInsertNewContender().setEnabled(true);
         viewContendientes.getCb_GanadorInsert().setEnabled(true);
-
+     
     }
 
+    
     private void contenderInsertDeactivate() {
-
+        viewContendientes.getTxtfInsertNewContender().setDisabledTextColor(Color.darkGray);
+        viewContendientes.getTxtfInsertNewContender().setBackground(Color.darkGray);
+        
         viewContendientes.getLblContenderName().setEnabled(false);
         viewContendientes.getTxtfInsertNewContender().setEnabled(false);
         viewContendientes.getBtnInsertNewContender().setEnabled(false);
         viewContendientes.getCb_GanadorInsert().setEnabled(false);
+       
     }
 
+
+    
     private void contenderUpdateSetActive() {
-        viewContendientes.getLblUpdateSelectedContender().setEnabled(true);
+
+   
+        viewContendientes.getTxtfUpdateSelectedContender().setDisabledTextColor(Color.WHITE);
+        viewContendientes.getTxtfUpdateSelectedContender().setBackground(Color.WHITE);
+        
         viewContendientes.getLblUpdateContenderName().setEnabled(true);
         viewContendientes.getTxtfUpdateSelectedContender().setEnabled(true);
         viewContendientes.getBtnUpdateSelectedContender().setEnabled(true);
         viewContendientes.getBtnDeleteSelectedContender().setEnabled(true);
         viewContendientes.getCb_Ganador().setEnabled(true);
+      
 
+       
     }
 
     private void contenderUpdateDeactivate() {
-        viewContendientes.getLblUpdateSelectedContender().setEnabled(false);
+      
+        viewContendientes.getTxtfUpdateSelectedContender().setDisabledTextColor(Color.darkGray);
+        viewContendientes.getTxtfUpdateSelectedContender().setBackground(Color.darkGray);
+
+        
         viewContendientes.getLblUpdateContenderName().setEnabled(false);
         viewContendientes.getTxtfUpdateSelectedContender().setEnabled(false);
         viewContendientes.getBtnUpdateSelectedContender().setEnabled(false);
         viewContendientes.getBtnDeleteSelectedContender().setEnabled(false);
         viewContendientes.getCb_Ganador().setEnabled(false);
+        
 
     }
 
     private void countriesInsertSetActive() {
+        
+        
+        viewContendientes.getCB_FechaAbandono().setBackground(Color.WHITE);
+        viewContendientes.getjDC_EndDate().setBackground(Color.WHITE);
+
+        
         viewContendientes.getLblDateBeginCountryToContender().setEnabled(true);
         viewContendientes.getBtnInsertCountryToContender().setEnabled(true);
         viewContendientes.getjDC_BeginDate().setEnabled(true);
@@ -544,43 +592,52 @@ class controllerContendientes implements ActionListener {
     }
 
     private void countriesInsertDeactivate() {
+        
+        viewContendientes.getCB_FechaAbandono().setBackground(Color.darkGray);
+        viewContendientes.getjDC_EndDate().setBackground(Color.darkGray);
+        
         viewContendientes.getLblDateBeginCountryToContender().setEnabled(false);
         viewContendientes.getBtnInsertCountryToContender().setEnabled(false);
         viewContendientes.getComboBoxSelectCountryToContender().setEnabled(false);
-        viewContendientes.getLblInsertNewCountry().setEnabled(false);
+  
         viewContendientes.getjDC_BeginDate().setEnabled(false);
         viewContendientes.getjDC_EndDate().setEnabled(false);
 
     }
 
     private void countriesUpdateSetActive() {
-        viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);
-        viewContendientes.getLblUpdateSelectedCountry().setEnabled(true);
+        
+
+        
+        viewContendientes.getComboBoxSelectCountryADDED().setEnabled(true);   
         viewContendientes.getLblUpdateDateBegin().setEnabled(true);
         viewContendientes.getBtnUpdateDate().setEnabled(true);
         viewContendientes.getjDC_updateBeginDate().setEnabled(true);
-
-
         viewContendientes.getjDC_updateEndDate().setEnabled(false);
         viewContendientes.getCB_updateFechaAbandono().setSelected(false);
 
     }
 
     private void countriesUpdateDeactivate() {
+        
+
+        
         viewContendientes.getLblUpdateDateBegin().setEnabled(false);
 
         viewContendientes.getBtnUpdateDate().setEnabled(false);
         viewContendientes.getBtnDeleteSelectCountryADDED().setEnabled(false);
         viewContendientes.getComboBoxSelectCountryADDED().setEnabled(false);
-        viewContendientes.getLblUpdateSelectedCountry().setEnabled(false);
+
         viewContendientes.getjDC_updateBeginDate().setEnabled(false);
         viewContendientes.getjDC_updateEndDate().setEnabled(false);
         viewContendientes.getCB_updateFechaAbandono().setSelected(false);
+        
+    
+        
+        
 
     }
 
-    public controllerContendientes() {
-    }
 
     private void cleanContenderForm() {
         viewContendientes.getTxtfInsertNewContender().setText("");
