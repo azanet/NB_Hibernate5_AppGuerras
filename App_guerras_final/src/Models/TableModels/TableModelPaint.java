@@ -79,7 +79,7 @@ public class TableModelPaint {
     private JTableHeader header;
     private JTable table;
     
-       DefaultTableCellRenderer AlignCENTER = new DefaultTableCellRenderer();
+    private final DefaultTableCellRenderer AlignCENTER;
 
     
     /**
@@ -97,6 +97,8 @@ public class TableModelPaint {
 
     
     public TableModelPaint(Object tableModelGuerra) {
+        
+        this.AlignCENTER = new DefaultTableCellRenderer();
         
 //        this.tableModelGuerra = tableModelGuerra;
         
@@ -137,6 +139,12 @@ public class TableModelPaint {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
 
+//                if (column ==0){
+//                 ((JComponent) c).setForeground(Color.red);
+//                }else{
+//                ((JComponent) c).setForeground(Color.black);
+//                }
+                
                 if (row % 2 == 0) {
                     ((JComponent) c).setBackground(new Color(223, 247, 252));
               

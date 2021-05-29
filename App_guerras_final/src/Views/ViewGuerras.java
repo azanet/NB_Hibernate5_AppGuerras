@@ -5,7 +5,9 @@
  */
 package Views;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +34,23 @@ public class ViewGuerras extends JDialog {
         initComponents();
         setWindow();
     }
+
+    public JCheckBox getcBoxFechaFin() {
+        return cBoxFechaFin;
+    }
+
+    
+    
+    public JDateChooser getCalendarFin() {
+        return calendarFin;
+    }
+
+    public JDateChooser getCalendarInicio() {
+        return calendarInicio;
+    }
+    
+    
+    
 
     public JScrollPane getjScrollPane1() {
         return jScrollPane1;
@@ -61,9 +80,7 @@ public class ViewGuerras extends JDialog {
         return edit_button;
     }
 
-    public JTextField getEnd_date_text() {
-        return end_date_text;
-    }
+
 
     public JButton getExit_button() {
         return exit_button;
@@ -81,10 +98,7 @@ public class ViewGuerras extends JDialog {
         return name_text;
     }
 
-    public JTextField getStart_date_text() {
-        return start_date_text;
-    }
-
+  
     public JTextField getTxtfFilterSearch() {
         return txtfFilterSearch;
     }
@@ -109,12 +123,12 @@ public class ViewGuerras extends JDialog {
         jPanel1 = new javax.swing.JPanel();
         name_text = new javax.swing.JTextField();
         name_label = new javax.swing.JLabel();
-        start_date_text = new javax.swing.JTextField();
         start_date_label = new javax.swing.JLabel();
         id_text = new javax.swing.JTextField();
         id_label = new javax.swing.JLabel();
-        end_date_label = new javax.swing.JLabel();
-        end_date_text = new javax.swing.JTextField();
+        calendarInicio = new com.toedter.calendar.JDateChooser();
+        calendarFin = new com.toedter.calendar.JDateChooser();
+        cBoxFechaFin = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableWars = new javax.swing.JTable();
         txtfFilterSearch = new javax.swing.JTextField();
@@ -197,31 +211,42 @@ public class ViewGuerras extends JDialog {
         );
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(name_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 410, 30));
+        jPanel1.setLayout(null);
+        jPanel1.add(name_text);
+        name_text.setBounds(30, 80, 410, 30);
 
         name_label.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         name_label.setForeground(new java.awt.Color(204, 204, 204));
         name_label.setText("Nombre de la Guerra:");
-        jPanel1.add(name_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, 30));
-        jPanel1.add(start_date_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 190, 30));
+        jPanel1.add(name_label);
+        name_label.setBounds(30, 50, 195, 30);
 
         start_date_label.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         start_date_label.setForeground(new java.awt.Color(204, 204, 204));
+        start_date_label.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         start_date_label.setText("Fecha de inicio:");
-        jPanel1.add(start_date_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 160, 30));
-        jPanel1.add(id_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 140, 30));
+        jPanel1.add(start_date_label);
+        start_date_label.setBounds(470, 40, 150, 20);
+        jPanel1.add(id_text);
+        id_text.setBounds(130, 10, 140, 30);
 
         id_label.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         id_label.setForeground(new java.awt.Color(204, 204, 204));
         id_label.setText("ID Guerra:");
-        jPanel1.add(id_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 100, 30));
+        jPanel1.add(id_label);
+        id_label.setBounds(30, 10, 100, 30);
+        jPanel1.add(calendarInicio);
+        calendarInicio.setBounds(630, 33, 180, 30);
+        jPanel1.add(calendarFin);
+        calendarFin.setBounds(630, 80, 180, 30);
 
-        end_date_label.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        end_date_label.setForeground(new java.awt.Color(204, 204, 204));
-        end_date_label.setText("Fecha de fin:");
-        jPanel1.add(end_date_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 120, 30));
-        jPanel1.add(end_date_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 81, 190, 30));
+        cBoxFechaFin.setBackground(new java.awt.Color(204, 204, 204));
+        cBoxFechaFin.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        cBoxFechaFin.setForeground(new java.awt.Color(204, 204, 204));
+        cBoxFechaFin.setText("Fecha de Fin:");
+        cBoxFechaFin.setContentAreaFilled(false);
+        jPanel1.add(cBoxFechaFin);
+        cBoxFechaFin.setBounds(480, 80, 150, 30);
 
         jtableWars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -301,10 +326,11 @@ public class ViewGuerras extends JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_button;
     private javax.swing.JButton btnLimpiarPantalla;
+    private javax.swing.JCheckBox cBoxFechaFin;
+    private com.toedter.calendar.JDateChooser calendarFin;
+    private com.toedter.calendar.JDateChooser calendarInicio;
     private javax.swing.JButton delete_button;
     private javax.swing.JButton edit_button;
-    private javax.swing.JLabel end_date_label;
-    private javax.swing.JTextField end_date_text;
     private javax.swing.JButton exit_button;
     private javax.swing.JLabel id_label;
     private javax.swing.JTextField id_text;
@@ -318,7 +344,6 @@ public class ViewGuerras extends JDialog {
     private javax.swing.JLabel name_label;
     private javax.swing.JTextField name_text;
     private javax.swing.JLabel start_date_label;
-    private javax.swing.JTextField start_date_text;
     private javax.swing.JTextField txtfFilterSearch;
     // End of variables declaration//GEN-END:variables
 

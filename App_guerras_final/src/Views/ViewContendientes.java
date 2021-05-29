@@ -26,6 +26,37 @@ public class ViewContendientes extends javax.swing.JDialog {
 	setWindow();
     }
 
+    public JPanel getPanelContendientes() {
+        return panelContendientes;
+    }
+
+    public JPanel getPanelGuerra() {
+        return panelGuerra;
+    }
+
+    public JPanel getPanelPaises() {
+        return panelPaises;
+    }
+    
+    
+    
+
+    public JPanel getPanelInsertPais() {
+        return panelInsertPais;
+    }
+
+    public JPanel getPanelUpdatePais() {
+        return panelUpdatePais;
+    }
+
+    public JPanel getPanelSeleccionGuerra() {
+        return panelSeleccionGuerra;
+    }
+
+    public JPanel getPanelGeneral() {
+        return panelGeneral;
+    }
+
     public JButton getBtnLimpiarPantalla() {
         return btnLimpiarPantalla;
     }
@@ -260,11 +291,11 @@ public class ViewContendientes extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        panelGeneral = new javax.swing.JPanel();
+        panelGuerra = new javax.swing.JPanel();
+        panelSeleccionGuerra = new javax.swing.JPanel();
         ComboBoxSelectWar = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
+        panelContendientes = new javax.swing.JPanel();
         panelSelecContend = new javax.swing.JPanel();
         comboBoxSelectContender = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
@@ -278,8 +309,8 @@ public class ViewContendientes extends javax.swing.JDialog {
         Cb_GanadorInsert = new javax.swing.JCheckBox();
         txtfInsertNewContender = new javax.swing.JTextField();
         lblContenderName = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        panelPaises = new javax.swing.JPanel();
+        panelUpdatePais = new javax.swing.JPanel();
         comboBoxSelectCountryADDED = new javax.swing.JComboBox<>();
         jDC_updateBeginDate = new com.toedter.calendar.JDateChooser();
         lblUpdateDateBegin = new javax.swing.JLabel();
@@ -287,87 +318,87 @@ public class ViewContendientes extends javax.swing.JDialog {
         jDC_updateEndDate = new com.toedter.calendar.JDateChooser();
         btnUpdateDate = new javax.swing.JButton();
         btnDeleteSelectCountryADDED = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
+        panelInsertPais = new javax.swing.JPanel();
         btnInsertCountryToContender = new javax.swing.JButton();
         jDC_EndDate = new com.toedter.calendar.JDateChooser();
         CB_FechaAbandono = new javax.swing.JCheckBox();
         lblDateBeginCountryToContender = new javax.swing.JLabel();
         jDC_BeginDate = new com.toedter.calendar.JDateChooser();
         comboBoxSelectCountryToContender = new javax.swing.JComboBox<>();
-        btnExit = new javax.swing.JButton();
         btnLimpiarPantalla = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnExit = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1237, 676));
         setMinimumSize(new java.awt.Dimension(1237, 676));
         setResizable(false);
         setSize(new java.awt.Dimension(1237, 676));
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(1237, 676));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1237, 676));
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(1237, 676));
+        panelGeneral.setMaximumSize(new java.awt.Dimension(1237, 676));
+        panelGeneral.setMinimumSize(new java.awt.Dimension(1237, 676));
+        panelGeneral.setPreferredSize(new java.awt.Dimension(1237, 676));
+        panelGeneral.setLayout(null);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14)), "GUERRA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16), new java.awt.Color(255, 51, 0))); // NOI18N
-        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.setOpaque(false);
+        panelGuerra.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14)), "GUERRA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 102, 0))); // NOI18N
+        panelGuerra.setForeground(new java.awt.Color(255, 255, 255));
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE Guerra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(204, 255, 204))); // NOI18N
-        jPanel9.setOpaque(false);
+        panelSeleccionGuerra.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE Guerra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(204, 255, 204))); // NOI18N
 
         ComboBoxSelectWar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guerra1", "Guerra2", "Guerra3", " " }));
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelSeleccionGuerraLayout = new javax.swing.GroupLayout(panelSeleccionGuerra);
+        panelSeleccionGuerra.setLayout(panelSeleccionGuerraLayout);
+        panelSeleccionGuerraLayout.setHorizontalGroup(
+            panelSeleccionGuerraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeleccionGuerraLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ComboBoxSelectWar, 0, 503, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        panelSeleccionGuerraLayout.setVerticalGroup(
+            panelSeleccionGuerraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSeleccionGuerraLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(ComboBoxSelectWar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelGuerraLayout = new javax.swing.GroupLayout(panelGuerra);
+        panelGuerra.setLayout(panelGuerraLayout);
+        panelGuerraLayout.setHorizontalGroup(
+            panelGuerraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGuerraLayout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(panelSeleccionGuerra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+        panelGuerraLayout.setVerticalGroup(
+            panelGuerraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGuerraLayout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(panelSeleccionGuerra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14)), "CONTENDIENTES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16), new java.awt.Color(255, 51, 0))); // NOI18N
-        jPanel3.setMaximumSize(new java.awt.Dimension(1221, 272));
-        jPanel3.setMinimumSize(new java.awt.Dimension(1221, 272));
-        jPanel3.setOpaque(false);
-        jPanel3.setPreferredSize(new java.awt.Dimension(1221, 272));
-        jPanel3.setLayout(null);
+        panelGeneral.add(panelGuerra);
+        panelGuerra.setBounds(330, 20, 564, 120);
 
-        panelSelecContend.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(255, 204, 102))); // NOI18N
+        panelContendientes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14)), "CONTENDIENTES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 102, 0))); // NOI18N
+        panelContendientes.setMaximumSize(new java.awt.Dimension(1221, 272));
+        panelContendientes.setMinimumSize(new java.awt.Dimension(1221, 272));
+        panelContendientes.setPreferredSize(new java.awt.Dimension(1221, 272));
+        panelContendientes.setLayout(null);
+
+        panelSelecContend.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(255, 204, 102))); // NOI18N
         panelSelecContend.setLayout(null);
 
         comboBoxSelectContender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un contendiente...", "Item 2", "Item 3", "Item 4" }));
         panelSelecContend.add(comboBoxSelectContender);
         comboBoxSelectContender.setBounds(138, 35, 334, 23);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contendiente Seleccionado (MODIFICAR / ELIMINAR)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(255, 204, 153))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contendiente Seleccionado (MODIFICAR / ELIMINAR)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(255, 204, 153))); // NOI18N
         jPanel7.setOpaque(false);
         jPanel7.setLayout(null);
         jPanel7.add(txtfUpdateSelectedContender);
@@ -410,10 +441,10 @@ public class ViewContendientes extends javax.swing.JDialog {
         panelSelecContend.add(jPanel7);
         jPanel7.setBounds(30, 80, 520, 131);
 
-        jPanel3.add(panelSelecContend);
+        panelContendientes.add(panelSelecContend);
         panelSelecContend.setBounds(30, 30, 570, 230);
 
-        panelCreateNewContender.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CREAR Nuevo Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(255, 204, 102))); // NOI18N
+        panelCreateNewContender.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CREAR Nuevo Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(255, 204, 102))); // NOI18N
 
         btnInsertNewContender.setText("INSERTAR NUEVO CONTENDIENTE");
         btnInsertNewContender.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -467,30 +498,31 @@ public class ViewContendientes extends javax.swing.JDialog {
                 .addGap(44, 44, 44))
         );
 
-        jPanel3.add(panelCreateNewContender);
+        panelContendientes.add(panelCreateNewContender);
         panelCreateNewContender.setBounds(630, 30, 570, 230);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PAÍSES ALIADOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16), new java.awt.Color(255, 51, 0))); // NOI18N
-        jPanel4.setMaximumSize(new java.awt.Dimension(1221, 226));
-        jPanel4.setMinimumSize(new java.awt.Dimension(1221, 226));
-        jPanel4.setOpaque(false);
-        jPanel4.setPreferredSize(new java.awt.Dimension(1221, 226));
+        panelGeneral.add(panelContendientes);
+        panelContendientes.setBounds(10, 160, 1215, 272);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE País Aliado (para MODIFICAR / ELIMINAR)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(153, 204, 255))); // NOI18N
-        jPanel5.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel5.setOpaque(false);
-        jPanel5.setLayout(null);
+        panelPaises.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PAÍSES ALIADOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 102, 0))); // NOI18N
+        panelPaises.setMaximumSize(new java.awt.Dimension(1221, 226));
+        panelPaises.setMinimumSize(new java.awt.Dimension(1221, 226));
+        panelPaises.setPreferredSize(new java.awt.Dimension(1221, 226));
+
+        panelUpdatePais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SELECCIONE País Aliado (para MODIFICAR / ELIMINAR)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(153, 204, 255))); // NOI18N
+        panelUpdatePais.setForeground(new java.awt.Color(255, 255, 255));
+        panelUpdatePais.setLayout(null);
 
         comboBoxSelectCountryADDED.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione país aliado...", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(comboBoxSelectCountryADDED);
+        panelUpdatePais.add(comboBoxSelectCountryADDED);
         comboBoxSelectCountryADDED.setBounds(120, 30, 360, 23);
-        jPanel5.add(jDC_updateBeginDate);
+        panelUpdatePais.add(jDC_updateBeginDate);
         jDC_updateBeginDate.setBounds(90, 70, 160, 23);
 
         lblUpdateDateBegin.setForeground(new java.awt.Color(255, 255, 255));
         lblUpdateDateBegin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblUpdateDateBegin.setText("F. Unión:");
-        jPanel5.add(lblUpdateDateBegin);
+        panelUpdatePais.add(lblUpdateDateBegin);
         lblUpdateDateBegin.setBounds(10, 70, 70, 20);
 
         CB_updateFechaAbandono.setForeground(new java.awt.Color(255, 255, 255));
@@ -500,30 +532,29 @@ public class ViewContendientes extends javax.swing.JDialog {
         CB_updateFechaAbandono.setFocusPainted(false);
         CB_updateFechaAbandono.setFocusable(false);
         CB_updateFechaAbandono.setVerifyInputWhenFocusTarget(false);
-        jPanel5.add(CB_updateFechaAbandono);
+        panelUpdatePais.add(CB_updateFechaAbandono);
         CB_updateFechaAbandono.setBounds(280, 71, 120, 20);
-        jPanel5.add(jDC_updateEndDate);
+        panelUpdatePais.add(jDC_updateEndDate);
         jDC_updateEndDate.setBounds(400, 70, 150, 23);
 
         btnUpdateDate.setText("MODIFICAR PAÍS ALIADO");
         btnUpdateDate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.add(btnUpdateDate);
+        panelUpdatePais.add(btnUpdateDate);
         btnUpdateDate.setBounds(330, 120, 190, 38);
 
         btnDeleteSelectCountryADDED.setText("ELIMINAR PAÍS ALIADO");
         btnDeleteSelectCountryADDED.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.add(btnDeleteSelectCountryADDED);
+        panelUpdatePais.add(btnDeleteSelectCountryADDED);
         btnDeleteSelectCountryADDED.setBounds(60, 120, 170, 37);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INSERTAR País a Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 13), new java.awt.Color(153, 204, 255))); // NOI18N
-        jPanel6.setOpaque(false);
-        jPanel6.setLayout(null);
+        panelInsertPais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INSERTAR País a Contendiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 14), new java.awt.Color(153, 204, 255))); // NOI18N
+        panelInsertPais.setLayout(null);
 
         btnInsertCountryToContender.setText("INSERTAR PAIS a CONTENDIENTE");
         btnInsertCountryToContender.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel6.add(btnInsertCountryToContender);
+        panelInsertPais.add(btnInsertCountryToContender);
         btnInsertCountryToContender.setBounds(160, 120, 250, 33);
-        jPanel6.add(jDC_EndDate);
+        panelInsertPais.add(jDC_EndDate);
         jDC_EndDate.setBounds(410, 70, 140, 23);
 
         CB_FechaAbandono.setForeground(new java.awt.Color(255, 255, 255));
@@ -535,103 +566,90 @@ public class ViewContendientes extends javax.swing.JDialog {
         CB_FechaAbandono.setRequestFocusEnabled(false);
         CB_FechaAbandono.setRolloverEnabled(false);
         CB_FechaAbandono.setVerifyInputWhenFocusTarget(false);
-        jPanel6.add(CB_FechaAbandono);
+        panelInsertPais.add(CB_FechaAbandono);
         CB_FechaAbandono.setBounds(290, 70, 120, 21);
 
         lblDateBeginCountryToContender.setForeground(new java.awt.Color(255, 255, 255));
         lblDateBeginCountryToContender.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblDateBeginCountryToContender.setText("F. Unión: ");
-        jPanel6.add(lblDateBeginCountryToContender);
+        panelInsertPais.add(lblDateBeginCountryToContender);
         lblDateBeginCountryToContender.setBounds(10, 70, 70, 20);
-        jPanel6.add(jDC_BeginDate);
+        panelInsertPais.add(jDC_BeginDate);
         jDC_BeginDate.setBounds(90, 70, 160, 23);
 
         comboBoxSelectCountryToContender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione país...", "Item 2", "Item 3", "Item 4" }));
-        jPanel6.add(comboBoxSelectCountryToContender);
+        panelInsertPais.add(comboBoxSelectCountryToContender);
         comboBoxSelectCountryToContender.setBounds(110, 30, 379, 23);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelPaisesLayout = new javax.swing.GroupLayout(panelPaises);
+        panelPaises.setLayout(panelPaisesLayout);
+        panelPaisesLayout.setHorizontalGroup(
+            panelPaisesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPaisesLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelUpdatePais, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelInsertPais, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        panelPaisesLayout.setVerticalGroup(
+            panelPaisesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPaisesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelPaisesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelInsertPais, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelUpdatePais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panelGeneral.add(panelPaises);
+        panelPaises.setBounds(10, 450, 1215, 214);
+
+        btnLimpiarPantalla.setText("LIMPIAR PANTALLA");
+        panelGeneral.add(btnLimpiarPantalla);
+        btnLimpiarPantalla.setBounds(70, 70, 197, 47);
+
+        jPanel1.setOpaque(false);
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salir.png"))); // NOI18N
         btnExit.setBorderPainted(false);
         btnExit.setContentAreaFilled(false);
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.setDefaultCapable(false);
         btnExit.setFocusPainted(false);
-
-        btnLimpiarPantalla.setText("LIMPIAR PANTALLA");
+        btnExit.setFocusable(false);
+        btnExit.setRequestFocusEnabled(false);
+        btnExit.setRolloverEnabled(false);
+        btnExit.setVerifyInputWhenFocusTarget(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExit)
-                        .addGap(82, 82, 82))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                .addGap(37, 37, 37)
+                .addComponent(btnExit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnLimpiarPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
+
+        panelGeneral.add(jPanel1);
+        jPanel1.setBounds(990, 40, 157, 102);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -664,21 +682,22 @@ public class ViewContendientes extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser jDC_updateBeginDate;
     private com.toedter.calendar.JDateChooser jDC_updateEndDate;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblContenderName;
     private javax.swing.JLabel lblDateBeginCountryToContender;
     private javax.swing.JLabel lblUpdateContenderName;
     private javax.swing.JLabel lblUpdateDateBegin;
+    private javax.swing.JPanel panelContendientes;
     private javax.swing.JPanel panelCreateNewContender;
+    private javax.swing.JPanel panelGeneral;
+    private javax.swing.JPanel panelGuerra;
+    private javax.swing.JPanel panelInsertPais;
+    private javax.swing.JPanel panelPaises;
     private javax.swing.JPanel panelSelecContend;
+    private javax.swing.JPanel panelSeleccionGuerra;
+    private javax.swing.JPanel panelUpdatePais;
     private javax.swing.JTextField txtfInsertNewContender;
     private javax.swing.JTextField txtfUpdateSelectedContender;
     // End of variables declaration//GEN-END:variables

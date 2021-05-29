@@ -135,6 +135,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
         //Comprobando de una (si viene de este controlador, o de algún otro) si 
         //Tenemos que lanzar el mensaje de error
         if(!statusBBDD){
+            viewPrincipal.getLblPreview().setVisible(false);
             JOptionPane.showMessageDialog(viewPrincipal, "Se ha producido un error en la conexíon", "CONNECTION ERROR", JOptionPane.ERROR_MESSAGE);
            
         }
