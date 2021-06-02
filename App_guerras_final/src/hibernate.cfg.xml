@@ -38,7 +38,7 @@ Version 2 license, then the option applies only if the new code is
 made subject to such option by the copyright holder.
 
 Contributor(s):
- <property name="hibernate.connection.autocommit">true</property>
+ 
 -->
 <hibernate-configuration>
   <session-factory>
@@ -50,7 +50,7 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.current_session_context_class">thread</property>
-
+    <property name="hibernate.connection.autocommit">true</property>
 
     <!-- Configuracion del C3P0 (Pool de conexiones) -->
     <property name="c3p0.min_size">5</property>

@@ -75,9 +75,11 @@ public class HibernateUtil_SessionFactory {
      * Abre una nueva sesión
      */
     private static void openSession() {
-
+try{
         session = sessionFactory.openSession();
-
+}catch(Exception e){
+  //  session.flush();
+}
     }
 
     /**

@@ -25,6 +25,7 @@ import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  *
@@ -50,8 +51,6 @@ public final class controllerGuerra implements ActionListener {
         viewGuerras.setVisible(true);
     }
 
-    
-    
     private void initComponents() {
 
         resetViewComponents();
@@ -75,8 +74,6 @@ public final class controllerGuerra implements ActionListener {
         initEvents();
     }//Fin initComponents
 
-    
-    
     private void initEvents() {
         //INICIALIZAR EVENTOS
         viewGuerras.getAdd_button().addActionListener(this);
@@ -103,8 +100,6 @@ public final class controllerGuerra implements ActionListener {
         }
         );
 
-        
-        
         //Agregando evento para controlar la "entrada de datos" en el Txt de BUSQUEDA
         viewGuerras.getTxtfFilterSearch().getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -131,9 +126,6 @@ public final class controllerGuerra implements ActionListener {
             }
         });
 
-        
-        
-    
         viewGuerras.getcBoxFechaFin().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
@@ -151,8 +143,6 @@ public final class controllerGuerra implements ActionListener {
 
     }//Fin initEvents
 
-    
-    
     ///EVENTOS PARA LOS BOTONES
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -194,8 +184,6 @@ public final class controllerGuerra implements ActionListener {
 
     }//Fin de action performed
 
-    
-    
     private void selected_row() {
 
         int row = viewGuerras.getJtableWars().getSelectedRow();
@@ -221,8 +209,6 @@ public final class controllerGuerra implements ActionListener {
 
     }
 
-    
-    
     private void list() {
 
         DAOguerra.selectAllGuerras();
@@ -230,8 +216,6 @@ public final class controllerGuerra implements ActionListener {
 
     }
 
-    
-    
     //Limpiar TextFields y volver a SETEAR los estados de los botones
     private void resetViewComponents() {
 
@@ -256,8 +240,6 @@ public final class controllerGuerra implements ActionListener {
 
     }
 
-    
-    
     private void activoTimer() {
 
         if ((timerbuscar != null) && timerbuscar.isRunning()) {
@@ -286,88 +268,102 @@ public final class controllerGuerra implements ActionListener {
 
             Guerra guerra = new Guerra();
 
-            guerra.setNombre(viewGuerras.getName_text().getText());
+            guerra.setNombre(viewGuerras.getName_text().getText().trim());
+            
+            if (guerra.getNombre().length() <= 50) {
+                //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoINICIO" indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
+                try {
 
-            //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoINICIO" indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
-            try {
+                    //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioInicio" 
+                    guerra.setAnioInicio(df.format(viewGuerras.getCalendarInicio().getDate()));
 
-                //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioInicio" 
-                guerra.setAnioInicio(df.format(viewGuerras.getCalendarInicio().getDate()));
+                    //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
+                    if (!viewGuerras.getcBoxFechaFin().isSelected()) {
 
-                //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
-                if (!viewGuerras.getcBoxFechaFin().isSelected()) {
-
-                    guerra.setAnioFin("");
-
-                } else {
-                    try {
-                        //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
-                        guerra.setAnioFin(df.format(viewGuerras.getCalendarFin().getDate()));
-
-                    } catch (Exception e) {
-                        //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoFin" INSERTAREMOS EL OBJETO Con "fechaFin" vacía [""] (pero no NULL)
                         guerra.setAnioFin("");
+
+                    } else {
+                        try {
+                            //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
+                            guerra.setAnioFin(df.format(viewGuerras.getCalendarFin().getDate()));
+
+                        } catch (Exception e) {
+                            //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoFin" INSERTAREMOS EL OBJETO Con "fechaFin" vacía [""] (pero no NULL)
+                            guerra.setAnioFin("");
+                        }
                     }
+
+                    try{
+                    DAOguerra.insertGuerras(guerra);
+                    }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewGuerras, "Ya Existe Una Guerra con este Nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+                    
+                    list();
+
+                } catch (Exception npe) {
+                    //En caso de error, ya sea por un NullPointerException o cualquier otro indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
+                    JOptionPane.showMessageDialog(viewGuerras, "La Fecha Inicio no PUEDE estar vacía", "ERROR de FECHA", JOptionPane.WARNING_MESSAGE);
                 }
-
-                DAOguerra.insertGuerras(guerra);
-                list();
-            } catch (Exception npe) {
-                //En caso de error, ya sea por un NullPointerException o cualquier otro indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
-                JOptionPane.showMessageDialog(viewGuerras, "La Fecha Inicio no PUEDE estar vacía", "ERROR de FECHA", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no puede ser superior a 50 carácteres", "ERROR de NOMBRE", JOptionPane.WARNING_MESSAGE);
             }
-
         } else {
             JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
 
     }
 
-    
-    
     private void modificarGuerra() {
         if (viewGuerras.getName_text().getText().length() > 0) {
             Guerra guerra = new Guerra();
             guerra.setIdGuerra(Integer.parseInt(viewGuerras.getId_text().getText()));
-            guerra.setNombre(viewGuerras.getName_text().getText());
 
-            //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoINICIO" indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
-            try {
+            guerra.setNombre(viewGuerras.getName_text().getText().trim());
+            
+            if (guerra.getNombre().length() <= 50) {
+                //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoINICIO" indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
+                try {
 
-                //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioInicio" 
-                guerra.setAnioInicio(df.format(viewGuerras.getCalendarInicio().getDate()));
+                    //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioInicio" 
+                    guerra.setAnioInicio(df.format(viewGuerras.getCalendarInicio().getDate()));
 
-                //Comprobando si el CHECKBOX está seleccionado, para determinar "si probar a recuperar la Fecha para Setear el anioFin del objeto" o Setarlo con la fecha vacia [""] PERO NO NULA 
-                if (!viewGuerras.getcBoxFechaFin().isSelected()) {
+                    //Comprobando si el CHECKBOX está seleccionado, para determinar "si probar a recuperar la Fecha para Setear el anioFin del objeto" o Setarlo con la fecha vacia [""] PERO NO NULA 
+                    if (!viewGuerras.getcBoxFechaFin().isSelected()) {
 
-                    guerra.setAnioFin("");
-
-                } else {
-                    try {
-                        //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
-                        guerra.setAnioFin(df.format(viewGuerras.getCalendarFin().getDate()));
-
-                    } catch (Exception e) {
-                        //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoFin" INSERTAREMOS EL OBJETO Con "fechaFin" vacía [""] (pero no NULL)
                         guerra.setAnioFin("");
+
+                    } else {
+                        try {
+                            //Pasamos directamente la FECHA del JCALENDAR a el "df"(DateFormat), y el "df" será el PARáMETRO que tome el OBJETO GUERRA para setear su "AnioFin"
+                            guerra.setAnioFin(df.format(viewGuerras.getCalendarFin().getDate()));
+
+                        } catch (Exception e) {
+                            //En caso de error, ya sea por un NullPointerException o cualquier otro en "ANIoFin" INSERTAREMOS EL OBJETO Con "fechaFin" vacía [""] (pero no NULL)
+                            guerra.setAnioFin("");
+                        }
                     }
+
+                    
+                    try{
+                    DAOguerra.updateGuerras(guerra);
+                    }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewGuerras, "Ya Existe Una Guerra con este Nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+                    list();
+
+                } catch (Exception npe) {
+                    //En caso de error, ya sea por un NullPointerException o cualquier otro indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
+                    JOptionPane.showMessageDialog(viewGuerras, "La Fecha Inicio no PUEDE estar vacía", "ERROR de FECHA", JOptionPane.WARNING_MESSAGE);
                 }
-
-                DAOguerra.updateGuerras(guerra);
-                list();
-
-            } catch (Exception npe) {
-                //En caso de error, ya sea por un NullPointerException o cualquier otro indicaremos que NO PODRA INSERTARSE EL OBJETO SIN FECHA DE INICIO
-                JOptionPane.showMessageDialog(viewGuerras, "La Fecha Inicio no PUEDE estar vacía", "ERROR de FECHA", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no puede ser superior a 50 carácteres", "ERROR de NOMBRE", JOptionPane.WARNING_MESSAGE);
             }
-
         } else {
             JOptionPane.showMessageDialog(viewGuerras, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }
 
-    
-    
     private void eliminarGuerra() {
 
         Guerra guerra = new Guerra();

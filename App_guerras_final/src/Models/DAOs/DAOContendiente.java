@@ -47,17 +47,23 @@ public class DAOContendiente {
     public void insertContendiente(Contendiente contendiente, String nombreGuerra) {
 
         Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        
+       
         Query query = session.createQuery("SELECT g FROM Guerra g WHERE g.nombre = :nombre");
         query.setParameter("nombre", nombreGuerra);
 
         //Recuperando Guerra
         Guerra guerraBBDD = (Guerra) query.uniqueResult();
         contendiente.setGuerra(guerraBBDD);
-
+        
         session.beginTransaction();
+      
         session.save(contendiente);
         session.getTransaction().commit();
-        session.close();
+      session.close();
+          
+  
+   
     }
 
     

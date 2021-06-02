@@ -10,6 +10,7 @@ import Models.POJOs.UnionBandos;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
 /**
@@ -56,7 +57,7 @@ public class DAOGuerra {
     
     
     //insertar registro
-    public void insertGuerras(Guerra guerra) {
+    public void insertGuerras(Guerra guerra)  {
 
         try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
             session.beginTransaction();

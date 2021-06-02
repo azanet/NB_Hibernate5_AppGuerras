@@ -23,6 +23,7 @@ import Views.ViewPaises;
 import Views.ViewPrincipal;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  *
@@ -39,7 +40,6 @@ public final class controllerPais implements ActionListener {
     private Timer timerbuscar;
     //AGREGAR MODELs *** 
 
-    
     //Constructor
     public controllerPais(ViewPrincipal viewPrincipal) {
 
@@ -53,34 +53,30 @@ public final class controllerPais implements ActionListener {
 
     }//Fin del constructor
 
-    
     private void initComponents() {
         resetViewComponents();
-        
 
-        
 //        viewPais.getJtableCountries().setModel(tableModelPais);
 //        
         //Inicializando el TableModel
         tableModelPais = new JTableModelPais(DAOpais);
-        
+
         //Creando objeto de TableModelPaint, pasandole el MODELO que QUEREMOS ESTABLECERLE
-        TableModelPaint  tableModelPaint = new TableModelPaint(tableModelPais);
-        
+        TableModelPaint tableModelPaint = new TableModelPaint(tableModelPais);
+
         //Seteando la JTable de la vista, con la JTable TUNEADA que nos devuelve la clase TableModelPaint
         viewPais.setJtableCountries(tableModelPaint.getJtable());
-        
+
         //Seteando la JTable al ScrollPane, para que se vea, ya que si no NO PODRÄ MOSTRARLA
-        viewPais.getjScrollPane1().setViewportView(viewPais.getJtableCountries());    
+        viewPais.getjScrollPane1().setViewportView(viewPais.getJtableCountries());
         //LISTO!, tabla tuning agregada
-  
+
         list();
-        
+
         initEvents();
 
     }//Fin initComponents
 
-    
     private void initEvents() {
         //INICIALIZAR EVENTOS
         viewPais.getBtnInsert().addActionListener(this);
@@ -141,69 +137,59 @@ public final class controllerPais implements ActionListener {
 
     }//Fin initEvents
 
-    
     @Override
     public void actionPerformed(ActionEvent ae) {
 
-        
         if (ae.getSource() == viewPais.getBtnExit()) {
 
             viewPais.dispose();
 
             //CheckBox Independencia    
         }
-        
-        
-        
-        if(HibernateUtil_SessionFactory.isConnected()){
-        
-        
-        //BOTON INSERT
-        if (ae.getSource() == viewPais.getBtnInsert()) {
 
-            insertarPais();
-            list();
+        if (HibernateUtil_SessionFactory.isConnected()) {
 
-            //BOTON UPDATE
-        } else if (ae.getSource() == viewPais.getBtnUpdate()) {
+            //BOTON INSERT
+            if (ae.getSource() == viewPais.getBtnInsert()) {
 
-            modificarPais();
-            list();
+                insertarPais();
+                list();
 
-            //BOTON DELETE
-        } else if (ae.getSource() == viewPais.getBtnDelete()) {
+                //BOTON UPDATE
+            } else if (ae.getSource() == viewPais.getBtnUpdate()) {
 
-            eliminarPais();
-            list();
+                modificarPais();
+                list();
 
-            //BOTON LimpiarPantalla
-        } else if (ae.getSource() == viewPais.getBtnLimpiarPantalla()) {
+                //BOTON DELETE
+            } else if (ae.getSource() == viewPais.getBtnDelete()) {
 
-            resetViewComponents();
+                eliminarPais();
+                list();
 
-            //BOTON EXIT
-        }  else if (ae.getSource() == viewPais.getCheckBoxIndependent()) {
+                //BOTON LimpiarPantalla
+            } else if (ae.getSource() == viewPais.getBtnLimpiarPantalla()) {
 
-            setIndependent();
-        }
-        
-        
-        }else{
+                resetViewComponents();
+
+                //BOTON EXIT
+            } else if (ae.getSource() == viewPais.getCheckBoxIndependent()) {
+
+                setIndependent();
+            }
+
+        } else {
             viewPais.dispose();
         }
-        
-        
 
     }//Fin de action performed
 
-    
     private void list() {
         DAOpais.selectAllPaises();
         tableModelPais.fireTableDataChanged();
         resetViewComponents();
     }
 
-    
     private void resetViewComponents() {
 
         viewPais.getJtableCountries().clearSelection();
@@ -225,7 +211,6 @@ public final class controllerPais implements ActionListener {
         setIndependent();
     }
 
-    
     //Seteara las etiquetas acorde al CheckBox
     private void setIndependent() {
         boolean aux = viewPais.getCheckBoxIndependent().isSelected();
@@ -247,7 +232,6 @@ public final class controllerPais implements ActionListener {
 
     }//Fin set independent
 
-    
     private void selected_row() {
         int row = viewPais.getJtableCountries().getSelectedRow();
         if (row >= 0) {
@@ -269,7 +253,6 @@ public final class controllerPais implements ActionListener {
         }
     }
 
-    
     //Timer que DISPARA "LA BUSQUEDA SUAVE"
     private void activoTimer() {
 
@@ -286,7 +269,6 @@ public final class controllerPais implements ActionListener {
         }
 
     }
-    
 
     private void eliminarPais() {
 
@@ -295,121 +277,157 @@ public final class controllerPais implements ActionListener {
         DAOpais.deletePais(pais);
     }
 
-    
     private void modificarPais() {
 
-        if(viewPais.getTxtfCountryName().getText().length()>0){
-        
-        Pais pais = new Pais();
+        if (viewPais.getTxtfCountryName().getText().length() > 0) {
 
-        pais.setIdPais(Integer.parseInt(viewPais.getTF_CountryId().getText()));
-        pais.setNombre(viewPais.getTxtfCountryName().getText());
+            if (viewPais.getTxtfCountryName().getText().length() <= 50) {
 
-        //SI EL CHECKBOX !!SII¡¡ Esta marcado y EXISTE "Fecha de INICIO", Updatearemos o Crearemos EL PERIODO DE INDEPENDENCIA     
-        if (viewPais.getCheckBoxIndependent().isSelected() == true) {
+                Pais pais = new Pais();
 
-            //Updateando el PAIS (Solo su nombre)
-            DAOpais.updatePais(pais);
+                pais.setIdPais(Integer.parseInt(viewPais.getTF_CountryId().getText()));
+                pais.setNombre(viewPais.getTxtfCountryName().getText());
 
-            if (viewPais.getTxtfDateBegin().getText().length() > 0) {
+                //SI EL CHECKBOX !!SII¡¡ Esta marcado y EXISTE "Fecha de INICIO", Updatearemos o Crearemos EL PERIODO DE INDEPENDENCIA     
+                if (viewPais.getCheckBoxIndependent().isSelected() == true) {
+  try{
+                    //Updateando el PAIS (Solo su nombre)
+                    DAOpais.updatePais(pais);
 
-                PeriodoIndependecia pi = new PeriodoIndependecia();
+                    if (viewPais.getTxtfDateBegin().getText().length() > 0) {
 
-                if(viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")){
-                
-                try {
-                    pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
-                } catch (NumberFormatException nfe) {
-                    pi.setAnioInicio(null);
+                        PeriodoIndependecia pi = new PeriodoIndependecia();
+
+                        if (viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")) {
+
+                            try {
+                                pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
+                            } catch (NumberFormatException nfe) {
+                                pi.setAnioInicio(null);
+                            }
+
+                            if (viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")) {
+                                try {
+                                    pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
+                                } catch (NumberFormatException nfe) {
+                                    pi.setAnioFin(null);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA, SE OMITIRÁ", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                            }
+
+                            //Añadiendo al objeto el periodo de independencia
+                            pais.getPeriodoIndependecias().add(pi);
+
+                            
+                            
+                  
+                         //UPDATEANDO PeriodoIndependencia  (En el DAO comprobará si se MODIFICA o INSERTA el REGISTRO según EXISTA O NO)
+                            DAOperiodoIndependencia.updatePeriodoIndependencia(pais);    
+                        } else {
+                            JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                        }
+                        
+                         }
+                        
+                    }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewPais, "Ya Existe Un País con este nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+                       
+
+                  
+                   
+
+                    //SI EL CHECKBOX !!NOO¡¡ Esta marcado, ELIMINAREMOS EL PERIODO DE INDEPENDENCIA (en caso de que exista)    
+                } else {
+
+                    
+                                     try{
+                    //Updateando el PAIS (Solo su nombre)
+                    DAOpais.updatePais(pais);
+                    //BORRANDO PeriodoIndependencia
+                    DAOperiodoIndependencia.deletePeriodoIndependencia(pais);
+                    }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewPais, "Ya Existe Un Pais con este nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+
+
                 }
-                
-    
-                
-                if(viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")){
-                try {
-                    pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
-                } catch (NumberFormatException nfe) {
-                    pi.setAnioFin(null);
-                }
-                }else{
-                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA, SE OMITIRÁ", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
-                }
 
-                //Añadiendo al objeto el periodo de independencia
-                pais.getPeriodoIndependecias().add(pi);
-
-                //UPDATEANDO PeriodoIndependencia  (En el DAO comprobará si se MODIFICA o INSERTA el REGISTRO según EXISTA O NO)
-                DAOperiodoIndependencia.updatePeriodoIndependencia(pais);
-                
-                
-                
-                            }else{
-                JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
-                }
+            } else {
+                JOptionPane.showMessageDialog(viewPais, "El NOMBRE no puede ser superior a 50 carácteres", "ERROR de NOMBRE", JOptionPane.WARNING_MESSAGE);
             }
 
-            //SI EL CHECKBOX !!NOO¡¡ Esta marcado, ELIMINAREMOS EL PERIODO DE INDEPENDENCIA (en caso de que exista)    
         } else {
-
-            //Updateando el PAIS (Solo su nombre)
-            DAOpais.updatePais(pais);
-            //BORRANDO PeriodoIndependencia
-            DAOperiodoIndependencia.deletePeriodoIndependencia(pais);
-
-        }
-        
-        }else{
             JOptionPane.showMessageDialog(viewPais, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-    
+
     }
 
-    
     private void insertarPais() {
-      
-        if(viewPais.getTxtfCountryName().getText().length()>0){
-        
-        Pais pais = new Pais();
-        //insert pais con independencia
-        if (viewPais.getCheckBoxIndependent().isSelected() == true) {
 
-            pais.setNombre(viewPais.getTxtfCountryName().getText());
+        if (viewPais.getTxtfCountryName().getText().length() > 0) {
 
-            DAOpais.insertPais(pais);
+            if (viewPais.getTxtfCountryName().getText().length() <= 50) {
 
-            if (viewPais.getTxtfDateBegin().getText().length() > 0) {
+                Pais pais = new Pais();
+                //insert pais con independencia
+                if (viewPais.getCheckBoxIndependent().isSelected() == true) {
 
-                PeriodoIndependecia pi = new PeriodoIndependecia();
+                    pais.setNombre(viewPais.getTxtfCountryName().getText());
+
+                             pais.setNombre(viewPais.getTxtfCountryName().getText());
+
+                    try{
+                         DAOpais.insertPais(pais);
+                  
+
+                    if (viewPais.getTxtfDateBegin().getText().length() > 0) {
+
+                        PeriodoIndependecia pi = new PeriodoIndependecia();
+
+                        if (viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")) {
+                            pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
+
+                            if (viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")) {
+                                pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
+                            } else {
+                                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                            }
+                            //Añadiendo al objeto el periodo de independencia
+                            pais.getPeriodoIndependecias().add(pi);
+                            //
+                            DAOperiodoIndependencia.insertPeriodoIndependencia(pais);
+                        } else {
+                            JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    }
+                    
+                      }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewPais, "Ya Existe Un Pais con este nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                    //insert de pais solo
+                } else {
+
+                    pais.setNombre(viewPais.getTxtfCountryName().getText());
+
+                    try{
+                         DAOpais.insertPais(pais);
+                    }catch(ConstraintViolationException  c){
+                        JOptionPane.showMessageDialog(viewPais, "Ya Existe Un Pais con este nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
+                    }
+
                 
-                 if(viewPais.getTxtfDateBegin().getText().matches("[0-9]{1,5}")){
-                pi.setAnioInicio(Integer.parseInt(viewPais.getTxtfDateBegin().getText()));
 
-                
-                 
-                 if(viewPais.getTxtfDateEnd().getText().matches("[0-9]{1,5}")){
-                pi.setAnioFin(Integer.parseInt(viewPais.getTxtfDateEnd().getText()));
-                    }else{
-                JOptionPane.showMessageDialog(viewPais, "FECHA 'FIN' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
                 }
-                //Añadiendo al objeto el periodo de independencia
-                pais.getPeriodoIndependecias().add(pi);
-                //
-                DAOperiodoIndependencia.insertPeriodoIndependencia(pais);                  
-                 }else{
-                JOptionPane.showMessageDialog(viewPais, "FECHA 'INICIO' INCORRECTA", "ERROR DE FECHA", JOptionPane.WARNING_MESSAGE);
-                }
-                
+
+            } else {
+                JOptionPane.showMessageDialog(viewPais, "El NOMBRE no puede ser superior a 50 carácteres", "ERROR de NOMBRE", JOptionPane.WARNING_MESSAGE);
             }
 
-            //insert de pais solo
         } else {
-
-            pais.setNombre(viewPais.getTxtfCountryName().getText());
-            DAOpais.insertPais(pais);
-
-        }
-        
-        }else{
             JOptionPane.showMessageDialog(viewPais, "El NOMBRE no PUEDE estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }
