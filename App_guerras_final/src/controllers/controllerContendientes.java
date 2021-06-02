@@ -414,9 +414,9 @@ class controllerContendientes implements ActionListener {
             //Insertar nuevo contendiente
             if (e.getSource() == viewContendientes.getBtnInsertNewContender()) {
 
-                if (viewContendientes.getTxtfInsertNewContender().getText().length() > 0) {
+                if (viewContendientes.getTxtfInsertNewContender().getText().trim().length() > 0) {
 
-                    if (viewContendientes.getTxtfInsertNewContender().getText().length() <= 50) {
+                    if (viewContendientes.getTxtfInsertNewContender().getText().trim().length() <= 50) {
 
                         int ganador;
 
@@ -429,7 +429,7 @@ class controllerContendientes implements ActionListener {
                         String nombreGuerra = (String) viewContendientes.getComboBoxSelectWar().getSelectedItem();
 
                         Contendiente contendiente = new Contendiente();
-                        contendiente.setNombre(viewContendientes.getTxtfInsertNewContender().getText());
+                        contendiente.setNombre(viewContendientes.getTxtfInsertNewContender().getText().trim());
                         contendiente.setGanador(ganador);
 
                         try {
@@ -469,11 +469,11 @@ class controllerContendientes implements ActionListener {
             //Actualizar contendiente seleccionado
             if (e.getSource() == viewContendientes.getBtnUpdateSelectedContender()) {
 
-                if (viewContendientes.getTxtfUpdateSelectedContender().getText().length() > 0) {
-                    if (viewContendientes.getTxtfUpdateSelectedContender().getText().length() <= 50) {
+                if (viewContendientes.getTxtfUpdateSelectedContender().getText().trim().length() > 0) {
+                    if (viewContendientes.getTxtfUpdateSelectedContender().getText().trim().length() <= 50) {
                         int ganador;
                         Contendiente contendiente = new Contendiente();
-                        String newContenderName = viewContendientes.getTxtfUpdateSelectedContender().getText();
+                        String newContenderName = viewContendientes.getTxtfUpdateSelectedContender().getText().trim();
                         String oldContenderName = (String) viewContendientes.getComboBoxSelectContender().getSelectedItem();
                         contendiente.setNombre(newContenderName);
 

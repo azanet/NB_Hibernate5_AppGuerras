@@ -279,14 +279,14 @@ public final class controllerPais implements ActionListener {
 
     private void modificarPais() {
 
-        if (viewPais.getTxtfCountryName().getText().length() > 0) {
+        if (viewPais.getTxtfCountryName().getText().trim().length() > 0) {
 
-            if (viewPais.getTxtfCountryName().getText().length() <= 50) {
+            if (viewPais.getTxtfCountryName().getText().trim().length() <= 50) {
 
                 Pais pais = new Pais();
 
                 pais.setIdPais(Integer.parseInt(viewPais.getTF_CountryId().getText()));
-                pais.setNombre(viewPais.getTxtfCountryName().getText());
+                pais.setNombre(viewPais.getTxtfCountryName().getText().trim());
 
                 //SI EL CHECKBOX !!SII¡¡ Esta marcado y EXISTE "Fecha de INICIO", Updatearemos o Crearemos EL PERIODO DE INDEPENDENCIA     
                 if (viewPais.getCheckBoxIndependent().isSelected() == true) {
@@ -366,18 +366,17 @@ public final class controllerPais implements ActionListener {
 
     private void insertarPais() {
 
-        if (viewPais.getTxtfCountryName().getText().length() > 0) {
+        if (viewPais.getTxtfCountryName().getText().trim().length() > 0) {
 
-            if (viewPais.getTxtfCountryName().getText().length() <= 50) {
+            if (viewPais.getTxtfCountryName().getText().trim().length() <= 50) {
 
                 Pais pais = new Pais();
                 //insert pais con independencia
                 if (viewPais.getCheckBoxIndependent().isSelected() == true) {
 
-                    pais.setNombre(viewPais.getTxtfCountryName().getText());
+                    pais.setNombre(viewPais.getTxtfCountryName().getText().trim());
 
-                             pais.setNombre(viewPais.getTxtfCountryName().getText());
-
+                          
                     try{
                          DAOpais.insertPais(pais);
                   
@@ -411,7 +410,7 @@ public final class controllerPais implements ActionListener {
                     //insert de pais solo
                 } else {
 
-                    pais.setNombre(viewPais.getTxtfCountryName().getText());
+                    pais.setNombre(viewPais.getTxtfCountryName().getText().trim());
 
                     try{
                          DAOpais.insertPais(pais);
