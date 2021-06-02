@@ -191,8 +191,16 @@ public class DAOGuerra {
 
                     //Recodierndo el SET de independencia(aunque en teoria solo deberia tener uno, lo iré pisando y me quedaré con el ultimo, aunque solo deberia haber uno)
                     for (PeriodoIndependecia periodoIndependecia : pi) {
+                        try{
                         inicio_independiente = Integer.toString(periodoIndependecia.getAnioInicio());
+                        }catch(Exception e){
+                            inicio_independiente="";
+                        }
+                        try{
                         fin_independiente = Integer.toString(periodoIndependecia.getAnioFin());
+                        }catch(Exception e){
+                            fin_independiente="";
+                        }
                     }
 
                     //Y AQUÍ ES DONDE POR FIN ALMACENAREMOS EL OBJETO,
