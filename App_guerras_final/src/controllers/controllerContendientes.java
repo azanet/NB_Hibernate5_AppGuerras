@@ -10,7 +10,7 @@ import Models.DAOs.DAOComboBoxesFill;
 import Models.DAOs.DAOUnionBandos;
 import Models.POJOs.Contendiente;
 import Models.POJOs.UnionBandos;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -52,7 +52,7 @@ class controllerContendientes implements ActionListener {
         initEvents();
         resetComponents();
 
-        if (HibernateUtil_SessionFactory.isConnected()) {
+        if (HibernateUtil.isConnected()) {
             viewContendientes.getComboBoxSelectWar().setModel(DAOcomboBoxesFill.fillComboBoxGuerras());
         }
 
@@ -143,7 +143,7 @@ class controllerContendientes implements ActionListener {
             public void itemStateChanged(ItemEvent e) {
 
                 //Comprobando CONEXION  
-                if (HibernateUtil_SessionFactory.isConnected()) {
+                if (HibernateUtil.isConnected()) {
 
                     //if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (viewContendientes.getComboBoxSelectWar().getSelectedIndex() > 0) {
@@ -201,7 +201,7 @@ class controllerContendientes implements ActionListener {
             public void itemStateChanged(ItemEvent e) {
 
                 //Comprobando CONEXION  
-                if (HibernateUtil_SessionFactory.isConnected()) {
+                if (HibernateUtil.isConnected()) {
                     countriesUpdateSetActive();
 
                     // if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -255,7 +255,7 @@ class controllerContendientes implements ActionListener {
             public void itemStateChanged(ItemEvent e) {
 
                 //Comprobando CONEXION  
-                if (HibernateUtil_SessionFactory.isConnected()) {
+                if (HibernateUtil.isConnected()) {
 
                     //if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (viewContendientes.getComboBoxSelectCountryToContender().getSelectedIndex() > 0) {
@@ -293,7 +293,7 @@ class controllerContendientes implements ActionListener {
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
                 //Comprobando CONEXION  
-                if (HibernateUtil_SessionFactory.isConnected()) {
+                if (HibernateUtil.isConnected()) {
 
                     if (viewContendientes.getComboBoxSelectCountryADDED().getSelectedIndex() > 0) {
 
@@ -403,7 +403,7 @@ class controllerContendientes implements ActionListener {
         }
 
         //Comprobando CONEXION  
-        if (HibernateUtil_SessionFactory.isConnected()) {
+        if (HibernateUtil.isConnected()) {
 
             //LimpiarPantalla
             if (e.getSource() == viewContendientes.getBtnLimpiarPantalla()) {
@@ -440,8 +440,8 @@ class controllerContendientes implements ActionListener {
                         refreshContenderComboBox();
                         } catch (ConstraintViolationException c) {
                             JOptionPane.showMessageDialog(viewContendientes, "Ya Existe Un Contendiente con este nombre", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
-                            HibernateUtil_SessionFactory.isConnected();
-                            HibernateUtil_SessionFactory.isConnected();
+                            HibernateUtil.isConnected();
+                            HibernateUtil.isConnected();
                             
                         }
                     } else {
@@ -539,8 +539,8 @@ class controllerContendientes implements ActionListener {
                 
                 } catch (ConstraintViolationException c) {
                     JOptionPane.showMessageDialog(viewContendientes, "Ya está vinculado este Pais a este contendiente", "ERROR entrada DUPLICADA", JOptionPane.WARNING_MESSAGE);
-                  HibernateUtil_SessionFactory.isConnected();
-                  HibernateUtil_SessionFactory.isConnected();
+                  HibernateUtil.isConnected();
+                  HibernateUtil.isConnected();
                 
                 }
             }

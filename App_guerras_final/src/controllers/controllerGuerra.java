@@ -9,7 +9,7 @@ import Models.POJOs.Guerra;
 import Models.TableModels.JTableModelGuerra;
 import Models.DAOs.DAOGuerra;
 import Models.TableModels.TableModelPaint;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -152,7 +152,7 @@ public final class controllerGuerra implements ActionListener {
         }
 
         //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
-        if (HibernateUtil_SessionFactory.isConnected()) {
+        if (HibernateUtil.isConnected()) {
 
             //Boton Añadir Guerras
             if (ae.getSource() == viewGuerras.getAdd_button()) {

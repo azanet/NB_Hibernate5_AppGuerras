@@ -7,7 +7,7 @@ package Models.DAOs;
 
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -27,7 +27,7 @@ public class DAOPeriodoIndependecia {
         
     public void insertPeriodoIndependencia(Pais pais) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");
         query.setParameter("nombre", pais.getNombre());
@@ -51,7 +51,7 @@ public class DAOPeriodoIndependecia {
 
     public void updatePeriodoIndependencia(Pais pais) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre =:nombre");
         query.setParameter("nombre", pais.getNombre());
@@ -90,7 +90,7 @@ public class DAOPeriodoIndependecia {
     
     public void deletePeriodoIndependencia(Pais pais) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         session.beginTransaction();
         Query query = session.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre");

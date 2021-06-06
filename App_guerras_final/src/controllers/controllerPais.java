@@ -11,7 +11,7 @@ import Models.DAOs.DAOPeriodoIndependecia;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
 import Models.TableModels.TableModelPaint;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -147,7 +147,7 @@ public final class controllerPais implements ActionListener {
             //CheckBox Independencia    
         }
 
-        if (HibernateUtil_SessionFactory.isConnected()) {
+        if (HibernateUtil.isConnected()) {
 
             //BOTON INSERT
             if (ae.getSource() == viewPais.getBtnInsert()) {

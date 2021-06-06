@@ -6,7 +6,10 @@
             <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/Models/DAOs/DAOContendiente.java</file>
             <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/controllers/controllerPais.java</file>
             <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/controllers/controllerContendientes.java</file>
+            <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/Models/DAOs/DAOGuerra.java</file>
             <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/SessionFactory/HibernateUtil_SessionFactory.java</file>
+            <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/controllers/controllerPrincipal.java</file>
+            <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/controllers/controllerConsultas.java</file>
             <file>file:/home/davidf/Escritorio/2-DAM/AED/ACTIVIDAD_FINAL/NB_Hibernate5_AppGuerras/App_guerras_final/src/hibernate.cfg.xml</file>
         </group>
     </open-files>

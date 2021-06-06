@@ -37,7 +37,7 @@ import org.hibernate.query.Query;
  * #############################################################################
  *
  */
-public class HibernateUtil_SessionFactory {
+public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
     private static Session session;
@@ -75,11 +75,11 @@ public class HibernateUtil_SessionFactory {
      * Abre una nueva sesión
      */
     private static void openSession() {
-try{
-        session = sessionFactory.openSession();
-}catch(Exception e){
-  //  session.flush();
-}
+        try {
+            session = sessionFactory.openSession();
+        } catch (Exception e) {
+            //  session.flush();
+        }
     }
 
     /**

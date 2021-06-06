@@ -8,7 +8,7 @@ package Models.DAOs;
 import Models.POJOs.Contendiente;
 import Models.POJOs.Pais;
 import Models.POJOs.UnionBandos;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -32,7 +32,7 @@ public class DAOComboBoxesFill {
         comboBoxGuerras.addElement("Seleccione una guerra...");
 
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         Query query = session.createQuery("SELECT g.nombre FROM Guerra g ORDER BY g.nombre");
 
         comboBoxGuerras.addAll(query.list()); //INSERTANDO la lista entera recibida en el combobox
@@ -49,7 +49,7 @@ public class DAOComboBoxesFill {
         comboBoxContendientes.addElement("Seleccione un Contendiente...");
 
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         Query query = session.createQuery("SELECT c FROM Contendiente c WHERE c.guerra=(SELECT g FROM Guerra g WHERE g.nombre = :nombre) ORDER BY c.nombre");
         query.setParameter("nombre", nombre);
 
@@ -72,7 +72,7 @@ public class DAOComboBoxesFill {
         comboBoxPaises.addElement("Seleccione un PAÍS Contendiente...");
 
         //Abriendo sesion, creando QUERY de la consulta y cargando el ComboBox con la lista recibida al realizar la consulta
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         Query query = session.createQuery("SELECT u FROM UnionBandos u WHERE u.contendiente=(SELECT c FROM Contendiente c WHERE c.nombre = :nombre)");
         query.setParameter("nombre", nombre);
         
@@ -96,7 +96,7 @@ public class DAOComboBoxesFill {
         DefaultComboBoxModel comboBoxAllPaises = new DefaultComboBoxModel();
         comboBoxAllPaises.addElement("Seleccione un País...");
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         Query query = session.createQuery("SELECT p.nombre FROM Pais p ORDER BY p.nombre");
 
         comboBoxAllPaises.addAll(query.list()); //Insertando la LISTA en el COMBOBOX

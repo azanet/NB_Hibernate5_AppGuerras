@@ -1,6 +1,6 @@
 package Models.DAOs;
 
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import Models.POJOs.Pais;
 import Models.POJOs.PeriodoIndependecia;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class DAOPais {
         
     public void selectAllPaises() {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT p FROM Pais p");
 
@@ -42,7 +42,7 @@ public class DAOPais {
     //BUSQUEDA "SUAVE" por nombre de PAIS o FECHAS DE INDEPENDENCIA
     public void lightSearchPaises(String nombre) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         nombre = "%" + nombre + "%";
         Query query = session.createQuery("SELECT p FROM Pais p LEFT JOIN PeriodoIndependecia pi ON pi.pais = p WHERE p.nombre LIKE :nombre OR pi.anioInicio LIKE :nombre OR pi.anioFin LIKE :nombre");
@@ -72,7 +72,7 @@ public class DAOPais {
      */
     private void chargePaisDetailsList(Query query) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         List<Pais> paisesBBDDList = new ArrayList<>(query.list());
 
@@ -118,7 +118,7 @@ public class DAOPais {
     //insertar registro
     public void insertPais(Pais pais) {
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
             session.beginTransaction();
             session.save(pais);
             session.getTransaction().commit();
@@ -133,7 +133,7 @@ public class DAOPais {
 
         int id = pais.getIdPais();
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         //Recogiendo objeto de la BBDD
         Pais paisBBDD = session.get(Pais.class, id);
 
@@ -153,7 +153,7 @@ public class DAOPais {
 
         int id = pais.getIdPais();
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         //Recogiendo Guerra de la BBDD, utilizando su ID, para su eliminación
         Pais paisBBDD = session.get(Pais.class, id);

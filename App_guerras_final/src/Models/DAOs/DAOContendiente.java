@@ -1,6 +1,6 @@
 package Models.DAOs;
 
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import Models.POJOs.Contendiente;
 import Models.POJOs.Guerra;
 import org.hibernate.Session;
@@ -24,7 +24,7 @@ public class DAOContendiente {
     public int isWinnerContender(String nombreContendiente) {
 
         Integer winner;
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT c.ganador FROM Contendiente c WHERE c.nombre = :nombre");
         query.setParameter("nombre", nombreContendiente);
@@ -46,7 +46,7 @@ public class DAOContendiente {
     //Insertar CONTENDIENTE
     public void insertContendiente(Contendiente contendiente, String nombreGuerra) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
         
        
         Query query = session.createQuery("SELECT g FROM Guerra g WHERE g.nombre = :nombre");
@@ -71,7 +71,7 @@ public class DAOContendiente {
     //UPDATE CONTENDIENTE      
     public void updateContendiente(Contendiente contendiente, String oldName) {
 
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT c From Contendiente c WHERE c.nombre = :nombre");
         query.setParameter("nombre", oldName);
@@ -95,7 +95,7 @@ public class DAOContendiente {
     public void deleteContendiente(Contendiente contendiente) {
 
         String nombreContendiente = contendiente.getNombre();
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT c FROM Contendiente c WHERE c.nombre = :nombre");
         query.setParameter("nombre", nombreContendiente);

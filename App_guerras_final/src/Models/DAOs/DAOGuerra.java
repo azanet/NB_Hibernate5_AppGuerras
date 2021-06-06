@@ -1,6 +1,6 @@
 package Models.DAOs;
 
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import Models.POJOs.Contendiente;
 import Models.ConsultFormatTextUtils.DetailsWarDTO;
 import Models.POJOs.Guerra;
@@ -10,7 +10,6 @@ import Models.POJOs.UnionBandos;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
 /**
@@ -31,7 +30,7 @@ public class DAOGuerra {
     
     //Consulta que obtiene toda la lista de Guerras contenidas en la bbdd
     public void selectAllGuerras() {
-        Session session = HibernateUtil_SessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getCurrentSession();
 
         Query query = session.createQuery("SELECT g FROM Guerra g ORDER BY g.nombre");
         GuerrasList = new ArrayList<>(query.list());
@@ -44,7 +43,7 @@ public class DAOGuerra {
     //Busqueda Suave, por nombre, año inicio, o año fin (todo junto)
     public void lightSearchGuerras(String nombre) {
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
             nombre = "%" + nombre + "%";
 
             Query query = session.createQuery("SELECT g FROM Guerra g WHERE g.nombre LIKE :nombre OR g.anioInicio LIKE :nombre OR g.anioFin LIKE :nombre");
@@ -59,7 +58,7 @@ public class DAOGuerra {
     //insertar registro
     public void insertGuerras(Guerra guerra)  {
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
             session.beginTransaction();
             session.save(guerra);
             session.getTransaction().commit();
@@ -75,7 +74,7 @@ public class DAOGuerra {
 
         int id = guerra.getIdGuerra();
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
             //Recogiendo objeto de la BBDD
             Guerra guerraBBDD = session.get(Guerra.class, id);
 
@@ -100,7 +99,7 @@ public class DAOGuerra {
 
         int id = guerra.getIdGuerra();
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
             //Recogiendo Guerra de la BBDD, utilizando su ID, para su eliminación         
             Guerra guerraBBDD = session.get(Guerra.class, id);
 
@@ -155,7 +154,7 @@ public class DAOGuerra {
 
         int id = guerra.getIdGuerra();
 
-        try (Session session = HibernateUtil_SessionFactory.getCurrentSession()) {
+        try (Session session = HibernateUtil.getCurrentSession()) {
 
             //Solicitando la guerra con la ID ESPECIFICADA, utilizaré el objeto con la sesion en el mismo método, 
             //para que funcione la conexion LAZY (automaticamente me recupere los datos de las tablas relacionadas con este objeto en caso de solcitarselos)

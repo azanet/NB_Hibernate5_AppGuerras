@@ -10,7 +10,7 @@ import Models.ConsultFormatTextUtils.FormatTextDetailsWarUtil;
 import Models.DAOs.DAOGuerra;
 import Models.TableModels.JTableModelGuerra;
 import Models.TableModels.TableModelPaint;
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -100,7 +100,7 @@ public final class controllerConsultas implements ActionListener {
             public void mouseClicked(MouseEvent me) {
 
                 //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
-                if(HibernateUtil_SessionFactory.isConnected()){
+                if(HibernateUtil.isConnected()){
           
                 
                 int row = viewConsultas.getJtableWarList().getSelectedRow();
@@ -170,7 +170,7 @@ public final class controllerConsultas implements ActionListener {
             
             
         //Comprobando Conexion, en caso de ser Erronea Saldrá a la pantalla principal
-        if(HibernateUtil_SessionFactory.isConnected()){
+        if(HibernateUtil.isConnected()){
           
         
         if (ae.getSource() == viewConsultas.getBtnClean()) {

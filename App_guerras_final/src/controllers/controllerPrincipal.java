@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import SessionFactory.HibernateUtil_SessionFactory;
+import SessionFactory.HibernateUtil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Views.ViewPrincipal;
@@ -25,12 +25,19 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     private ViewPrincipal viewPrincipal;
     
     //Variables para el TIMER de la Conexion/Reconexion
-    private static final int CHECKTIME = 5000;
-    private Timer timerbuscar;
-    private int pBarValue=15;
+    private static final int CHECKTIME = 5000;//Tiempo en ms
+    private Timer timerReconnect; //Timer que controla la recoexion
+    
+    
     //Variable del estado de la BBDD
-    private boolean statusBBDD=false;
-    private int countTryConnect=1;
+    private boolean statusBBDD=false;    
+    
+    //Controlar la progressBar y informacion de reconexion.
+    private int countTryConnect=1; //Contador para saber cuando se realizará la reconexion (que sabemos que serán 30 segundos)=( 6ciclos de 5000ms)
+    private int pBarValue=15; //valor de la progressBar
+
+    
+    
     
     public controllerPrincipal() {
 
@@ -91,7 +98,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     public void actionPerformed(ActionEvent ae) {
         
         if (ae.getSource() == viewPrincipal.getBtnExit()) {
-            HibernateUtil_SessionFactory.closeSessionFactory();
+            HibernateUtil.closeSessionFactory();
             System.exit(0);
         }
  
@@ -200,12 +207,10 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
      * En caso de NO Existir CONEXION
      */
     private void checkBBDDStatus(){
-        
-
-       
+               
         viewPrincipal.getpBarIntentandoConn().setValue(pBarValue);
         //Este METODO es el que comprueba y REALIZA LA RECONEXIÓN EN CASO de ERROR de CONEXIÓN
-        statusBBDD= HibernateUtil_SessionFactory.isConnected();
+        statusBBDD= HibernateUtil.isConnected();
 
         viewPrincipal.getBtnWars().setEnabled(statusBBDD);
         viewPrincipal.getBtnCountry().setEnabled(statusBBDD);
@@ -225,7 +230,6 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
             viewPrincipal.getLblIntentandoConectar().setForeground(new Color(  245, 139, 19 ));
         }
         
-
         //Si la BBDD está desconectada, Activo el TIMER, para que compruebe periodicamente la conexion
         if(!statusBBDD){        
 
@@ -233,9 +237,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
            
             viewPrincipal.getLblStatusBBDD().setText("NO CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.red);
-            
-
-        
+                  
         }else{       
             viewPrincipal.getLblStatusBBDD().setText("CONECTADO");
             viewPrincipal.getLblStatusBBDD().setForeground(Color.green);
@@ -253,7 +255,7 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
     //Timer que DISPARA "LA RECONEXION" en caso de NO TENER CONEXION
     private void reconnectTimer() {
 
-            timerbuscar = new Timer(CHECKTIME, (ActionEvent evt) -> {
+            timerReconnect = new Timer(CHECKTIME, (ActionEvent evt) -> {
                 
                 System.out.println("Comprobando conexion"); 
                 
@@ -275,8 +277,8 @@ public class controllerPrincipal extends MouseAdapter implements ActionListener 
                
             });
             
-            timerbuscar.setRepeats(false);
-            timerbuscar.start();
+            timerReconnect.setRepeats(false);
+            timerReconnect.start();
 
     }//Fin del TIMER reconnectTimer
     
