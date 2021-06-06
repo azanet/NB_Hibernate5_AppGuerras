@@ -13,6 +13,10 @@ import java.util.TreeSet;
 /**
  *
  * @author davidf
+ * 
+ * Recibe un ARRAYList con todos los registros para una guerra
+ * esta clase "clasifica", ordena y alinea la información que le llega a este
+ * y lo va almacenando en una STRING, que será devuelta para imprimir en el TEXTAREA
  */
 public class FormatTextDetailsWarUtil {
 
